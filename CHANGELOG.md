@@ -3,12 +3,13 @@
 - post logout
 - no effect (reload/reload)
 - nav bar
-- version
+- datascript
 
-# 0.2-SNAPSHOT
+# 0.2.0-SNAPSHOT
 
-- worked router.
-
+- router started to work
+- version in view.clj
+- bump-version-local.sh
 
 # 0.1.0 (2025-09-03)
 

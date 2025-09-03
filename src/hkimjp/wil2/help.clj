@@ -5,4 +5,6 @@
 (defn help
   [request]
   (page
-   [:div "help"]))
+   [:div
+    [:div "Help"]
+    [:p "under construction"]]))

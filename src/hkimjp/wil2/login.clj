@@ -10,7 +10,7 @@
    ;;
    [hkimjp.wil2.view :refer [page]]))
 
-(def l22 (or (env :l22) "https://l22.melt.kyutech.ac.jp"))
+(def l22 (or (env :auth) "https://l22.melt.kyutech.ac.jp"))
 
 (defn login
   [request]
@@ -30,7 +30,7 @@
 
 (defn login!
   [{{:keys [login password]} :params}]
-  (if (env :develop)
+  (if (env :no-login)
     (do
       ;; always login success in development
       (t/log! :info (str "login success: " login))
@@ -58,31 +58,3 @@
   (t/log! :info (str "logout! " (get-in request [:session :identity])))
   (-> (resp/redirect "/")
       (assoc :session {})))
-
-(defn task
-  [request]
-  (page
-   [:div.mx-4
-    [:div.flex.items-baseline
-     [:div.flex-none.text-4xl "Task"]
-     [:div.flex-none.text-base "login as: " (get-in request [:session :identity])]]
-    [:p "go to " [:a {:href "/admin"} [:span.underline "admin"]]]
-    [:div
-     [:form {:method "post" :action "/logout"}
-      (h/raw (anti-forgery-field))
-      [:button.px-1.text-white.rounded-xl.bg-sky-300.hover:bg-sky-600.active:bg-red-400
-       "logout"]]]]))
-
-(defn admin
-  [request]
-  (page
-   [:div.mx-4
-    [:div.flex.items-baseline
-     [:div.flex-none.text-4xl "Admin"]
-     [:div.flex-none.text-base "login as: " (get-in request [:session :identity])]]
-    [:div
-     [:p "admin only"]
-     [:form {:method "post" :action "/logout"}
-      (h/raw (anti-forgery-field))
-      [:button.px-1.text-white.rounded-xl.bg-sky-300.hover:bg-sky-600.active:bg-red-400
-       "logout"]]]]))
