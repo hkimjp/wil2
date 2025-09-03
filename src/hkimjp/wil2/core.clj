@@ -18,7 +18,7 @@
   (page
    [:div "upload!"]))
 
-(defn list [request]
+(defn list-days [request]
   (page
    [:div "list"]))
 
