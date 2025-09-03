@@ -4,7 +4,7 @@
    [ring.util.response :as response]
    [ring.util.anti-forgery :refer [anti-forgery-field]]))
 
-(def version "0.2")
+(def version "0.2.0")
 
 (defn header []
   [:div.flex.bg-green-900.items-baseline.gap-x-8

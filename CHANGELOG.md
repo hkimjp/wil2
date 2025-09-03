@@ -3,7 +3,7 @@
 - no effect reload/reload
 - datascript
 
-# 0.2.0-SNAPSHOT
+# 0.2.0 (2025-09-03)
 
 - router started to work
 - version in view.clj
