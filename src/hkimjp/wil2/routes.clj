@@ -5,27 +5,25 @@
    [taoensso.telemere :as t]
    ;
    [hkimjp.wil2.admin :as admin]
-   [hkimjp.wil2.core :as wil2]
+   [hkimjp.wil2.core :as core]
    [hkimjp.wil2.help :refer [help]]
    [hkimjp.wil2.login :refer [login login! logout!]]
    [hkimjp.wil2.middleware :as m]))
 
 (defn routes
   []
-  [["/" {:get  {:handler login}
-         :post {:handler login!}}]
-   ["/logout"  {:post {:handler logout!}}]
-   ["/help" {:get {:handler help}}]
-   ["/wil2"  {:middleware [m/wrap-users]}
-    ["/"       {:get {:handler wil2/index}}]
-    ["/todays" {:get {:handler wil2/todays}}]
-    ["/upload" {:get  {:handler wil2/upload}
-                :post {:handler wil2/upload!}}]
-    ["/list" {:get {:handler wil2/list}}]
-    ["/browse" {:get {:handler wil2/browse}}]
-    ["/my"   {:get {:handler wil2/my}}]]
-   ["/admin" {:middleware [m/wrap-admin]}
-    ["" {:get {:handler admin/admin}}]]])
+  [["/"        {:get login :post login!}]
+   ["/logout"  {:post logout!}]
+   ["/help"    {:get  help}]
+   ["/wil2"    {:middleware [m/wrap-users]}
+    [""        {:get core/index}]
+    ["/todays" {:get core/todays}]
+    ["/upload" {:get core/upload :post core/upload!}]
+    ["/list"   {:get core/list-days}]
+    ["/browse" {:get core/browse}]
+    ["/my"     {:get core/my}]]
+   ["/admin"   {:middleware [m/wrap-admin]}
+    [""        {:get admin/admin}]]])
 
 (defn root-handler
   [request]
