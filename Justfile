@@ -17,6 +17,10 @@ plus:
 nrepl:
   clj -M:dev:nrepl
 
+dev:
+  just watch &
+  just nrepl
+
 test:
   clojure -M:dev -m kaocha.runner
 
