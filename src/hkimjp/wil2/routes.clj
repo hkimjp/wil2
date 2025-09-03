@@ -17,11 +17,11 @@
    ["/logout"  {:post {:handler logout!}}]
    ["/help"    {:get  {:handler help}}]
    ["/wil2"    {:middleware [m/wrap-users]}
-    ["/"       {:get  {:handler core/index}}]
+    [""        {:get  {:handler core/index}}]
     ["/todays" {:get  {:handler core/todays}}]
     ["/upload" {:get  {:handler core/upload}
                 :post {:handler core/upload!}}]
-    ["/list"   {:get  {:handler core/list}}]
+    ["/list"   {:get  {:handler core/list-days}}]
     ["/browse" {:get  {:handler core/browse}}]
     ["/my"     {:get  {:handler core/my}}]]
    ["/admin"   {:middleware [m/wrap-admin]}

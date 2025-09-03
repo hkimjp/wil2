@@ -4,12 +4,12 @@
    [ring.util.response :as response]))
 
 (def header
-  [:div.text-base "header"])
+  [:div.text-base "WIL2"])
 
 (def footer
   [:div.text-base
    [:hr]
-   "footer"])
+   "hkimura"])
 
 (defn- base
   [content]
@@ -28,9 +28,9 @@
               :defer true}]
     [:title "app"]]
    [:body {:hx-boost "true"}
-    [:div.text-2xl.font-medium
+    [:div
      [:div header]
-     [:div.m-4 content]
+     [:div content]
      [:div footer]]]])
 
 (defn page

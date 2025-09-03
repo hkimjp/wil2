@@ -25,7 +25,8 @@
       [:input.border-1.border-solid.px-1 {:name "login" :placeholder "your account"}]
       [:span.mx-1 ""]
       [:input.border-1.border-solid.px-1 {:name "password" :placeholder "password" :type "password"}]
-      [:button.mx-1.px-1.text-white.bg-sky-500.hover:bg-sky-700.active:bg-red-500.rounded-xl "LOGIN"]]]]))
+      [:button.mx-1.px-1.text-white.bg-sky-500.hover:bg-sky-700.active:bg-red-500.rounded-xl "LOGIN"]]]
+    [:br]]))
 
 (defn login!
   [{{:keys [login password]} :params}]
@@ -33,7 +34,7 @@
     (do
       ;; always login success in development
       (t/log! :info (str "login success: " login))
-      (-> (resp/redirect "/tasks")
+      (-> (resp/redirect "/wil2")
           (assoc-in [:session :identity] login)))
     (try
       (let [resp (hc/get (str l22 "/api/user/" login) {:timeout 3000 :as :json})]
@@ -41,7 +42,7 @@
                  (hashers/check password (get-in resp [:body :password])))
           (do
             (t/log! :info (str "login success: " login))
-            (-> (resp/redirect "/task")
+            (-> (resp/redirect "/wil2")
                 (assoc-in [:session :identity] login)))
           (do
             (t/log! :info (str "login failed: " login))
