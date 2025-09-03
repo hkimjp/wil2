@@ -8,7 +8,7 @@
 
 (defn header []
   [:div.flex.bg-green-900.items-baseline.gap-x-8
-   [:div.text-2xl.font-medium.text-white "WILL2"]
+   [:div.text-2xl.font-medium.text-white "WIL2"]
    [:div.text-xl.font-medium.text-white
     [:span.px-1.hover:bg-red-900 "days"]]
    [:div.text-xl.font-medium.text-white "my"]

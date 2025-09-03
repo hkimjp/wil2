@@ -26,7 +26,6 @@
 /classes
 /target
 
-/.cpcache
 .env
 .nrepl-port
 resources/public/assets/css/output.css

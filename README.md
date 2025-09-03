@@ -15,7 +15,7 @@ KONPY も、コピー回答を出しづらくそして回答より回答を読�
 ## .env
 
 ```
-# DEVELOP = True # remove in production
+# NO_LOGIN = True # remove in production
 AUTH    = <url of auth server>
 PORT    = <port jetty listens>
 ADMIN   = <who>
