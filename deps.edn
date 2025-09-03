@@ -1,0 +1,17 @@
+{:paths ["src" "resources"]
+
+ :deps
+ {org.clojure/clojure     {:mvn/version "1.12.2"}
+  buddy/buddy-hashers     {:mvn/version "2.0.167"}
+  com.taoensso/telemere   {:mvn/version "1.1.0"}
+  environ/environ         {:mvn/version "1.2.0"}
+  org.slf4j/slf4j-nop     {:mvn/version "2.0.17"}
+  ring/ring-jetty-adapter {:mvn/version "1.14.2"}
+  ring/ring-defaults      {:mvn/version "0.6.0"}
+  metosin/reitit-ring     {:mvn/version "0.9.1"}
+  metosin/muuntaja        {:mvn/version "0.6.11"}
+  hato/hato               {:mvn/version "1.0.0"}
+  hiccup/hiccup           {:mvn/version "2.0.0"}}
+
+ :aliases
+ {:neil {:project {:name hkimjp/wil2}}}}
