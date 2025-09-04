@@ -6,17 +6,19 @@
 
 (def version "0.2.0")
 
-(defn header []
+(def menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
+
+(defn navbar []
   [:div.flex.bg-green-900.items-baseline.gap-x-8
    [:div.text-2xl.font-medium.text-white "WIL2"]
    [:div.text-xl.font-medium.text-white
-    [:span.px-1.hover:bg-red-900 "days"]]
-   [:div.text-xl.font-medium.text-white "my"]
-   [:div.text-xl.font-medium.text-white "list"]
+    [:span.px-1.hover:bg-sky-400 "days"]]
+   [:div {:class menu} "my"]
+   [:div {:class menu} "list"]
    [:div.text-xl.font-medium.text-white
     [:form {:method "post" :action "/logout"}
      (h/raw (anti-forgery-field))
-     [:button.px-1.text-white.hover:bg-red-900 "logout"]]]
+     [:button.px-1.text-white.hover:bg-sky-400 "logout"]]]
    [:div.text-xl.font-medium.text-white "HELP"]])
 
 (def footer
@@ -42,7 +44,7 @@
     [:title "app"]]
    [:body {:hx-boost "true"}
     [:div
-     (header)
+     (navbar)
      [:div content]
      [:div footer]]]])
 

@@ -3,6 +3,10 @@
 - no effect reload/reload
 - datascript
 
+# 0.2.1-SNAPSHOT
+
+- def tailwind classes
+
 # 0.2.0 (2025-09-03)
 
 - router started to work
