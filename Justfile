@@ -24,11 +24,11 @@ dev:
 test:
   clojure -M:dev -m kaocha.runner
 
+build:
+  clojure -T:build ci
+
 container-nrepl:
   clj -M:dev -m nrepl.cmdline -b 0.0.0.0 -p 5555
-
-run:
-  clojure -M:run-m
 
 update:
   clojure -Tantq outdated :upgrade true :force true
