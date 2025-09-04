@@ -1,5 +1,6 @@
 (ns hkimjp.wil2.todays
   (:require
+   ;;[clojure.string :as str]
    [hiccup2.core :as h]
    [java-time.api :as jt]
    [ring.util.anti-forgery :refer [anti-forgery-field]]
@@ -45,7 +46,8 @@
      [:div
       [:div.text-2xl "Upload"]
       [:div
-       (str (mapv second uploaded))]
+       [:span.font-bold "uploaded: "]
+       (interpose " " (mapv second uploaded))]
       [:div.m-4
        [:form {:method "post" :action "/upload"}
         (h/raw (anti-forgery-field))
