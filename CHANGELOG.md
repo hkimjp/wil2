@@ -2,6 +2,7 @@
 
 - no effect reload/reload
 - datascript
+- gitignored resources/public/assets/css/output.css?
 
 # 0.2.1-SNAPSHOT (2025-09-04)
 
@@ -11,6 +12,7 @@
 - added `hkimjp/wil2/my.clj`
 - added `hkimjp/wil2/todays.clj`
 - added `hkimjp/wil2/weeks.clj`
+- changed routes.clj - :as -> :refer [...]
 
 # 0.2.0 (2025-09-03)
 

@@ -9,9 +9,9 @@
    [hkimjp.wil2.core :as core]
    [hkimjp.wil2.help :refer [help]]
    [hkimjp.wil2.login :refer [login login! logout!]]
-   [hkimjp.wil2.my :as my]
-   [hkimjp.wil2.todays :as todays]
-   [hkimjp.wil2.weeks :as weeks]))
+   [hkimjp.wil2.my :refer [my]]
+   [hkimjp.wil2.todays :refer [todays upload upload!]]
+   [hkimjp.wil2.weeks :refer [list-days browse]]))
 
 (defn routes
   []
@@ -22,11 +22,11 @@
     [""        {:get admin/admin}]]
    ["/wil2"    {:middleware [m/wrap-users]}
     [""        {:get core/index}]
-    ["/todays" {:get todays/todays}]
-    ["/upload" {:get todays/upload :post todays/upload!}]
-    ["/weeks"  {:get weeks/list-days}]
-    ["/browse" {:get weeks/browse}]
-    ["/my"     {:get my/my}]]])
+    ["/todays" {:get todays}]
+    ["/upload" {:get upload :post upload!}]
+    ["/weeks"  {:get list-days}]
+    ["/browse" {:get browse}]
+    ["/my"     {:get my}]]])
 
 (defn root-handler
   [request]

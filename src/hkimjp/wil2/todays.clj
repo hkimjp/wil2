@@ -1,7 +1,8 @@
 (ns hkimjp.wil2.todays
   (:require
    [ring.util.response :as response]
-   [hkimjp.wil2.view :refer [page]]))
+   [hkimjp.wil2.view :refer [page]]
+   [taoensso.telemere :as t]))
 
 (defn upload [request]
   (page [:div "upload"]))
