@@ -4,26 +4,29 @@
    [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
    [taoensso.telemere :as t]
    ;
+   [hkimjp.wil2.middleware :as m]
    [hkimjp.wil2.admin :as admin]
    [hkimjp.wil2.core :as core]
    [hkimjp.wil2.help :refer [help]]
    [hkimjp.wil2.login :refer [login login! logout!]]
-   [hkimjp.wil2.middleware :as m]))
+   [hkimjp.wil2.my :refer [my]]
+   [hkimjp.wil2.todays :refer [todays upload upload!]]
+   [hkimjp.wil2.weeks :refer [list-days browse]]))
 
 (defn routes
   []
   [["/"        {:get login :post login!}]
    ["/logout"  {:post logout!}]
-   ["/help"    {:get  help}]
+   ["/help"    {:get help}]
+   ["/admin"   {:middleware [m/wrap-admin]}
+    [""        {:get admin/admin}]]
    ["/wil2"    {:middleware [m/wrap-users]}
     [""        {:get core/index}]
-    ["/todays" {:get core/todays}]
-    ["/upload" {:get core/upload :post core/upload!}]
-    ["/list"   {:get core/list-days}]
-    ["/browse" {:get core/browse}]
-    ["/my"     {:get core/my}]]
-   ["/admin"   {:middleware [m/wrap-admin]}
-    [""        {:get admin/admin}]]])
+    ["/todays" {:get todays}]
+    ["/upload" {:get upload :post upload!}]
+    ["/weeks"  {:get list-days}]
+    ["/browse" {:get browse}]
+    ["/my"     {:get my}]]])
 
 (defn root-handler
   [request]
