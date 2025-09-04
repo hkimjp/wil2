@@ -2,10 +2,11 @@
   (:require
    [environ.core :refer [env]]
    [ring.util.response :as resp]
-   [taoensso.telemere :as t]))
+   [taoensso.telemere :as t]
+   [hkimjp.wil2.util :refer [user]]))
 
-(defn- user [request]
-  (get-in request [:session :identity]))
+; (defn- user [request]
+;   (get-in request [:session :identity]))
 
 (defn wrap-users
   [handler]

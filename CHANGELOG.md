@@ -20,7 +20,9 @@
 > clojure -T:build ci
 ```
 
-- ds/put!, ds/qq
+- ensured `start-or-restore`, `ds/put!`, `ds/qq`, etc.
+- can switch `upload` and `todays`
+- added `hkimjp.wil2.util`
 
 
 # 0.2.1 (2025-09-04)
