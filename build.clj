@@ -3,8 +3,8 @@
   (:require [clojure.tools.build.api :as b]))
 
 (def lib 'io.github.hkimjp/wil2)
-(def version "0.2.0")
-(def main 'hkimjp.wil2)
+(def version "0.2.2")
+(def main 'hkimjp.wil2.core)
 (def class-dir "target/classes")
 
 (defn test "Run all the tests." [opts]

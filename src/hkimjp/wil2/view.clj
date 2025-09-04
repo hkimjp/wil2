@@ -1,23 +1,21 @@
 (ns hkimjp.wil2.view
   (:require
    [hiccup2.core :as h]
-   [ring.util.response :as response]
-   [ring.util.anti-forgery :refer [anti-forgery-field]]))
+   [ring.util.response :as response]))
 
-(def version "0.2.0")
+(def version "0.2.2")
 
-(defn header []
-  [:div.flex.bg-green-900.items-baseline.gap-x-8
-   [:div.text-2xl.font-medium.text-white "WILL2"]
-   [:div.text-xl.font-medium.text-white
-    [:span.px-1.hover:bg-red-900 "days"]]
-   [:div.text-xl.font-medium.text-white "my"]
-   [:div.text-xl.font-medium.text-white "list"]
-   [:div.text-xl.font-medium.text-white
-    [:form {:method "post" :action "/logout"}
-     (h/raw (anti-forgery-field))
-     [:button.px-1.text-white.hover:bg-red-900 "logout"]]]
-   [:div.text-xl.font-medium.text-white "HELP"]])
+(def ^:private menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
+
+(defn navbar []
+  [:div.flex.bg-green-900.items-baseline.gap-x-4
+   [:div.text-2xl.font-medium.text-white "WIL2"]
+   [:div {:class menu} [:a {:href "/wil2"} "todays"]]
+   [:div {:class menu} [:a {:href "/wil2/my"} "my"]]
+   [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
+   [:div {:class menu} [:a {:href "/logout"} "logout"]]
+   [:div {:class menu} [:a {:href "/help"} "HELP"]]
+   [:div {:class menu} [:a {:href "/admin"} "(admin)"]]])
 
 (def footer
   [:div.text-base
@@ -42,9 +40,9 @@
     [:title "app"]]
    [:body {:hx-boost "true"}
     [:div
-     (header)
-     [:div content]
-     [:div footer]]]])
+     (navbar)
+     content
+     footer]]])
 
 (defn page
   [content]
