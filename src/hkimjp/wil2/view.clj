@@ -4,7 +4,7 @@
    [ring.util.response :as response]
    [ring.util.anti-forgery :refer [anti-forgery-field]]))
 
-(def version "0.2.0")
+(def version "0.2.1-SNAPSHOT")
 
 (def menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
 

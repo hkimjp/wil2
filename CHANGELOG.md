@@ -3,7 +3,7 @@
 - no effect reload/reload
 - datascript
 
-# 0.2.1-SNAPSHOT
+# 0.2.1-SNAPSHOT (2025-09-04)
 
 - `tailwindcss --watch=always` is a go.
 
