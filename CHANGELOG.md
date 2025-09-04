@@ -10,6 +10,10 @@
 
 - help - mx-2
 - upload - m-4
+- todays/upload - upload markdown files.
+    - in form: enctype="multipart/form-data"
+    - htmx: :hx-encoding "multipart/form-data"
+
 
 # 0.2.2 (2025-09-04)
 

@@ -7,7 +7,7 @@
    [ring.util.response :as resp]
    [taoensso.telemere :as t]
    [hkimjp.datascript :as ds]
-   [hkimjp.wil2.util :refer [user today]]
+   [hkimjp.wil2.util :refer [user today abbrev]]
    [hkimjp.wil2.view :refer [page]]))
 
 (def uploaded? '[:find ?e
@@ -50,7 +50,7 @@
        [:p.m-4 (interpose ", " (mapv second uploaded))]]
       [:div
        [:span.font-bold "upload your markdown"]
-       [:form.m-4 {:method "post" :action "/wil2/upload"}
+       [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
         (h/raw (anti-forgery-field))
         [:input
          {:type   "file"
@@ -60,8 +60,19 @@
          "upload"]]]])))
 
 (defn upload! [request]
-  (page
-   [:div "upload!"]))
+  (let [login (user request)
+        _ (t/log! :info (get-in request [:params :file :tempfile]))]
+    ;;(t/log! :info (str "upload! " login " " (abbrev md 40)))
+    (try
+      (ds/put! {:login login
+                :md (slurp (get-in request [:params :file :tempfile]))
+                :date (today) :updated (jt/local-date-time)})
+      (page [:div "upload success"])
+      (catch Exception e
+        (let [e (.getMessage e)]
+          (t/log! :error e)
+          (page [:div "error"
+                 [:p e]]))))))
 
 (defn todays [request]
   (let [uploaded (ds/qq todays-uploads (today))]
@@ -74,5 +85,3 @@
   (if (some? (first (ds/qq uploaded? (user request))))
     (resp/redirect "/wil2/todays")
     (resp/redirect "/wil2/upload")))
-
-

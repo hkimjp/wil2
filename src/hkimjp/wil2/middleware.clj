@@ -14,9 +14,13 @@
     (let [user (user request)]
       (t/log! :debug (str "wrap-users " user))
       (if (some? user)
-        (handler request)
-        (-> (resp/redirect "/")
-            (assoc :session {} :flash "need login"))))))
+        (do
+          (t/log! :debug "found")
+          (handler request))
+        (do
+          (t/log! :debug "not found")
+          (-> (resp/redirect "/")
+              (assoc :session {} :flash "need login")))))))
 
 (defn wrap-admin [handler]
   (fn [request]
