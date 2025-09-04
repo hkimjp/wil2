@@ -3,27 +3,25 @@
    [reitit.ring :as rr]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
    [taoensso.telemere :as t]
-   ;
    [hkimjp.wil2.middleware :as m]
    [hkimjp.wil2.admin :as admin]
-   [hkimjp.wil2.core :as core]
    [hkimjp.wil2.help :refer [help]]
    [hkimjp.wil2.login :refer [login login! logout!]]
    [hkimjp.wil2.my :refer [my]]
-   [hkimjp.wil2.todays :refer [todays upload upload!]]
+   [hkimjp.wil2.todays :as todays]
    [hkimjp.wil2.weeks :refer [list-days browse]]))
 
 (defn routes
   []
   [["/"        {:get login :post login!}]
-   ["/logout"  {:post logout!}]
+   ["/logout"  logout!]
    ["/help"    {:get help}]
    ["/admin"   {:middleware [m/wrap-admin]}
     [""        {:get admin/admin}]]
    ["/wil2"    {:middleware [m/wrap-users]}
-    [""        {:get core/index}]
-    ["/todays" {:get todays}]
-    ["/upload" {:get upload :post upload!}]
+    [""        {:get todays/switch}]
+    ["/todays" {:get todays/todays}]
+    ["/upload" {:get todays/upload :post todays/upload!}]
     ["/weeks"  {:get list-days}]
     ["/browse" {:get browse}]
     ["/my"     {:get my}]]])
