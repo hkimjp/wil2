@@ -1,8 +1,7 @@
 (ns hkimjp.wil2.view
   (:require
    [hiccup2.core :as h]
-   [ring.util.response :as response]
-   #_[ring.util.anti-forgery :refer [anti-forgery-field]]))
+   [ring.util.response :as response]))
 
 (def version "0.2.2-SNAPSHOT")
 
@@ -14,9 +13,6 @@
    [:div {:class menu} [:a {:href "/wil2"} "todays"]]
    [:div {:class menu} [:a {:href "/wil2/my"} "my"]]
    [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
-   ; [:form {:method "post" :action "/logout"}
-   ;  (h/raw (anti-forgery-field))
-   ;  [:button {:class menu} "logout"]]
    [:div {:class menu} [:a {:href "/logout"} "logout"]]
    [:div {:class menu} [:a {:href "/help"} "HELP"]]
    [:div {:class menu} [:a {:href "/admin"} "(admin)"]]])

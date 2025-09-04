@@ -5,7 +5,6 @@
    [taoensso.telemere :as t]
    [hkimjp.wil2.middleware :as m]
    [hkimjp.wil2.admin :as admin]
-   ;;[hkimjp.wil2.core :as core]
    [hkimjp.wil2.help :refer [help]]
    [hkimjp.wil2.login :refer [login login! logout!]]
    [hkimjp.wil2.my :refer [my]]
