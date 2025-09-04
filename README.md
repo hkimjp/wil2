@@ -20,7 +20,7 @@
 開発用の覚え書き。
 
 ```
-# NO_LOGIN = True # remove in production
+# NO_AUTH = True # remove in production
 AUTH    = <url of auth server>
 PORT    = <port jetty listens>
 ADMIN   = <who>

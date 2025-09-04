@@ -9,10 +9,17 @@
     - after mark his/her markdown file, decrement the n.
     - redis?
 
+
+# 0.2.5-SNAPSHOT
+
+- added h1, h2, h3 definitions into `css/input.css`
+- ul {list-style-type: disc}
+- ol {list-style-type: decimal}
+
 # 0.2.4 (2025-09-04)
 
 - :wil2/type [upload|answer|...]?
-- retrieved today's markdown. next, make preview.
+- retrieved today's markdown.
 
 # 0.2.3 (2025-09-04)
 

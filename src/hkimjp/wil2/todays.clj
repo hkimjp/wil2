@@ -3,6 +3,7 @@
    ;;[clojure.string :as str]
    [hiccup2.core :as h]
    [java-time.api :as jt]
+   [nextjournal.markdown :as md]
    [ring.util.anti-forgery :refer [anti-forgery-field]]
    [ring.util.response :as resp]
    [taoensso.telemere :as t]
@@ -77,14 +78,23 @@
           (page [:div "error"
                  [:p e]]))))))
 
-(defn md [{{:keys [eid]} :path-params}]
-  (resp/response (str (:md (ds/pl (parse-double eid))))))
+(defn markdown [eid]
+  (t/log! :debug (:md (ds/pl eid)))
+  (-> (:md (ds/pl eid))
+      md/parse
+      md/->hiccup
+      h/html
+      str))
+
+(defn md [{{:keys [eid]} :path-params :as request}]
+  (t/log! :info (str (user request) eid))
+  (resp/response
+   (markdown (parse-double eid))))
 
 (defn- link [[eid login]]
   [:span.px-2 {:hx-get (str "/wil2/md/" eid)
-               :hx-target "#wil"} login])
-
-;; (mapv link #{[3 "chatgpt"] [1 "hkimura"] [2 "akari"]})
+               :hx-target "#wil"}
+   login])
 
 (defn todays [request]
   (t/log! :debug "todays")
@@ -92,9 +102,9 @@
     (page
      [:div
       [:div.text-2xl.font-medium "Todays"]
-      (into [:div] (mapv link uploads))
-      [:div#wil "markdown"]
-      [:div "score->"]])))
+      [:div.font-bold "uploaded"]
+      (into [:div.mx-2] (mapv link uploads))
+      [:div#wil.mx-4 "[markdown]"]])))
 
 (comment
   (let [uploads (ds/qq todays-uploads (today))]
