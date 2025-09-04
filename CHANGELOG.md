@@ -1,15 +1,19 @@
 # TODO
 
-- no effect reload/reload. how to use?
+- how to use clj-reload
 - test
-- kill just nrepl by C-c, tailwindcss survives.
-- default-handler works?
+- kill `just dev` by C-c, tailwindcss survives.
+- my default-handler works?
+- todays/todays - follow todays markdown files uploaded
+    - choose n files.
+    - after mark his/her markdown file, decrement the n.
+    - redis?
+
+# 0.2.4-SNAPSHOT
 
 
-# 0.2.3 (2025-09-04) (2025-09-04)
+# 0.2.3 (2025-09-04)
 
-- help - mx-2
-- upload - m-4
 - todays/upload - upload markdown files.
     - in form: enctype="multipart/form-data"
     - htmx: :hx-encoding "multipart/form-data"
