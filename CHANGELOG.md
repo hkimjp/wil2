@@ -12,7 +12,7 @@
 # 0.2.4-SNAPSHOT
 
 - :wil2/type [upload|answer|...]?
-
+- retrieved today's markdown. next, make preview.
 
 # 0.2.3 (2025-09-04)
 
