@@ -1,7 +1,7 @@
 (ns user
   (:require
    [clj-reload.core :as reload]
-   [environ.core :refer [env]]
+   ;;[environ.core :refer [env]]
    [taoensso.telemere :as t]
    [hkimjp.wil2.system :refer [start-system stop-system]]))
 

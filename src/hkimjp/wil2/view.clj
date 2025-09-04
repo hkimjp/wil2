@@ -8,16 +8,17 @@
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
 
-(def navbar
+(defn navbar []
   [:div.flex.bg-green-900.items-baseline.gap-x-8
    [:div.text-2xl.font-medium.text-white "WIL2"]
-   [:div {:class menu} "todays"]
-   [:div {:class menu} "my"]
-   [:div {:class menu} "weeks"]
+   [:div {:class menu} [:a {:href "/wil2/todays"} "todays"]]
+   [:div {:class menu} [:a {:href "/wil2/my"} "my"]]
+   [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
    [:form {:method "post" :action "/logout"}
     (h/raw (anti-forgery-field))
     [:button {:class menu} "logout"]]
-   [:div {:class menu} [:a {:href "/help"} "HELP"]]])
+   [:div {:class menu} [:a {:href "/help"} "HELP"]]
+   [:div {:class menu} [:a {:href "/admin"} "admin"]]])
 
 (def footer
   [:div.text-base
@@ -42,7 +43,7 @@
     [:title "app"]]
    [:body {:hx-boost "true"}
     [:div
-     navbar
+     (navbar)
      content
      footer]]])
 
