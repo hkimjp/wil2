@@ -2,9 +2,11 @@
 
 - no effect reload/reload. how to use?
 
+
 # 0.2.2-SNAPSHOT
 
 - git rm --cached resources/public/assets/css/output.css
+- change post logout to get - `[DOM] Found 2 elements with non-unique id #__anti-forgery-token`
 
 # 0.2.1 (2025-09-04) (2025-09-04)
 

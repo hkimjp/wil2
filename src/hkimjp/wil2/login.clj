@@ -7,7 +7,6 @@
    [ring.util.anti-forgery :refer [anti-forgery-field]]
    [ring.util.response :as resp]
    [taoensso.telemere :as t]
-   ;;
    [hkimjp.wil2.view :refer [page]]))
 
 (def l22 (or (env :auth) "https://l22.melt.kyutech.ac.jp"))

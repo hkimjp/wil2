@@ -15,7 +15,7 @@
 (defn routes
   []
   [["/"        {:get login :post login!}]
-   ["/logout"  {:post logout!}]
+   ["/logout"  logout!]
    ["/help"    {:get help}]
    ["/admin"   {:middleware [m/wrap-admin]}
     [""        {:get admin/admin}]]

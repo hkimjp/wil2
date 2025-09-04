@@ -9,14 +9,15 @@
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
 
 (defn navbar []
-  [:div.flex.bg-green-900.items-baseline.gap-x-8
+  [:div.flex.bg-green-900.items-baseline.gap-x-4
    [:div.text-2xl.font-medium.text-white "WIL2"]
    [:div {:class menu} [:a {:href "/wil2/todays"} "todays"]]
    [:div {:class menu} [:a {:href "/wil2/my"} "my"]]
    [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
-   [:form {:method "post" :action "/logout"}
-    (h/raw (anti-forgery-field))
-    [:button {:class menu} "logout"]]
+   ; [:form {:method "post" :action "/logout"}
+   ;  (h/raw (anti-forgery-field))
+   ;  [:button {:class menu} "logout"]]
+   [:div {:class menu} [:a {:href "/logout"} "logout"]]
    [:div {:class menu} [:a {:href "/help"} "HELP"]]
    [:div {:class menu} [:a {:href "/admin"} "(admin)"]]])
 
