@@ -29,4 +29,5 @@
 .env
 .nrepl-port
 resources/public/assets/css/output.css
-/storage
+!/storage/.keep
+/storage/*
