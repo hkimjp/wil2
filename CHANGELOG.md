@@ -7,7 +7,11 @@
 # 0.2.2-SNAPSHOT
 
 - `git rm --cached resources/public/assets/css/output.css`
-- change post logout to get - `[DOM] Found 2 elements with non-unique id #__anti-forgery-token`
+- change post logout to get
+
+```
+[DOM] Found 2 elements with non-unique id #__anti-forgery-token
+```
 - help page
 - added `io.github.nextjournal/markdown` to dependencies.
 - build success. WIL.jar=72MB, WIL2.jar=44MB.
@@ -15,6 +19,9 @@
 ```
 > clojure -T:build ci
 ```
+
+- ds/put!, ds/qq
+
 
 # 0.2.1 (2025-09-04)
 
