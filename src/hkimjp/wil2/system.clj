@@ -3,7 +3,8 @@
    [environ.core :refer [env]]
    [ring.adapter.jetty :as jetty]
    [taoensso.telemere :as t]
-   [hkimjp.wil2.routes :as routes]))
+   [hkimjp.wil2.routes :as routes]
+   [hkimjp.datascript :as ds]))
 
 (defonce server (atom nil))
 
@@ -21,8 +22,16 @@
     (.stop @server)
     (t/log! :info "server stopped.")))
 
+(defn start-ds []
+  (ds/start-or-restore {:url "jdbc:sqlite:storage/wil2.sqlite"}))
+
+(defn stop-ds []
+  (ds/stop))
+
 (defn start-system []
-  (start-jetty))
+  (start-jetty)
+  (start-ds))
 
 (defn stop-system []
-  (stop-server))
+  (stop-server)
+  (stop-ds))

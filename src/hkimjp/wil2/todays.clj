@@ -1,5 +1,6 @@
 (ns hkimjp.wil2.todays
   (:require
+   [hkimjp.datascript :as ds]
    [hkimjp.wil2.view :refer [page]]
    [taoensso.telemere :as t]))
 
