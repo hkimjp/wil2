@@ -6,7 +6,7 @@
 - default-handler works?
 
 
-# 0.2.3-SNAPSHOT (2025-09-04)
+# 0.2.3 (2025-09-04) (2025-09-04)
 
 - help - mx-2
 - upload - m-4
