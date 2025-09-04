@@ -44,13 +44,18 @@
   (let [uploaded (ds/qq todays-uploads (today))]
     (page
      [:div
-      [:div.text-2xl "Upload"]
+      [:div.text-2xl "Upload (" (user request) ")"]
       [:div
-       [:span.font-bold "uploaded: "]
-       (interpose " " (mapv second uploaded))]
-      [:div.m-4
-       [:form {:method "post" :action "/upload"}
+       [:span.font-bold "uploaded:"]
+       [:p.m-4 (interpose ", " (mapv second uploaded))]]
+      [:div
+       [:span.font-bold "upload your markdown"]
+       [:form.m-4 {:method "post" :action "/wil2/upload"}
         (h/raw (anti-forgery-field))
+        [:input
+         {:type   "file"
+          :accept ".md"
+          :name   "file"}]
         [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
          "upload"]]]])))
 
