@@ -4,8 +4,12 @@
 - test
 - kill just nrepl by C-c, tailwindcss survives.
 
+
+
 # 0.2.3-SNAPSHOT (2025-09-04)
 
+- help - mx-2
+- upload - m-4
 
 # 0.2.2 (2025-09-04)
 
