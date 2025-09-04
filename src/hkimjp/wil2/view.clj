@@ -11,13 +11,13 @@
 (def navbar
   [:div.flex.bg-green-900.items-baseline.gap-x-8
    [:div.text-2xl.font-medium.text-white "WIL2"]
-   [:div {:class menu} "days"]
+   [:div {:class menu} "todays"]
    [:div {:class menu} "my"]
-   [:div {:class menu} "list"]
+   [:div {:class menu} "weeks"]
    [:form {:method "post" :action "/logout"}
     (h/raw (anti-forgery-field))
     [:button {:class menu} "logout"]]
-   [:div {:class menu} "HELP"]])
+   [:div {:class menu} [:a {:href "/help"} "HELP"]]])
 
 (def footer
   [:div.text-base

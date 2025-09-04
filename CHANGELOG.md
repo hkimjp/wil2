@@ -6,7 +6,11 @@
 # 0.2.1-SNAPSHOT (2025-09-04)
 
 - `tailwindcss --watch=always` is a go.
-
+- added `hkimjp/datascript-storage-javatime` in dependencies.
+- navbar menu - todays, my, weeks, logout, help
+- added `hkimjp/wil2/my.clj`
+- added `hkimjp/wil2/todays.clj`
+- added `hkimjp/wil2/weeks.clj`
 
 # 0.2.0 (2025-09-03)
 

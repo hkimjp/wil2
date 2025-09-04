@@ -17,11 +17,11 @@
    ["/help"    {:get  help}]
    ["/wil2"    {:middleware [m/wrap-users]}
     [""        {:get core/index}]
-    ["/todays" {:get core/todays}]
-    ["/upload" {:get core/upload :post core/upload!}]
-    ["/list"   {:get core/list-days}]
-    ["/browse" {:get core/browse}]
-    ["/my"     {:get core/my}]]
+    ["/todays" {:get todays/todays}]
+    ["/upload" {:get todays/upload :post todays/upload!}]
+    ["/weeks"  {:get weeks/list-days}]
+    ["/browse" {:get weeks/browse}]
+    ["/my"     {:get my/my}]]
    ["/admin"   {:middleware [m/wrap-admin]}
     [""        {:get admin/admin}]]])
 
