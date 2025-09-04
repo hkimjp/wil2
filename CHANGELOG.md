@@ -5,7 +5,8 @@
 
 # 0.2.1-SNAPSHOT
 
-- def tailwind classes
+- `tailwindcss --watch=always` is a go.
+
 
 # 0.2.0 (2025-09-03)
 
