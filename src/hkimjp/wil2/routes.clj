@@ -13,18 +13,19 @@
 
 (defn routes
   []
-  [["/"        {:get login :post login!}]
-   ["/logout"  logout!]
-   ["/help"    {:get help}]
-   ["/admin"   {:middleware [m/wrap-admin]}
-    [""        {:get admin/admin}]]
-   ["/wil2"    {:middleware [m/wrap-users]}
-    [""        {:get todays/switch}]
-    ["/todays" {:get todays/todays}]
-    ["/upload" {:get todays/upload :post todays/upload!}]
-    ["/weeks"  {:get list-days}]
-    ["/browse" {:get browse}]
-    ["/my"     {:get my}]]])
+  [["/"         {:get login :post login!}]
+   ["/logout"   logout!]
+   ["/help"     {:get help}]
+   ["/admin"    {:middleware [m/wrap-admin]}
+    [""         {:get admin/admin}]]
+   ["/wil2"     {:middleware [m/wrap-users]}
+    [""         {:get todays/switch}]
+    ["/todays"  {:get todays/todays}]
+    ["/upload"  {:get todays/upload :post todays/upload!}]
+    ["/md/:eid" {:get todays/md}]
+    ["/weeks"   {:get list-days}]
+    ["/browse"  {:get browse}]
+    ["/my"      {:get my}]]])
 
 (defn root-handler
   [request]
