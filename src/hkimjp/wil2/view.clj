@@ -4,20 +4,21 @@
    [ring.util.response :as response]
    [ring.util.anti-forgery :refer [anti-forgery-field]]))
 
-(def version "0.2.0")
+(def version "0.2.1")
 
-(defn header []
+(def ^:private menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
+
+(defn navbar []
   [:div.flex.bg-green-900.items-baseline.gap-x-8
    [:div.text-2xl.font-medium.text-white "WIL2"]
-   [:div.text-xl.font-medium.text-white
-    [:span.px-1.hover:bg-red-900 "days"]]
-   [:div.text-xl.font-medium.text-white "my"]
-   [:div.text-xl.font-medium.text-white "list"]
-   [:div.text-xl.font-medium.text-white
-    [:form {:method "post" :action "/logout"}
-     (h/raw (anti-forgery-field))
-     [:button.px-1.text-white.hover:bg-red-900 "logout"]]]
-   [:div.text-xl.font-medium.text-white "HELP"]])
+   [:div {:class menu} [:a {:href "/wil2/todays"} "todays"]]
+   [:div {:class menu} [:a {:href "/wil2/my"} "my"]]
+   [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
+   [:form {:method "post" :action "/logout"}
+    (h/raw (anti-forgery-field))
+    [:button {:class menu} "logout"]]
+   [:div {:class menu} [:a {:href "/help"} "HELP"]]
+   [:div {:class menu} [:a {:href "/admin"} "admin"]]])
 
 (def footer
   [:div.text-base
@@ -42,9 +43,9 @@
     [:title "app"]]
    [:body {:hx-boost "true"}
     [:div
-     (header)
-     [:div content]
-     [:div footer]]]])
+     (navbar)
+     content
+     footer]]])
 
 (defn page
   [content]

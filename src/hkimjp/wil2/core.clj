@@ -8,26 +8,3 @@
   (page
    [:div "index"]))
 
-(defn todays [request]
-  (page
-   [:div "todays"]))
-
-(defn upload [request]
-  (page
-   [:div "upload"]))
-
-(defn upload! [request]
-  (page
-   [:div "upload!"]))
-
-(defn list-days [request]
-  (page
-   [:div "list"]))
-
-(defn browse [request]
-  (page
-   [:div "browse"]))
-
-(defn my [request]
-  (page [:div "my"]))
-
