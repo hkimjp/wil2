@@ -4,7 +4,7 @@
 - datascript
 - gitignored resources/public/assets/css/output.css?
 
-# 0.2.1-SNAPSHOT (2025-09-04)
+# 0.2.1 (2025-09-04) (2025-09-04)
 
 - `tailwindcss --watch=always` is a go.
 - added `hkimjp/datascript-storage-javatime` in dependencies.
