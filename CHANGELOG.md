@@ -1,8 +1,10 @@
 # TODO
 
-- no effect reload/reload
-- datascript
-- gitignored resources/public/assets/css/output.css?
+- no effect reload/reload. how to use?
+
+# 0.2.2-SNAPSHOT
+
+- git rm --cached resources/public/assets/css/output.css
 
 # 0.2.1 (2025-09-04) (2025-09-04)
 

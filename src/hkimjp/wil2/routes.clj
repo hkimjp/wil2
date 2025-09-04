@@ -3,7 +3,6 @@
    [reitit.ring :as rr]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
    [taoensso.telemere :as t]
-   ;
    [hkimjp.wil2.middleware :as m]
    [hkimjp.wil2.admin :as admin]
    [hkimjp.wil2.core :as core]
