@@ -14,6 +14,6 @@
 
 (defn switch [request]
   (page
-   [:div.mx-4.text-2xl "switch"
-    [:div.font-bold [:a {:href "/wil2/upload"} "upload"]]
-    [:div.font-bold [:a {:href "/wil2/todays"} "todays"]]]))
+   [:div.text-2xl "switch"
+    [:div [:a {:href "/wil2/upload"} "upload"]]
+    [:div [:a {:href "/wil2/todays"} "todays"]]]))

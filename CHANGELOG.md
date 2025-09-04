@@ -8,7 +8,7 @@
 - `git rm --cached resources/public/assets/css/output.css`
 - change post logout to get - `[DOM] Found 2 elements with non-unique id #__anti-forgery-token`
 - help page
-
+- added `io.github.nextjournal/markdown` to dependencies.
 
 # 0.2.1 (2025-09-04)
 
