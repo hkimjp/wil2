@@ -33,13 +33,20 @@
   :rcf)
 
 (defn upload [request]
-  (page [:div "upload"]))
+  (page
+   [:div
+    [:div.text-2xl "Upload"]
+    [:form {:method "post" :action "/upload"}
+     [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
+      "upload"]]]))
 
 (defn upload! [request]
-  (page [:div "upload!"]))
+  (page
+   [:div "upload!"]))
 
 (defn todays [request]
-  (page [:div "todays"]))
+  (page
+   [:div "todays"]))
 
 (defn switch [request]
   (if (some? (first (ds/qq uploaded? (user request))))
