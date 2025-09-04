@@ -9,7 +9,7 @@
     - after mark his/her markdown file, decrement the n.
     - redis?
 
-# 0.2.4-SNAPSHOT
+# 0.2.4 (2025-09-04)
 
 - :wil2/type [upload|answer|...]?
 - retrieved today's markdown. next, make preview.
