@@ -2,7 +2,7 @@
   (:require
    [hiccup2.core :as h]
    [ring.util.response :as response]
-   [ring.util.anti-forgery :refer [anti-forgery-field]]))
+   #_[ring.util.anti-forgery :refer [anti-forgery-field]]))
 
 (def version "0.2.2-SNAPSHOT")
 
@@ -11,7 +11,7 @@
 (defn navbar []
   [:div.flex.bg-green-900.items-baseline.gap-x-4
    [:div.text-2xl.font-medium.text-white "WIL2"]
-   [:div {:class menu} [:a {:href "/wil2/todays"} "todays"]]
+   [:div {:class menu} [:a {:href "/wil2"} "todays"]]
    [:div {:class menu} [:a {:href "/wil2/my"} "my"]]
    [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
    ; [:form {:method "post" :action "/logout"}

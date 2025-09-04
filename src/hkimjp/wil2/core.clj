@@ -6,5 +6,5 @@
 
 (defn index [request]
   (page
-   [:div "index"]))
+   [:div "core/index"]))
 

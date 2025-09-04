@@ -5,10 +5,12 @@
 
 # 0.2.2-SNAPSHOT
 
-- git rm --cached resources/public/assets/css/output.css
+- `git rm --cached resources/public/assets/css/output.css`
 - change post logout to get - `[DOM] Found 2 elements with non-unique id #__anti-forgery-token`
+- help page
 
-# 0.2.1 (2025-09-04) (2025-09-04)
+
+# 0.2.1 (2025-09-04)
 
 - `tailwindcss --watch=always` is a go.
 - added `hkimjp/datascript-storage-javatime` in dependencies.
