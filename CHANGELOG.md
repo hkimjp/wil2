@@ -1,15 +1,17 @@
 # TODO
 
-- how to use clj-reload
+- how to use clj-reload?
 - test
 - kill `just dev` by C-c, tailwindcss survives.
-- my default-handler works?
+- is my routes/default-handler working?
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n.
     - redis?
 
 # 0.2.4-SNAPSHOT
+
+- :wil2/type [upload|answer|...]?
 
 
 # 0.2.3 (2025-09-04)

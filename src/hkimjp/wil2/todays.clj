@@ -41,6 +41,7 @@
   :rcf)
 
 (defn upload [request]
+  (t/log! :debug "upload")
   (let [uploaded (ds/qq todays-uploads (today))]
     (page
      [:div
@@ -64,9 +65,11 @@
         _ (t/log! :info (get-in request [:params :file :tempfile]))]
     ;;(t/log! :info (str "upload! " login " " (abbrev md 40)))
     (try
-      (ds/put! {:login login
+      (ds/put! {:wil2 "upload"
+                :login login
                 :md (slurp (get-in request [:params :file :tempfile]))
-                :date (today) :updated (jt/local-date-time)})
+                :date (today)
+                :updated (jt/local-date-time)})
       (page [:div "upload success"])
       (catch Exception e
         (let [e (.getMessage e)]
@@ -74,14 +77,34 @@
           (page [:div "error"
                  [:p e]]))))))
 
+(defn md [{{:keys [eid]} :path-params}]
+  (resp/response (str (:md (ds/pl (parse-double eid))))))
+
+(defn- link [[eid login]]
+  [:span.px-2 {:hx-get (str "/wil2/md/" eid)
+               :hx-target "#wil"} login])
+
+;; (mapv link #{[3 "chatgpt"] [1 "hkimura"] [2 "akari"]})
+
 (defn todays [request]
-  (let [uploaded (ds/qq todays-uploads (today))]
+  (t/log! :debug "todays")
+  (let [uploads (ds/qq todays-uploads (today))]
     (page
      [:div
-      [:div "todays"]
-      (str (mapv second uploaded))])))
+      [:div.text-2xl.font-medium "Todays"]
+      (into [:div] (mapv link uploads))
+      [:div#wil "markdown"]
+      [:div "score->"]])))
+
+(comment
+  (let [uploads (ds/qq todays-uploads (today))]
+    [:div
+     [:div "todays"]
+     (into [:div] (mapv link uploads))])
+  :rcf)
 
 (defn switch [request]
+  (t/log! :debug "switch")
   (if (some? (first (ds/qq uploaded? (user request))))
     (resp/redirect "/wil2/todays")
     (resp/redirect "/wil2/upload")))
