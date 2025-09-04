@@ -9,6 +9,11 @@
 - change post logout to get - `[DOM] Found 2 elements with non-unique id #__anti-forgery-token`
 - help page
 - added `io.github.nextjournal/markdown` to dependencies.
+- build success.
+
+```
+clojure -T:build ci
+```
 
 # 0.2.1 (2025-09-04)
 

@@ -1,9 +1,8 @@
 (ns hkimjp.wil2.system
   (:require
    [environ.core :refer [env]]
-   [taoensso.telemere :as t]
    [ring.adapter.jetty :as jetty]
-   ;;
+   [taoensso.telemere :as t]
    [hkimjp.wil2.routes :as routes]))
 
 (defonce server (atom nil))

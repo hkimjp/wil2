@@ -1,10 +1,8 @@
 (ns hkimjp.wil2.core
-  (:require
-   [hiccup2.core :as h]
-   [ring.util.anti-forgery :refer [anti-forgery-field]]
-   [hkimjp.wil2.view :refer [page]]))
+  (:gen-class)
+  (:require [hkimjp.wil2.system :as system]))
 
-(defn index [request]
-  (page
-   [:div "core/index"]))
+(defn -main [& _args]
+  (system/start-system))
+
 
