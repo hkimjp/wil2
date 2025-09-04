@@ -1,12 +1,28 @@
 # TODO
 
 - no effect reload/reload. how to use?
+- test
+- kill just nrepl by C-c, tailwindcss survives.
+
 
 # 0.2.2-SNAPSHOT
 
-- git rm --cached resources/public/assets/css/output.css
+- `git rm --cached resources/public/assets/css/output.css`
+- change post logout to get
 
-# 0.2.1 (2025-09-04) (2025-09-04)
+    [DOM] Found 2 elements with non-unique id `#__anti-forgery-token`
+
+- help page
+- added `io.github.nextjournal/markdown` to dependencies.
+- build success. WIL.jar=72MB, WIL2.jar=44MB.
+
+    clojure -T:build ci
+
+- ensured `start-or-restore`, `ds/put!`, `ds/qq`, etc.
+- can switch `upload` and `todays`
+- added `hkimjp.wil2.util`
+
+# 0.2.1 (2025-09-04)
 
 - `tailwindcss --watch=always` is a go.
 - added `hkimjp/datascript-storage-javatime` in dependencies.
