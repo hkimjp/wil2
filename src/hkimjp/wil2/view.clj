@@ -6,20 +6,18 @@
 
 (def version "0.2.1-SNAPSHOT")
 
-(def menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
+(def ^:private menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
 
-(defn navbar []
+(def navbar
   [:div.flex.bg-green-900.items-baseline.gap-x-8
    [:div.text-2xl.font-medium.text-white "WIL2"]
-   [:div.text-xl.font-medium.text-white
-    [:span.px-1.hover:bg-sky-400 "days"]]
+   [:div {:class menu} "days"]
    [:div {:class menu} "my"]
    [:div {:class menu} "list"]
-   [:div.text-xl.font-medium.text-white
-    [:form {:method "post" :action "/logout"}
-     (h/raw (anti-forgery-field))
-     [:button.px-1.text-white.hover:bg-sky-400 "logout"]]]
-   [:div.text-xl.font-medium.text-white "HELP"]])
+   [:form {:method "post" :action "/logout"}
+    (h/raw (anti-forgery-field))
+    [:button {:class menu} "logout"]]
+   [:div {:class menu} "HELP"]])
 
 (def footer
   [:div.text-base
@@ -44,9 +42,9 @@
     [:title "app"]]
    [:body {:hx-boost "true"}
     [:div
-     (navbar)
-     [:div content]
-     [:div footer]]]])
+     navbar
+     content
+     footer]]])
 
 (defn page
   [content]
