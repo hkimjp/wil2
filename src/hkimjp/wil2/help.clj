@@ -6,5 +6,12 @@
   [request]
   (page
    [:div
-    [:div "Help"]
-    [:p "under construction"]]))
+    [:div.text-2xl.font-medium "Help"]
+    [:p "under construction"]
+    [:ul
+     [:li "todays"]
+     [:li "my"]
+     [:li "weeks"]
+     [:li "logout" [:p "logout."]]
+     [:li "HELP" [:p "show this page."]]
+     [:li "(admin)" [:p "admin only."]]]]))

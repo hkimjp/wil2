@@ -4,7 +4,7 @@
    [ring.util.response :as response]
    [ring.util.anti-forgery :refer [anti-forgery-field]]))
 
-(def version "0.2.1")
+(def version "0.2.2-SNAPSHOT")
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
 
@@ -18,7 +18,7 @@
     (h/raw (anti-forgery-field))
     [:button {:class menu} "logout"]]
    [:div {:class menu} [:a {:href "/help"} "HELP"]]
-   [:div {:class menu} [:a {:href "/admin"} "admin"]]])
+   [:div {:class menu} [:a {:href "/admin"} "(admin)"]]])
 
 (def footer
   [:div.text-base
