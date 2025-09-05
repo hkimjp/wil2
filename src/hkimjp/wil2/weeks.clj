@@ -32,8 +32,8 @@
     (into [:div] (mapv link (ds/qq dates)))
     [:div#weeks "[weely submissions]"]]))
 
-(defn browse [{date :path-params :as request}]
-  (t/log! :debug (str "date " date))
+(defn browse [{{:keys [date]} :path-params :as request}]
+  (t/log! :debug (str "browse: date " date))
   (-> (for [upload (ds/qq uploads date)]
         (conj (-> upload
                   md/parse
@@ -42,3 +42,5 @@
       h/html
       str
       resp/response))
+
+(browse {:path-params "2025-09-05"})
