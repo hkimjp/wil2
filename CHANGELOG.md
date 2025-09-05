@@ -18,7 +18,7 @@
 - time restrictions
 
 
-# 0.2.7-SNAPSHOT
+# 0.2.7 (2025-09-05)
 
 - improved HELP
 - points for sending
