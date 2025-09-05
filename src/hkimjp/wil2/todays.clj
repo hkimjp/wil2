@@ -1,6 +1,6 @@
 (ns hkimjp.wil2.todays
   (:require
-   ;;[clojure.string :as str]
+   [clojure.string :as str]
    [hiccup2.core :as h]
    [java-time.api :as jt]
    [nextjournal.markdown :as md]
@@ -56,11 +56,23 @@
         (page [:div "upload success."]))
       (page [:div "did not select a file to upload."]))))
 
+(defn- pt [s]
+  (condp = (last (str/split s #"/"))
+    "good" 1
+    "soso" 0
+    "bad" -1))
+
 (defn point [{params :params :as request}]
   (t/log! :info "point")
   (t/log! :info (str "params " params))
   (t/log! :info (str "uri: " (:uri request)))
-  (resp/response "<p>OK</p>"))
+  (ds/put! {:wil2 "point"
+            :login (user request)
+            :to/id (parse-long (:eid params))
+            :pt (pt (:uri request))
+            :date (today)
+            :updated (jt/local-datatime)})
+  (resp/response "<p>received</p>"))
 
 (defn md [{{:keys [eid]} :path-params :as request}]
   (let [md (:md (ds/pl (parse-long eid)))
@@ -74,12 +86,17 @@
             (h/raw (anti-forgery-field))
             [:input {:type "hidden" :name "eid" :value eid}]
             markdown
-            [:button {:hx-post "/wil2/point/good"
-                      :hx-target "#wil"}
-             "👍,"]
-            [:button {:hx-post "/wil2/point/bad"
-                      :hx-target "#wil"}
-             "😐👎"]])))))
+            [:div.flex.gap-x-
+             [:span "評価: "]
+             [:button {:hx-post "/wil2/point/good"
+                       :hx-target "#wil"}
+              "⬆️"]
+             [:button {:hx-post "/wil2/point/soso"
+                       :hx-target "#wil"}
+              "➡️"]
+             [:button {:hx-post "/wil2/point/bad"
+                       :hx-target "#wil"}
+              "⬇️"]]])))))
 
 (defn- link [[eid login]]
   [:span.px-2.hover:underline

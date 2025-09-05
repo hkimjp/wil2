@@ -5,13 +5,17 @@
 - is my routes/default-handler working?
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
-    - after mark his/her markdown file, decrement the n.
+    - after mark his/her markdown file, decrement the n
 - can send good/bad to the uploads
-- can see my sends/receives
-- restrict the period allowed uploading
+- aggregation - can see one's sends/receives
 - nextjournal.markdown Unknown type:
 
     ':html-block'.{:type :html-block, :content [{:type :text, :text "<hr>\nhkimura"}]}
+
+- restrict the period allowed uploading
+- restrict browsing when he/she does not submit his/her today's wil
+- rename `login` namespace to `auth`
+
 
 # 0.2.6-SNAPSHOT
 
@@ -19,7 +23,6 @@
 - changed nabvar order: todays weeks my logout HELP (admin)
 - links hover:underline
 - new route - post /wil2/point/:pt
-
 
 # 0.2.5 (2025-09-05)
 
