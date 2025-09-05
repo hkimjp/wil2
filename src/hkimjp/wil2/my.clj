@@ -3,6 +3,7 @@
    [hkimjp.datascript :as ds]
    [hkimjp.wil2.util :refer [user]]
    [hkimjp.wil2.view :refer [page]]
+   [nextjournal.markdown :as md]
    [taoensso.telemere :as t]))
 
 (def sent-pt '[:find ?e
@@ -25,6 +26,28 @@
 
 ; (group-by second (ds/qq recv-pt "hkimura"))
 
+(def my-uploads '[:find ?e ?date ?md
+                  :in $ ?login
+                  :where
+                  [?e ?wil2 "upload"]
+                  [?e :date ?date]
+                  [?e :md ?md]])
+
+; (ds/qq my-uploads "chatgpt")
+
+(def my-points '[:find ?e ?pt
+                 :in $ ?id
+                 :where
+                 [?e :wil2 "point"]
+                 [?e :to/id ?id]
+                 [?e :pt ?pt]])
+
+(defn- points [eid]
+  [:div.my-2
+   [:span.font-bold.text-red-600 "received points: "]
+   (str (reduce + (map second (ds/qq my-points eid))))
+   [:hr]])
+
 (defn my [request]
   (let [user (user request)]
     (t/log! :info (str "my " user))
@@ -37,7 +60,17 @@
         "⬆️ " (ct user 2)
         ", ➡️ " (ct user 1)
         ", ⬇️ " (ct user -1)]
+       ;;
        [:div.font-bold "points for received"]
        [:div.mx-4
         [:p "improve!"]
-        (str (group-by second (ds/qq recv-pt user)))]]])))
+        (str (group-by second (ds/qq recv-pt user)))]
+       [:div.mx-4
+        (for [[e date md] (ds/qq my-uploads user)]
+          (conj (-> md
+                    md/parse
+                    md/->hiccup)
+                (points e)))]]])))
+
+
+

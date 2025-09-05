@@ -16,7 +16,7 @@
 - prevent duplicate submissions to one upload
 - restrict number of submissions
 - time restrictions
-- improve received points
+- improve `points for received`
 
 
 # 0.2.7-SNAPSHOT
