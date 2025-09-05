@@ -1,8 +1,8 @@
 (ns user
   (:require
    [clj-reload.core :as reload]
-   ;;[environ.core :refer [env]]
    [taoensso.telemere :as t]
+   [hkimjp.datascript :as ds]
    [hkimjp.wil2.system :refer [start-system stop-system]]))
 
 (t/set-min-level! :debug)
@@ -11,12 +11,14 @@
  {:dirs ["src" "dev" "test"]
   :no-reload '#{user}})
 
-; (reload/reload)
-
 (defn restart-system
   []
   (stop-system)
   (reload/reload)
   (start-system))
 
-(restart-system)
+(start-system)
+
+;; (reload/reload)
+;; (restart-system)
+

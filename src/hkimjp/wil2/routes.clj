@@ -24,7 +24,7 @@
     ["/upload"  {:get todays/upload :post todays/upload!}]
     ["/md/:eid" {:get todays/md}]
     ["/weeks"   {:get list-days}]
-    ["/browse"  {:get browse}]
+    ["/browse/:date" {:get browse}]
     ["/my"      {:get my}]]])
 
 (defn root-handler

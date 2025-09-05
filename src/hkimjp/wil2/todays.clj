@@ -3,6 +3,7 @@
    ;;[clojure.string :as str]
    [hiccup2.core :as h]
    [java-time.api :as jt]
+   [nextjournal.markdown :as md]
    [ring.util.anti-forgery :refer [anti-forgery-field]]
    [ring.util.response :as resp]
    [taoensso.telemere :as t]
@@ -57,34 +58,40 @@
          {:type   "file"
           :accept ".md"
           :name   "file"}]
+        [:br]
         [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
          "upload"]]]])))
 
 (defn upload! [request]
-  (let [login (user request)
-        _ (t/log! :info (get-in request [:params :file :tempfile]))]
-    ;;(t/log! :info (str "upload! " login " " (abbrev md 40)))
-    (try
-      (ds/put! {:wil2 "upload"
-                :login login
-                :md (slurp (get-in request [:params :file :tempfile]))
-                :date (today)
-                :updated (jt/local-date-time)})
-      (page [:div "upload success"])
-      (catch Exception e
-        (let [e (.getMessage e)]
-          (t/log! :error e)
-          (page [:div "error"
-                 [:p e]]))))))
+  (let [login (user request)]
+    (t/log! :info (str "upload! " login))
+    (if-let [u (get-in request [:params :file :tempfile])]
+      (do
+        (ds/put! {:wil2 "upload"
+                  :login login
+                  :md (slurp u)
+                  :date (today)
+                  :updated (jt/local-date-time)})
+        (page [:div "upload success"]))
+      (page [:div "did not select a file."]))))
 
-(defn md [{{:keys [eid]} :path-params}]
-  (resp/response (str (:md (ds/pl (parse-double eid))))))
+(defn markdown [eid]
+  (t/log! :debug (:md (ds/pl eid)))
+  (-> (:md (ds/pl eid))
+      md/parse
+      md/->hiccup
+      h/html
+      str))
+
+(defn md [{{:keys [eid]} :path-params :as request}]
+  (t/log! :info (str (user request) eid))
+  (resp/response
+   (markdown (parse-double eid))))
 
 (defn- link [[eid login]]
   [:span.px-2 {:hx-get (str "/wil2/md/" eid)
-               :hx-target "#wil"} login])
-
-;; (mapv link #{[3 "chatgpt"] [1 "hkimura"] [2 "akari"]})
+               :hx-target "#wil"}
+   login])
 
 (defn todays [request]
   (t/log! :debug "todays")
@@ -92,9 +99,9 @@
     (page
      [:div
       [:div.text-2xl.font-medium "Todays"]
-      (into [:div] (mapv link uploads))
-      [:div#wil "markdown"]
-      [:div "score->"]])))
+      [:div.font-bold "uploaded"]
+      (into [:div.mx-2] (mapv link uploads))
+      [:div#wil.mx-4 "[markdown]"]])))
 
 (comment
   (let [uploads (ds/qq todays-uploads (today))]

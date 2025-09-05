@@ -1,18 +1,30 @@
 # TODO
 
-- how to use clj-reload?
+- how to clj-reload?
 - test
-- kill `just dev` by C-c, tailwindcss survives.
 - is my routes/default-handler working?
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n.
-    - redis?
+- can upload markdown files
+- can select/display uploaded expanded markdown
+- can send good/bad to the uploads
+- can see my sends/receives
+- can see week-by-week uploads
+- restrict the period allowed uploading
+
+
+# 0.2.5-SNAPSHOT
+
+- added h1, h2, h3 definitions into `css/input.css`
+- ul {list-style-type: disc}
+- ol {list-style-type: decimal}
+- show error page if try to upload without selecting a file
 
 # 0.2.4 (2025-09-04)
 
 - :wil2/type [upload|answer|...]?
-- retrieved today's markdown. next, make preview.
+- retrieved today's markdown.
 
 # 0.2.3 (2025-09-04)
 
