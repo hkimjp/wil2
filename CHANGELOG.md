@@ -19,6 +19,10 @@
 - FIXME: in `my` page, displays other than myself uploads.
 - FIXME: weeks: shoud have some margin-left?
 
+# 0.2.7.1 (2025-09-05)
+
+- fixed: typo `:wil2` as `?wil`
+
 
 # 0.2.7 (2025-09-05)
 
