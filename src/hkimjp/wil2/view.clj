@@ -3,7 +3,7 @@
    [hiccup2.core :as h]
    [ring.util.response :as response]))
 
-(def version "0.2.5")
+(def version "0.2.6-SNAPSHOT")
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
 
@@ -11,8 +11,8 @@
   [:div.flex.bg-green-900.items-baseline.gap-x-4
    [:div.text-2xl.font-medium.text-white "WIL2"]
    [:div {:class menu} [:a {:href "/wil2"} "todays"]]
-   [:div {:class menu} [:a {:href "/wil2/my"} "my"]]
    [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
+   [:div {:class menu} [:a {:href "/wil2/my"} "my"]]
    [:div {:class menu} [:a {:href "/logout"} "logout"]]
    [:div {:class menu} [:a {:href "/help"} "HELP"]]
    [:div {:class menu} [:a {:href "/admin"} "(admin)"]]])
@@ -37,7 +37,7 @@
     [:script {:type "text/javascript"
               :src  "/assets/js/htmx.min.js"
               :defer true}]
-    [:title "app"]]
+    [:title "WIL2"]]
    [:body {:hx-boost "true"}
     [:div
      (navbar)
