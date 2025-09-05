@@ -14,12 +14,15 @@
 - restrict the period allowed uploading
 
 
-# 0.2.5-SNAPSHOT
+# 0.2.5 (2025-09-05)
 
 - added h1, h2, h3 definitions into `css/input.css`
 - ul {list-style-type: disc}
 - ol {list-style-type: decimal}
 - show error page if try to upload without selecting a file
+- /wil2/weeks - display the dates in which at least an upload found.
+  click the date will show the uploads received on that day.
+
 
 # 0.2.4 (2025-09-04)
 
