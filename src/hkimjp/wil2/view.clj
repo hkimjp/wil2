@@ -5,7 +5,7 @@
 
 (def version "0.2.7.1")
 
-(def ^:private menu "text-xl font-medium text-white px-1 hover:bg-sky-400")
+(def ^:private menu "text-xl font-medium text-white px-1 hover:bg-green-700")
 
 (defn navbar []
   [:div.flex.bg-green-900.items-baseline.gap-x-4
