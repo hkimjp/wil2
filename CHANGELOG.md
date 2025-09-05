@@ -12,14 +12,16 @@
 
 - restrict the period allowed uploading
 - restrict browsing when he/she does not submit his/her today's wil
-- rename `login` namespace to `auth`
-- prevent duplicate submissions to one upload
 - restrict number of submissions
 - time restrictions
+- prevent duplicate submissions to one upload
 - FIXME: weeks: shoud have some margin-left?
-
+- rename `login` namespace to `auth`
 
 # 0.2.8-SNAPSHOT
+
+- favicon.ico - copied from WIL1.
+
 
 # 0.2.7.1 (2025-09-05)
 
