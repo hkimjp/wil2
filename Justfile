@@ -27,6 +27,11 @@ test:
 build:
   clojure -T:build ci
 
+deploy: build
+  scp target/uberjar/wil.jar ${DEST}:wil/wil.jar
+  ssh ${DEST} 'sudo systemctl restart wil'
+  ssh ${DEST} 'systemctl status wil'
+
 container-nrepl:
   clj -M:dev -m nrepl.cmdline -b 0.0.0.0 -p 5555
 
