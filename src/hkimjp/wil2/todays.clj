@@ -60,8 +60,8 @@
 
 (defn- pt [s]
   (condp = (last (str/split s #"/"))
-    "good" 1
-    "soso" 0
+    "good" 2
+    "soso" 1
     "bad" -1))
 
 (defn point [{params :params :as request}]
