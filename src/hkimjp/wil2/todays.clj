@@ -58,25 +58,22 @@
          {:type   "file"
           :accept ".md"
           :name   "file"}]
+        [:br]
         [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
          "upload"]]]])))
 
 (defn upload! [request]
-  (let [login (user request)
-        _ (t/log! :info (get-in request [:params :file :tempfile]))]
-    ;;(t/log! :info (str "upload! " login " " (abbrev md 40)))
-    (try
-      (ds/put! {:wil2 "upload"
-                :login login
-                :md (slurp (get-in request [:params :file :tempfile]))
-                :date (today)
-                :updated (jt/local-date-time)})
-      (page [:div "upload success"])
-      (catch Exception e
-        (let [e (.getMessage e)]
-          (t/log! :error e)
-          (page [:div "error"
-                 [:p e]]))))))
+  (let [login (user request)]
+    (t/log! :info (str "upload! " login))
+    (if-let [u (get-in request [:params :file :tempfile])]
+      (do
+        (ds/put! {:wil2 "upload"
+                  :login login
+                  :md (slurp u)
+                  :date (today)
+                  :updated (jt/local-date-time)})
+        (page [:div "upload success"]))
+      (page [:div "did not select a file."]))))
 
 (defn markdown [eid]
   (t/log! :debug (:md (ds/pl eid)))
