@@ -30,7 +30,7 @@
   (page
    [:div
     [:div.text-2xl.font-meduim "Weeks"]
-    [:p "日付をクリックで受け取った WIL を表示する。"]
+    [:p.py-2 "日付をクリックで受け取った WIL を表示する。"]
     (into [:div] (mapv link (ds/qq dates)))
     [:div#weeks "[weely submissions]"]]))
 

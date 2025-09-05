@@ -6,7 +6,6 @@
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n
-- aggregation - can see one's sends/receives
 - nextjournal.markdown Unknown type:
 
     ':html-block'.{:type :html-block, :content [{:type :text, :text "<hr>\nhkimura"}]}
@@ -14,9 +13,17 @@
 - restrict the period allowed uploading
 - restrict browsing when he/she does not submit his/her today's wil
 - rename `login` namespace to `auth`
-- prevent duplicate submissions to one upload.
-- restrict number of submissions.
+- prevent duplicate submissions to one upload
+- restrict number of submissions
+- time restrictions
 
+
+# 0.2.7 (2025-09-05)
+
+- improved HELP
+- points for sending
+- aggregation - can see one's sends/receives
+- improved `points for received`
 
 # 0.2.6 (2025-09-05)
 
