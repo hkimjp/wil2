@@ -28,7 +28,7 @@ build:
   clojure -T:build ci
 
 deploy: build
-  scp target/uberjar/wil.jar ${DEST}:wil/wil.jar
+  scp target/io.github.hkimjp/wil2-*.jar ${DEST}:wil/wil.jar
   ssh ${DEST} 'sudo systemctl restart wil'
   ssh ${DEST} 'systemctl status wil'
 
