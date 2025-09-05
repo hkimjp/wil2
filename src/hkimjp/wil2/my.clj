@@ -32,11 +32,12 @@
      [:div
       [:div.text-2xl user "'s points"]
       [:div
-       [:div.font-bold "送信ポイント"]
+       [:div.font-bold "points for sending"]
        [:div.mx-4
         "⬆️ " (ct user 2)
         ", ➡️ " (ct user 1)
         ", ⬇️ " (ct user -1)]
-       [:div.font-bold "受信ポイント"]
+       [:div.font-bold "points for received"]
        [:div.mx-4
+        [:p "improve!"]
         (str (group-by second (ds/qq recv-pt user)))]]])))
