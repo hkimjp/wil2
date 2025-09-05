@@ -56,13 +56,11 @@
         (page [:div "upload success."]))
       (page [:div "did not select a file to upload."]))))
 
-; (defn markdown [eid]
-;   (t/log! :debug (:md (ds/pl eid)))
-;   (-> (:md (ds/pl eid))
-;       md/parse
-;       md/->hiccup
-;       h/html
-;       str))
+(defn point [{params :params :as request}]
+  (t/log! :info "point")
+  (t/log! :info (str "params " params))
+  (t/log! :info (str "uri: " (:uri request)))
+  (resp/response "<p>OK</p>"))
 
 (defn md [{{:keys [eid]} :path-params :as request}]
   (let [md (:md (ds/pl (parse-long eid)))
@@ -70,14 +68,18 @@
                      md/parse
                      md/->hiccup)]
     (t/log! :info (str "md " (user request) " " eid))
-    (t/log! :debug (abbrev md 40))
     (resp/response
      (str (h/html
            [:form
+            (h/raw (anti-forgery-field))
+            [:input {:type "hidden" :name "eid" :value eid}]
             markdown
-            [:button {:hx-post "/wil/"
-                      :hx-target "#wil"}]
-            "👍"])))))
+            [:button {:hx-post "/wil2/point/good"
+                      :hx-target "#wil"}
+             "👍,"]
+            [:button {:hx-post "/wil2/point/bad"
+                      :hx-target "#wil"}
+             "😐👎"]])))))
 
 (defn- link [[eid login]]
   [:span.px-2.hover:underline

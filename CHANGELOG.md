@@ -18,6 +18,7 @@
 - title `WIL2`
 - changed nabvar order: todays weeks my logout HELP (admin)
 - links hover:underline
+- new route - post /wil2/point/:pt
 
 
 # 0.2.5 (2025-09-05)
