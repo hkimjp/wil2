@@ -16,6 +16,8 @@
 - prevent duplicate submissions to one upload
 - restrict number of submissions
 - time restrictions
+- FIXME: in `my` page, displays other than myself uploads.
+- FIXME: weeks: shoud have some margin-left?
 
 
 # 0.2.7 (2025-09-05)
