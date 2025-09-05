@@ -16,13 +16,15 @@
 - prevent duplicate submissions to one upload
 - restrict number of submissions
 - time restrictions
-- FIXME: in `my` page, displays other than myself uploads.
 - FIXME: weeks: shoud have some margin-left?
+
+
+# 0.2.8-SNAPSHOT
 
 # 0.2.7.1 (2025-09-05)
 
-- fixed: typo `:wil2` as `?wil`
-
+- fixed: in `my` page, displays other than myself uploads.
+  typo `:wil2` as `?wil`.
 
 # 0.2.7 (2025-09-05)
 
