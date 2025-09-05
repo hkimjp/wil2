@@ -33,3 +33,6 @@
          [?e :wil2 "upload"]
          [?e :login "hkimura"]])
 (ds/pl 1)
+
+(ds/pl 25)
+(ds/pl 18)

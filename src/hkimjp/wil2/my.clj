@@ -29,11 +29,12 @@
 (def my-uploads '[:find ?e ?date ?md
                   :in $ ?login
                   :where
-                  [?e ?wil2 "upload"]
+                  [?e :wil2 "upload"]
+                  [?e :login ?login]
                   [?e :date ?date]
                   [?e :md ?md]])
 
-; (ds/qq my-uploads "chatgpt")
+;; (ds/qq my-uploads "hkimura")
 
 (def my-points '[:find ?e ?pt
                  :in $ ?id
