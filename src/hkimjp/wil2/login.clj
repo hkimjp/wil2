@@ -29,10 +29,10 @@
 
 (defn login!
   [{{:keys [login password]} :params}]
-  (if (env :no-login)
+  (if (empty? (env :auth))
     (do
-      ;; always login success in development
-      (t/log! :info (str "login success: " login))
+      ;; always login success when (env :auth) is empty
+      (t/log! :info (str "no auth mode: " login))
       (-> (resp/redirect "/wil2")
           (assoc-in [:session :identity] login)))
     (try
