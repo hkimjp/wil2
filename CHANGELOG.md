@@ -15,6 +15,8 @@
 - restrict the period allowed uploading
 - restrict browsing when he/she does not submit his/her today's wil
 - rename `login` namespace to `auth`
+- prevent duplicate submissions to one upload.
+- restrict number of submissions.
 
 
 # 0.2.6-SNAPSHOT
@@ -23,6 +25,8 @@
 - changed nabvar order: todays weeks my logout HELP (admin)
 - links hover:underline
 - new route - post /wil2/point/:pt
+- attibute :wil2 identifiying uploads and points, etc.
+- short descriptions at the top of each page.
 
 # 0.2.5 (2025-09-05)
 

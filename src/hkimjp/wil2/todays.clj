@@ -14,11 +14,13 @@
 (def uploaded? '[:find ?e
                  :in $ ?login
                  :where
+                 [?e :wil2 "upload"]
                  [?e :login ?login]])
 
 (def todays-uploads '[:find ?e ?login
                       :in $ ?today
                       :where
+                      [?e :wil2 "upload"]
                       [?e :login ?login]
                       [?e :date ?today]])
 
@@ -28,6 +30,7 @@
     (page
      [:div
       [:div.text-2xl "Upload (" (user request) ")"]
+      [:p "今日の WIL を提出する。"]
       [:div
        [:span.font-bold "uploaded:"]
        [:p.m-4 (interpose ", " (mapv second uploaded))]]
@@ -39,7 +42,6 @@
          {:type   "file"
           :accept ".md"
           :name   "file"}]
-        [:br]
         [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
          "upload"]]]])))
 
@@ -71,7 +73,7 @@
             :to/id (parse-long (:eid params))
             :pt (pt (:uri request))
             :date (today)
-            :updated (jt/local-datatime)})
+            :updated (jt/local-date-time)})
   (resp/response "<p>received</p>"))
 
 (defn md [{{:keys [eid]} :path-params :as request}]
@@ -86,7 +88,7 @@
             (h/raw (anti-forgery-field))
             [:input {:type "hidden" :name "eid" :value eid}]
             markdown
-            [:div.flex.gap-x-
+            [:div.flex.gap-x-4
              [:span "評価: "]
              [:button {:hx-post "/wil2/point/good"
                        :hx-target "#wil"}
@@ -110,9 +112,10 @@
     (page
      [:div
       [:div.text-2xl.font-medium "Todays"]
+      [:p "他のユーザの WIL を読んで評価する。"]
       [:div.font-bold "uploaded"]
       (into [:div.mx-2] (mapv link uploads))
-      [:div#wil.mx-4 "[markdown]"]])))
+      [:div#wil.mx-4 "評価:　⬆️　➡️　⬇️"]])))
 
 (defn switch [request]
   (t/log! :debug "switch")

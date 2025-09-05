@@ -22,3 +22,14 @@
 ;; (reload/reload)
 ;; (restart-system)
 
+(ds/qq '[:find ?e
+         :where
+         [?e :wil2 "point"]])
+
+(ds/pl 10)
+
+(ds/qq '[:find ?e
+         :where
+         [?e :wil2 "upload"]
+         [?e :login "hkimura"]])
+(ds/pl 1)
