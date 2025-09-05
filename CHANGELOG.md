@@ -6,7 +6,6 @@
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n
-- can send good/bad to the uploads
 - aggregation - can see one's sends/receives
 - nextjournal.markdown Unknown type:
 
@@ -19,7 +18,7 @@
 - restrict number of submissions.
 
 
-# 0.2.6-SNAPSHOT
+# 0.2.6 (2025-09-05)
 
 - title `WIL2`
 - changed nabvar order: todays weeks my logout HELP (admin)
@@ -27,6 +26,7 @@
 - new route - post /wil2/point/:pt
 - attibute :wil2 identifiying uploads and points, etc.
 - short descriptions at the top of each page.
+- can send good/bad to the uploads
 
 # 0.2.5 (2025-09-05)
 
