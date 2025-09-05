@@ -5,9 +5,6 @@
    [taoensso.telemere :as t]
    [hkimjp.wil2.util :refer [user]]))
 
-; (defn- user [request]
-;   (get-in request [:session :identity]))
-
 (defn wrap-users
   [handler]
   (fn [request]
@@ -30,4 +27,3 @@
         (handler request)
         (-> (resp/redirect "/")
             (assoc :session {} :flash "admin only"))))))
-
