@@ -12,24 +12,26 @@
             [?e :login ?login]
             [?e :pt ?pt]])
 
-(def sent-count '[:find (count ?e)
-                  :in $ ?login ?pt
-                  :where
-                  [?e :wil2 "point"]
-                  [?e :login ?login]
-                  [?e :pt ?pt]])
+(def sent-pt '[:find ?e
+               :in $ ?login ?pt
+               :where
+               [?e :wil2 "point"]
+               [?e :login ?login]
+               [?e :pt ?pt]])
 
-; (ds/qq sent "hkimura")
-; (ds/qq sent-count "hkimura" 1)
-; (ds/qq sent-count "hkimura" 2)
-; (ds/qq sent-count "hkimura" -1)
+(defn- ct [user pt]
+  (count (ds/qq sent-pt user pt)))
 
 (defn my [request]
   (let [user (user request)]
     (t/log! :info (str "my " user))
     (page
      [:div
-      [:div.text-2xl (user  request) "'s points"]
+      [:div.text-2xl user "'s points"]
       [:div
-       [:div.font-bold "Points by Sendings"]
-       [:div.font-bold "Points by Receivings"]]])))
+       [:div.font-bold "送信ポイント"]
+       [:div.mx-4
+        "⬆️ " (ct user 2)
+        ", ➡️ " (ct user 1)
+        ", ⬇️ " (ct user -1)]
+       [:div.font-bold "受信ポイント"]]])))
