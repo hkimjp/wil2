@@ -3,7 +3,7 @@
    [hkimjp.wil2.view :refer [page]]))
 
 (defn help
-  [request]
+  [_request]
   (page
    [:div
     [:div.text-2xl.font-medium "Help"]

@@ -17,6 +17,7 @@
 
 - title `WIL2`
 - changed nabvar order: todays weeks my logout HELP (admin)
+- links hover:underline
 
 
 # 0.2.5 (2025-09-05)

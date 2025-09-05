@@ -89,8 +89,9 @@
    (markdown (parse-double eid))))
 
 (defn- link [[eid login]]
-  [:span.px-2 {:hx-get (str "/wil2/md/" eid)
-               :hx-target "#wil"}
+  [:span.px-2.hover:underline
+   {:hx-get (str "/wil2/md/" eid)
+    :hx-target "#wil"}
    login])
 
 (defn todays [request]
