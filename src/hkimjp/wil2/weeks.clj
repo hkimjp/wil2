@@ -43,4 +43,3 @@
       str
       resp/response))
 
-(browse {:path-params "2025-09-05"})
