@@ -19,12 +19,13 @@
 
 開発用の覚え書き。
 
-```
-# NO_AUTH = True # remove in production
-AUTH    = <url of auth server>
-PORT    = <port jetty listens>
-ADMIN   = <who>
-```
+
+    AUTH    = <url of auth server>
+    PORT    = <port jetty listens>
+    ADMIN   = <who>
+
+
+AUTH="" でパスワードの照合なしでログイン（開発用）。
 
 ## Installation
 

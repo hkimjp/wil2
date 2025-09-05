@@ -9,8 +9,14 @@
 - can send good/bad to the uploads
 - can see my sends/receives
 - restrict the period allowed uploading
+- nextjournal.markdown Unknown type:
+
+    ':html-block'.{:type :html-block, :content [{:type :text, :text "<hr>\nhkimura"}]}
 
 # 0.2.6-SNAPSHOT
+
+- title `WIL2`
+- changed nabvar order: todays weeks my logout HELP (admin)
 
 
 # 0.2.5 (2025-09-05)
