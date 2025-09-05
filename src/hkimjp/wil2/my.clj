@@ -9,4 +9,8 @@
   (t/log! :debug "my")
   (page
    [:div
-    [:div.text-2xl (user  request)]]))
+    [:div.text-2xl (user  request) "'s points"]
+    [:div
+     [:div.font-bold "送信ポイント"]
+     [:p "⬆️　➡️　⬇️"]
+     [:div.font-bold "受信ポイント"]]]))

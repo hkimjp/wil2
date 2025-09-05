@@ -18,6 +18,10 @@
 - restrict number of submissions.
 
 
+# 0.2.7-SNAPSHOT
+
+- improved HELP
+
 # 0.2.6 (2025-09-05)
 
 - title `WIL2`

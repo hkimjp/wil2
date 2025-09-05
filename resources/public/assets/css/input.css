@@ -32,12 +32,9 @@
     margin: 12px 0;
   }
   ul {
-    margin: 2rem;
     list-style-type: disc;
   }
   ol {
-    margin: 2rem;
     list-style-type: decimal;
-
   }
 }
