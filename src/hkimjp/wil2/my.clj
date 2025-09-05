@@ -55,16 +55,14 @@
      [:div
       [:div.text-2xl user "'s points"]
       [:div
-       [:div.font-bold "points for sending"]
+       [:div.font-bold.py-2 "points for sending"]
        [:div.mx-4
         "⬆️ " (ct user 2)
         ", ➡️ " (ct user 1)
         ", ⬇️ " (ct user -1)]
-       ;;
-       [:div.font-bold "points for received"]
-       [:div.mx-4
-        [:p "improve!"]
-        (str (group-by second (ds/qq recv-pt user)))]
+       [:div.font-bold.py-2 "points for received"]
+       [:div.mx-4 (str (group-by second (ds/qq recv-pt user)))]
+       [:div.font-bold.py-2 "your submissions"]
        [:div.mx-4
         (for [[e date md] (ds/qq my-uploads user)]
           (conj (-> md

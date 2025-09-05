@@ -16,7 +16,6 @@
 - prevent duplicate submissions to one upload
 - restrict number of submissions
 - time restrictions
-- improve `points for received`
 
 
 # 0.2.7-SNAPSHOT
@@ -24,6 +23,7 @@
 - improved HELP
 - points for sending
 - aggregation - can see one's sends/receives
+- improved `points for received`
 
 # 0.2.6 (2025-09-05)
 
