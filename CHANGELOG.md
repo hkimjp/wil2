@@ -21,6 +21,7 @@
 # 0.2.7-SNAPSHOT
 
 - improved HELP
+- points for sending
 
 # 0.2.6 (2025-09-05)
 

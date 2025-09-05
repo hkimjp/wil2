@@ -5,13 +5,6 @@
    [hkimjp.wil2.view :refer [page]]
    [taoensso.telemere :as t]))
 
-(def sent '[:find ?e ?pt
-            :in $ ?login
-            :where
-            [?e :wil2 "point"]
-            [?e :login ?login]
-            [?e :pt ?pt]])
-
 (def sent-pt '[:find ?e
                :in $ ?login ?pt
                :where
@@ -21,6 +14,16 @@
 
 (defn- ct [user pt]
   (count (ds/qq sent-pt user pt)))
+
+(def recv-pt '[:find ?e ?pt
+               :in $ ?login
+               :where
+               [?e :wil2 "point"]
+               [?e :pt ?pt]
+               [?e :to/id ?id]
+               [?id :login ?login]])
+
+; (group-by second (ds/qq recv-pt "hkimura"))
 
 (defn my [request]
   (let [user (user request)]
@@ -34,4 +37,6 @@
         "⬆️ " (ct user 2)
         ", ➡️ " (ct user 1)
         ", ⬇️ " (ct user -1)]
-       [:div.font-bold "受信ポイント"]]])))
+       [:div.font-bold "受信ポイント"]
+       [:div.mx-4
+        (str (group-by second (ds/qq recv-pt user)))]]])))
