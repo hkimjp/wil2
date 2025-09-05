@@ -22,16 +22,16 @@
     (.stop @server)
     (t/log! :info "server stopped.")))
 
-(defn start-ds []
-  (ds/start-or-restore {:url "jdbc:sqlite:storage/wil2.sqlite"}))
+; (defn start-ds []
+;   (ds/start-or-restore {:url "jdbc:sqlite:storage/wil2.sqlite"}))
 
-(defn stop-ds []
-  (ds/stop))
+; (defn stop-ds []
+;   (ds/stop))
 
 (defn start-system []
   (start-jetty)
-  (start-ds))
+  (ds/start-or-restore {:url "jdbc:sqlite:storage/wil2.sqlite"}))
 
 (defn stop-system []
   (stop-server)
-  (stop-ds))
+  (ds/stop))

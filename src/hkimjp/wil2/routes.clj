@@ -17,13 +17,14 @@
    ["/logout"   logout!]
    ["/help"     {:get help}]
    ["/admin"    {:middleware [m/wrap-admin]}
-    [""         {:get admin/admin}]]
+    [""           {:get admin/admin}]]
    ["/wil2"     {:middleware [m/wrap-users]}
-    [""         {:get todays/switch}]
-    ["/todays"  {:get todays/todays}]
-    ["/upload"  {:get todays/upload :post todays/upload!}]
-    ["/md/:eid" {:get todays/md}]
-    ["/weeks"   {:get list-days}]
+    [""              {:get todays/switch}]
+    ["/todays"       {:get todays/todays}]
+    ["/upload"       {:get todays/upload :post todays/upload!}]
+    ["/md/:eid"      {:get todays/md}]
+    ["/point/:pt"    {:post todays/point}]
+    ["/weeks"        {:get list-days}]
     ["/browse/:date" {:get browse}]
     ["/my"      {:get my}]]])
 

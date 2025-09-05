@@ -21,18 +21,20 @@
 ; (count (ds/qq uploads "2025-09-04"))
 
 (defn- link [day]
-  [:span.px-2 {:hx-get (str "/wil2/browse/" day)
-               :hx-target "#weeks"}
+  [:span.px-2.hover:underline
+   {:hx-get (str "/wil2/browse/" day)
+    :hx-target "#weeks"}
    day])
 
-(defn list-days [request]
+(defn list-days [_request]
   (page
    [:div
     [:div.text-2xl.font-meduim "Weeks"]
+    [:p "日付をクリックで受け取った WIL を表示する。"]
     (into [:div] (mapv link (ds/qq dates)))
     [:div#weeks "[weely submissions]"]]))
 
-(defn browse [{{:keys [date]} :path-params :as request}]
+(defn browse [{{:keys [date]} :path-params}]
   (t/log! :debug (str "browse: date " date))
   (-> (for [upload (ds/qq uploads date)]
         (conj (-> upload
@@ -43,4 +45,3 @@
       str
       resp/response))
 
-(browse {:path-params "2025-09-05"})
