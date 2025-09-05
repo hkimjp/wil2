@@ -22,25 +22,6 @@
                       [?e :login ?login]
                       [?e :date ?today]])
 
-(comment
-  (def data [{:login "hkimura"
-              :md "# hello, World"
-              :date "2025-09-04"
-              :updated (jt/local-date-time)}
-             {:login "akari"
-              :md "# hello, akari"
-              :date "2025-09-04"
-              :updated (jt/local-date-time)}])
-
-  (ds/puts! data)
-  (ds/qq uploaded? "hkimura")
-  (some? (first (ds/qq uploaded? "hkimura")))
-  (ds/qq uploaded? "akari")
-  (some? (first (ds/qq uploaded? "chatgpt")))
-  (ds/qq todays-uploads "2025-09-04")
-  (map second (ds/qq todays-uploads "2025-09-04"))
-  :rcf)
-
 (defn upload [request]
   (t/log! :debug "upload")
   (let [uploaded (ds/qq todays-uploads (today))]
@@ -72,21 +53,31 @@
                   :md (slurp u)
                   :date (today)
                   :updated (jt/local-date-time)})
-        (page [:div "upload success"]))
-      (page [:div "did not select a file."]))))
+        (page [:div "upload success."]))
+      (page [:div "did not select a file to upload."]))))
 
-(defn markdown [eid]
-  (t/log! :debug (:md (ds/pl eid)))
-  (-> (:md (ds/pl eid))
-      md/parse
-      md/->hiccup
-      h/html
-      str))
+; (defn markdown [eid]
+;   (t/log! :debug (:md (ds/pl eid)))
+;   (-> (:md (ds/pl eid))
+;       md/parse
+;       md/->hiccup
+;       h/html
+;       str))
 
 (defn md [{{:keys [eid]} :path-params :as request}]
-  (t/log! :info (str (user request) eid))
-  (resp/response
-   (markdown (parse-double eid))))
+  (let [md (:md (ds/pl (parse-long eid)))
+        markdown (-> md
+                     md/parse
+                     md/->hiccup)]
+    (t/log! :info (str "md " (user request) " " eid))
+    (t/log! :debug (abbrev md 40))
+    (resp/response
+     (str (h/html
+           [:form
+            markdown
+            [:button {:hx-post "/wil/"
+                      :hx-target "#wil"}]
+            "👍"])))))
 
 (defn- link [[eid login]]
   [:span.px-2.hover:underline
@@ -103,13 +94,6 @@
       [:div.font-bold "uploaded"]
       (into [:div.mx-2] (mapv link uploads))
       [:div#wil.mx-4 "[markdown]"]])))
-
-(comment
-  (let [uploads (ds/qq todays-uploads (today))]
-    [:div
-     [:div "todays"]
-     (into [:div] (mapv link uploads))])
-  :rcf)
 
 (defn switch [request]
   (t/log! :debug "switch")
