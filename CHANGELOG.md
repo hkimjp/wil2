@@ -2,7 +2,12 @@
 
 - how to clj-reload?
 - test
-- is my routes/default-handler working?
+- restrict the period allowed uploading
+- restrict number of good/bad
+- time restrictions
+- prevent duplicate submissions to one upload
+- FIXME: weeks: shoud have some margin-left?
+- rename `login` namespace to `auth`
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n
@@ -10,13 +15,18 @@
 
     ':html-block'.{:type :html-block, :content [{:type :text, :text "<hr>\nhkimura"}]}
 
-- restrict the period allowed uploading
-- restrict browsing when he/she does not submit his/her today's wil
-- rename `login` namespace to `auth`
-- prevent duplicate submissions to one upload
-- restrict number of submissions
-- time restrictions
+# 0.2.8 (2025-09-06) (2025-09-06)
 
+- favicon.ico - copied from WIL1.
+- fixed - show upload button if the user has not yet submitted today's markdown.
+- checked ds - it works.
+- deployed over to tiger.melt.
+- improved `my/points for received`
+
+# 0.2.7.1 (2025-09-05)
+
+- fixed: in `my` page, displays other than myself uploads.
+  typo `:wil2` as `?wil`.
 
 # 0.2.7 (2025-09-05)
 

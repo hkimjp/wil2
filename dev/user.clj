@@ -22,14 +22,27 @@
 ;; (reload/reload)
 ;; (restart-system)
 
-(ds/qq '[:find ?e
-         :where
-         [?e :wil2 "point"]])
+(def recv {2 [[8 2] [9 2]], 1 [[1 2] [3 4]], -1 [[5 6] [7 8]]})
 
-(ds/pl 10)
+(recv 2)
+(recv 1)
+(recv -1)
 
-(ds/qq '[:find ?e
+(defn)
+
+(ds/qq '[:find ?e ?login
+         :in $ ?login
          :where
          [?e :wil2 "upload"]
-         [?e :login "hkimura"]])
+         [?e :login ?login]
+         [?e :date "2025-09-06"]]
+       "hkimura")
+
+(ds/qq '[:find ?e
+         :in $ ?login
+         :where
+         [?e :wil2 "upload"]
+         [?e :login ?login]]
+       "hkimura")
+
 (ds/pl 1)

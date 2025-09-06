@@ -12,10 +12,11 @@
    [hkimjp.wil2.view :refer [page]]))
 
 (def uploaded? '[:find ?e
-                 :in $ ?login
+                 :in $ ?login ?date
                  :where
                  [?e :wil2 "upload"]
-                 [?e :login ?login]])
+                 [?e :login ?login]
+                 [?e :date ?date]])
 
 (def todays-uploads '[:find ?e ?login
                       :in $ ?today
@@ -28,7 +29,7 @@
   (t/log! :debug "upload")
   (let [uploaded (ds/qq todays-uploads (today))]
     (page
-     [:div
+     [:div.mx-4
       [:div.text-2xl "Upload (" (user request) ")"]
       [:p "今日の WIL を提出する。"]
       [:div
@@ -36,6 +37,7 @@
        [:p.m-4 (interpose ", " (mapv second uploaded))]]
       [:div
        [:span.font-bold "upload your markdown"]
+       [:p "今日のWILを書いたマークダウンを選んで upload ボタン。"]
        [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
         (h/raw (anti-forgery-field))
         [:input
@@ -89,16 +91,16 @@
             [:input {:type "hidden" :name "eid" :value eid}]
             markdown
             [:div.flex.gap-x-4
-             [:span "評価: "]
+             [:span.py-2.font-bold "評価: "]
              [:button {:hx-post "/wil2/point/good"
                        :hx-target "#wil"}
-              "⬆️"]
+              [:span.hover:text-2xl "⬆️"]]
              [:button {:hx-post "/wil2/point/soso"
                        :hx-target "#wil"}
-              "➡️"]
+              [:span.hover:text-2xl "➡️"]]
              [:button {:hx-post "/wil2/point/bad"
                        :hx-target "#wil"}
-              "⬇️"]]])))))
+              [:span.hover:text-2xl "⬇️"]]]])))))
 
 (defn- link [[eid login]]
   [:span.px-2.hover:underline
@@ -110,15 +112,15 @@
   (t/log! :debug "todays")
   (let [uploads (ds/qq todays-uploads (today))]
     (page
-     [:div
+     [:div.mx-4
       [:div.text-2xl.font-medium "Todays"]
       [:p "他のユーザの WIL を読んで評価する。"]
       [:div.font-bold "uploaded"]
       (into [:div.mx-2] (mapv link uploads))
-      [:div#wil.mx-4 "評価:　⬆️　➡️　⬇️"]])))
+      [:div#wil.py-2 [:span.font-bold "評価:"] "　⬆️　➡️　⬇️"]])))
 
 (defn switch [request]
   (t/log! :debug "switch")
-  (if (some? (first (ds/qq uploaded? (user request))))
+  (if (some? (first (ds/qq uploaded? (user request) (today))))
     (resp/redirect "/wil2/todays")
     (resp/redirect "/wil2/upload")))
