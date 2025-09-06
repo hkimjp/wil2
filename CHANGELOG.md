@@ -18,10 +18,12 @@
 - FIXME: weeks: shoud have some margin-left?
 - rename `login` namespace to `auth`
 
-# 0.2.8-SNAPSHOT
+
+# 0.2.8-SNAPSHOT (2025-09-06)
 
 - favicon.ico - copied from WIL1.
-
+- BUG: did not show submit button
+- check ds -
 
 # 0.2.7.1 (2025-09-05)
 

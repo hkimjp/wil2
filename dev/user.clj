@@ -22,17 +22,19 @@
 ;; (reload/reload)
 ;; (restart-system)
 
-(ds/qq '[:find ?e
-         :where
-         [?e :wil2 "point"]])
-
-(ds/pl 10)
-
-(ds/qq '[:find ?e
+(ds/qq '[:find ?e ?login
+         :in $ ?login
          :where
          [?e :wil2 "upload"]
-         [?e :login "hkimura"]])
-(ds/pl 1)
+         [?e :login ?login]
+         [?e :date "2025-09-06"]]
+       "hkimura")
 
-(ds/pl 25)
-(ds/pl 18)
+(ds/qq '[:find ?e
+         :in $ ?login
+         :where
+         [?e :wil2 "upload"]
+         [?e :login ?login]]
+       "hkimura")
+
+(ds/pl 1)

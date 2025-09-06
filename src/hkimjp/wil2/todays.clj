@@ -12,10 +12,11 @@
    [hkimjp.wil2.view :refer [page]]))
 
 (def uploaded? '[:find ?e
-                 :in $ ?login
+                 :in $ ?login ?date
                  :where
                  [?e :wil2 "upload"]
-                 [?e :login ?login]])
+                 [?e :login ?login]
+                 [?e :date ?date]])
 
 (def todays-uploads '[:find ?e ?login
                       :in $ ?today
@@ -36,6 +37,7 @@
        [:p.m-4 (interpose ", " (mapv second uploaded))]]
       [:div
        [:span.font-bold "upload your markdown"]
+       [:p "今日のWILを書いたマークダウンを選んで upload ボタン。"]
        [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
         (h/raw (anti-forgery-field))
         [:input
@@ -119,6 +121,6 @@
 
 (defn switch [request]
   (t/log! :debug "switch")
-  (if (some? (first (ds/qq uploaded? (user request))))
+  (if (some? (first (ds/qq uploaded? (user request) (today))))
     (resp/redirect "/wil2/todays")
     (resp/redirect "/wil2/upload")))
