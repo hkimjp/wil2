@@ -24,8 +24,6 @@
                [?e :to/id ?id]
                [?id :login ?login]])
 
-; (group-by second (ds/qq recv-pt "hkimura"))
-
 (def my-uploads '[:find ?e ?date ?md
                   :in $ ?login
                   :where
@@ -33,8 +31,6 @@
                   [?e :login ?login]
                   [?e :date ?date]
                   [?e :md ?md]])
-
-;; (ds/qq my-uploads "hkimura")
 
 (def my-points '[:find ?e ?pt
                  :in $ ?id
@@ -50,26 +46,31 @@
    [:hr]])
 
 (defn my [request]
-  (let [user (user request)]
+  (let [user (user request)
+        recv (group-by second (ds/qq recv-pt user))]
     (t/log! :info (str "my " user))
     (page
-     [:div
+     [:div.mx-4
       [:div.text-2xl user "'s points"]
       [:div
-       [:div.font-bold.py-2 "points for sending"]
+       [:div.font-bold.py-2 "送信ポイント"]
        [:div.mx-4
         "⬆️ " (ct user 2)
         ", ➡️ " (ct user 1)
         ", ⬇️ " (ct user -1)]
-       [:div.font-bold.py-2 "points for received"]
-       [:div.mx-4 (str (group-by second (ds/qq recv-pt user)))]
-       [:div.font-bold.py-2 "your submissions"]
+       [:div.font-bold.py-2 "受信ポイント"]
        [:div.mx-4
-        (for [[e date md] (ds/qq my-uploads user)]
-          (conj (-> md
-                    md/parse
-                    md/->hiccup)
-                (points e)))]]])))
+        "⬆️ " (count (recv 2))
+        ", ➡️ " (count (recv 1))
+        ", ⬇️ " (count (recv -1))]]
+      [:div.font-bold.py-2 "自分 WIL"]
+      [:p.mx-4 "それぞれで受け取ったポイントを WIL の下に表示している。"]
+      [:div
+       (for [[e date md] (ds/qq my-uploads user)]
+         (conj (-> md
+                   md/parse
+                   md/->hiccup)
+               (points e)))]])))
 
 
 

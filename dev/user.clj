@@ -22,6 +22,14 @@
 ;; (reload/reload)
 ;; (restart-system)
 
+(def recv {2 [[8 2] [9 2]], 1 [[1 2] [3 4]], -1 [[5 6] [7 8]]})
+
+(recv 2)
+(recv 1)
+(recv -1)
+
+(defn)
+
 (ds/qq '[:find ?e ?login
          :in $ ?login
          :where
