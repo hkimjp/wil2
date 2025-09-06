@@ -22,8 +22,10 @@
 # 0.2.8-SNAPSHOT (2025-09-06)
 
 - favicon.ico - copied from WIL1.
-- BUG: did not show submit button
-- check ds -
+- fixed - show upload button if the user has not yet submitted today's markdown.
+- checked ds - it works.
+- deployed over to tiger.melt.
+
 
 # 0.2.7.1 (2025-09-05)
 
