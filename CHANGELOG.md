@@ -1,19 +1,25 @@
 # TODO
 
+- my - sort by date
+- `hover:text-2xl` is a right choise?
 - how to clj-reload?
 - test
 - restrict the period allowed uploading
 - restrict number of good/bad
 - time restrictions
 - prevent duplicate submissions to one upload
-- FIXME: weeks: shoud have some margin-left?
 - rename `login` namespace to `auth`
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n
-- nextjournal.markdown Unknown type:
+- nextjournal.markdown warning:
 
-    ':html-block'.{:type :html-block, :content [{:type :text, :text "<hr>\nhkimura"}]}
+    Unknown type:
+    ':html-block'.
+        {:type :html-block,
+         :content [{:type :text, :text "<hr>\nhkimura"}]}
+
+# 0.2.9-SNAPSHOT
 
 # 0.2.8 (2025-09-06) (2025-09-06)
 
