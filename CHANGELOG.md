@@ -15,7 +15,7 @@
 
     ':html-block'.{:type :html-block, :content [{:type :text, :text "<hr>\nhkimura"}]}
 
-# 0.2.8-SNAPSHOT (2025-09-06)
+# 0.2.8 (2025-09-06) (2025-09-06)
 
 - favicon.ico - copied from WIL1.
 - fixed - show upload button if the user has not yet submitted today's markdown.
