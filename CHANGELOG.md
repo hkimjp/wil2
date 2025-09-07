@@ -16,7 +16,8 @@
 # 0.2.9-SNAPSHOT
 
 - use `---` (three dashes) for <hr>
-- sort `my` by date
+- sort `my` by date. reverse?
+- added `com.carmine` to dependencies
 
 # 0.2.8 (2025-09-06)
 
