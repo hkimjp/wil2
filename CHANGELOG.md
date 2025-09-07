@@ -12,16 +12,13 @@
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n
-- nextjournal.markdown warning:
-
-    Unknown type:
-    ':html-block'.
-        {:type :html-block,
-         :content [{:type :text, :text "<hr>\nhkimura"}]}
 
 # 0.2.9-SNAPSHOT
 
-# 0.2.8 (2025-09-06) (2025-09-06)
+- use `---` (three dashes) for <hr>
+- sort `my` by date
+
+# 0.2.8 (2025-09-06)
 
 - favicon.ico - copied from WIL1.
 - fixed - show upload button if the user has not yet submitted today's markdown.
