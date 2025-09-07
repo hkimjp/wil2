@@ -66,11 +66,13 @@
       [:div.font-bold.py-2 "自分 WIL"]
       [:p.mx-4 "それぞれで受け取ったポイントを WIL の下に表示している。"]
       [:div
-       (for [[e date md] (ds/qq my-uploads user)]
+       (for [[e date md] (sort-by second (ds/qq my-uploads user))]
          (conj (-> md
                    md/parse
                    md/->hiccup)
                (points e)))]])))
 
-
+(comment
+  (ds/qq my-uploads "hkimura")
+  :rcf)
 
