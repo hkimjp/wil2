@@ -46,7 +46,7 @@
   (today)
   (str (jt/local-date))
 
-  (dummy "hkimura" 10)
+  (dummy "chatgpt" 10)
 
   (some #(= "5"  %) ["1" "2" "3" "5"])
   (count (c/lrange "wil2:hkimura:2025-09-08"))

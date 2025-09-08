@@ -15,11 +15,12 @@
 - sum received points
 - sum sent points
 - does not display /wil2/todays flash
+- wil2 stacks when not connected to redis-server
 
+# 0.3.0
 
-# 0.3.0-SNAPSHOT (2025-09-08)
-
-- span.inline-block
+- update deps - hkimjp/carmine-farm 0.2.4
+- span.inline-block - why is this needed?
 - redis key:
 
     (c/lpush (str "wil2:" user ":" (today)) id)
