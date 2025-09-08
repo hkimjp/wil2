@@ -3,7 +3,7 @@
    [hiccup2.core :as h]
    [ring.util.response :as response]))
 
-(def version "0.2.9")
+(def version "0.3.0-SNAPSHOT")
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-green-700")
 
