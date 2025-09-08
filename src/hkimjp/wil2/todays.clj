@@ -73,7 +73,7 @@
     "soso" 1
     "bad" -1))
 
-;; ここで redis にメモる。ds と一緒にする？
+;; ここで redis にメモる。
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
@@ -84,7 +84,9 @@
               :to/id id
               :pt pt
               :updated (jt/local-date-time)})
-    (resp/response "<p>received</p>")))
+    (c/lpush (str "wil2:" user ":" (today)) id)
+    (c/setex (str "wil2:" user ":pt") 60 id)
+    (resp/response "<p>received.</p>")))
 
 (defn- button [key sym]
   [:button {:hx-post (str "/wil2/point/" key)
