@@ -13,10 +13,9 @@
   metosin/muuntaja        {:mvn/version "0.6.11"}
   hato/hato               {:mvn/version "1.0.0"}
   hiccup/hiccup           {:mvn/version "2.0.0"}
-  io.github.hkimjp/carmine-farm
-  {:git/tag "0.2.1" :git/sha "ea7b11b"}
-  io.github.hkimjp/datascript-storage-javatime
-  {:git/tag "0.7.4" :git/sha "f5c3196"}}
+  ;
+  io.github.hkimjp/carmine-farm {:git/tag "0.2.2" :git/sha "69e2add"}
+  io.github.hkimjp/datascript-storage-javatime {:git/tag "0.7.4" :git/sha "f5c3196"}}
 
  :aliases
  {:run-m {:main-opts ["-m" "hkimjp.wil2.core"]}
