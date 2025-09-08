@@ -11,12 +11,13 @@
 
 # point
 
+* removed :date (2025-09-08)
+
 ```
 {:db/id   <id>
  :wil2    "point"
  :login   <login>
  :to/id   <eid>
- :date    <today> ???
  :pt      <int>
  :updated <jt/local-date-time>}
 ```

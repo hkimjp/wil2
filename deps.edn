@@ -18,7 +18,9 @@
   {:git/tag "0.7.4" :git/sha "f5c3196"}}
 
  :aliases
- {:test
+ {:run-m {:main-opts ["-m" "hkimjp.wil2.core"]}
+
+  :test
   {:extra-paths ["test"]
    :extra-deps {org.clojure/test.check {:mvn/version "1.1.1"}
                 io.github.cognitect-labs/test-runner

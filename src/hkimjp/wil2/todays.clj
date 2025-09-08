@@ -74,7 +74,6 @@
             :login (user request)
             :to/id (parse-long (:eid params))
             :pt (pt (:uri request))
-            :date (today)
             :updated (jt/local-date-time)})
   (resp/response "<p>received</p>"))
 

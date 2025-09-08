@@ -28,9 +28,10 @@
 ; (defn stop-ds []
 ;   (ds/stop))
 
+; the URL shoube be provided thru ENV VAR?
 (defn start-system []
-  (start-jetty)
-  (ds/start-or-restore {:url "jdbc:sqlite:storage/wil2.sqlite"}))
+  (ds/start-or-restore {:url "jdbc:sqlite:storage/wil2.sqlite"})
+  (start-jetty))
 
 (defn stop-system []
   (stop-server)

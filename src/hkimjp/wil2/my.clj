@@ -16,14 +16,6 @@
 (defn- ct [user pt]
   (count (ds/qq sent-pt user pt)))
 
-(def recv-pt '[:find ?e ?pt
-               :in $ ?login
-               :where
-               [?e :wil2 "point"]
-               [?e :pt ?pt]
-               [?e :to/id ?id]
-               [?id :login ?login]])
-
 (def my-uploads '[:find ?e ?date ?md
                   :in $ ?login
                   :where
@@ -32,22 +24,30 @@
                   [?e :date ?date]
                   [?e :md ?md]])
 
-(def my-points '[:find ?e ?pt
-                 :in $ ?id
-                 :where
-                 [?e :wil2 "point"]
-                 [?e :to/id ?id]
-                 [?e :pt ?pt]])
+(def my-point-sent '[:find ?e ?pt
+                     :in $ ?id
+                     :where
+                     [?e :wil2 "point"]
+                     [?e :to/id ?id]
+                     [?e :pt ?pt]])
+
+(def my-point-recv '[:find ?e ?pt
+                     :in $ ?login
+                     :where
+                     [?e :wil2 "point"]
+                     [?e :pt ?pt]
+                     [?e :to/id ?id]
+                     [?id :login ?login]])
 
 (defn- points [eid]
   [:div.my-2
    [:span.font-bold.text-red-600 "received points: "]
-   (str (reduce + (map second (ds/qq my-points eid))))
+   (str (reduce + (map second (ds/qq my-point-sent eid))))
    [:hr]])
 
 (defn my [request]
   (let [user (user request)
-        recv (group-by second (ds/qq recv-pt user))]
+        recv (group-by second (ds/qq my-point-recv user))]
     (t/log! :info (str "my " user))
     (page
      [:div.mx-4

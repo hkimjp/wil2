@@ -24,6 +24,9 @@ dev:
 test:
   clojure -M:dev -m kaocha.runner
 
+run:
+  clojure -J--enable-native-access=ALL-UNNAMED -M:run-m
+
 build:
   clojure -T:build ci
 

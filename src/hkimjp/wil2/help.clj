@@ -23,7 +23,7 @@
         [:p "読んで点数をつける。(good:+2, soso:+1, bad:-1)"]]]]
      [:div [:span.font-bold "weeks"]
       [:p.mx-4 "授業の日付のリスト。クリックするとその日に届いた WIL を表示。"]]
-     [:div [:span.font-bold "my"]
+     [:div [:span.font-bold "points"]
       [:p.mx-4 "自分の WIL 送信ポイント、受信ポイントを表示。"]]
      [:div [:span.font-bold "logout"]
       [:p.mx-4 "WIL をログアウト。"]]

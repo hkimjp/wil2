@@ -12,9 +12,14 @@
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n
+- restore's return displayed on the terminal is noisy
 
 # 0.2.9-SNAPSHOT
 
+- alias `:run-m` which is called by `just run`
+- changed order calling - datascript first, then jetty (easy to find the port)
+- removed `:date` from point data structure
+- changed navbar - my -> points
 - use `---` (three dashes) for <hr>
 - sort `my` by date. reverse?
 - added `com.carmine` to dependencies
