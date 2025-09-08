@@ -3,10 +3,6 @@
 - my - sort by date
 - how to clj-reload?
 - test
-- restrict the period allowed uploading
-- restrict number of good/bad
-- time restrictions
-
 - rename `login` namespace to `auth`
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
@@ -15,10 +11,17 @@
 - sum received points
 - sum sent points
 - does not display /wil2/todays flash
+- sort answers?
+
+
+# 0.3.1-SNAPSHOT (2025-09-09)
+
+
+# 0.3.0 (2025-09-09)
+
+- restricted frequency the good/bad voting par a minite.
+- restricted max voting a day to 5.
 - wil2 stacks when not connected to redis-server
-
-# 0.3.0
-
 - update deps - hkimjp/carmine-farm 0.2.4
 - span.inline-block - why is this needed?
 - redis key:
