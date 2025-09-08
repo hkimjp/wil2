@@ -2,7 +2,7 @@
   (:require
    [clj-reload.core :as reload]
    [taoensso.telemere :as t]
-   [hkimjp.carmine-farm :as c]
+   [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]
    [hkimjp.wil2.system :refer [start-system stop-system]]))
 
@@ -27,4 +27,11 @@
   (ds/qq '[:find ?e
            :where
            [?e _ _]])
+
+  (c/ping)
+  (c/set "x" 3)
+  (c/get "x")
+  (c/setex "z" 20 4)
+  (c/get "z")
+
   :rcf)

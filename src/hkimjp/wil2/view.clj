@@ -12,7 +12,7 @@
    [:div.text-2xl.font-medium.text-white "WIL2"]
    [:div {:class menu} [:a {:href "/wil2"} "todays"]]
    [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
-   [:div {:class menu} [:a {:href "/wil2/my"} "points"]]
+   [:div {:class menu} [:a {:href "/wil2/points"} "points"]]
    [:div {:class menu} [:a {:href "/logout"} "logout"]]
    [:div {:class menu} [:a {:href "/help"} "HELP"]]
    [:div {:class menu} [:a {:href "/admin"} "(admin)"]]])
