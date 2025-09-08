@@ -1,21 +1,33 @@
 # TODO
 
+- my - sort by date
 - how to clj-reload?
 - test
 - restrict the period allowed uploading
 - restrict number of good/bad
 - time restrictions
 - prevent duplicate submissions to one upload
-- FIXME: weeks: shoud have some margin-left?
 - rename `login` namespace to `auth`
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n
-- nextjournal.markdown Unknown type:
+- restore's return value displayed on the terminal is noisy
+- sum received points
+- sum sent points
 
-    ':html-block'.{:type :html-block, :content [{:type :text, :text "<hr>\nhkimura"}]}
+# 0.2.9 (2025-09-08)
 
-# 0.2.8 (2025-09-06) (2025-09-06)
+- autocomplete="username" and autocomplete="current-password" in login.clj
+- alias `:run-m` which is called by `just run`
+- changed order calling - datascript first, then jetty (easy to find the port)
+- removed `:date` from point data structure
+- changed navbar - my -> points
+- use `---` (three dashes) for <hr>
+- sort `my` by date. reverse?
+- added `io.github.hkimjp/carmine-farm` to dependencies.
+- added `.env-template`
+
+# 0.2.8 (2025-09-06)
 
 - favicon.ico - copied from WIL1.
 - fixed - show upload button if the user has not yet submitted today's markdown.
