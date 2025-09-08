@@ -69,14 +69,18 @@
     "soso" 1
     "bad" -1))
 
+;; ここで redis にメモる。
 (defn point! [{params :params :as request}]
-  (t/log! :info (str "point! params " params))
-  (ds/put! {:wil2 "point"
-            :login (user request)
-            :to/id (parse-long (:eid params))
-            :pt (pt (:uri request))
-            :updated (jt/local-date-time)})
-  (resp/response "<p>received</p>"))
+  (let [user (user request)
+        id (parse-long (:eid params))
+        pt (pt (:uri request))]
+    (t/log! :info (str "point! " user " to " id " pt " pt))
+    (ds/put! {:wil2 "point"
+              :login user
+              :to/id id
+              :pt pt
+              :updated (jt/local-date-time)})
+    (resp/response "<p>received</p>")))
 
 (defn- button [key sym]
   [:button {:hx-post (str "/wil2/point/" key)
