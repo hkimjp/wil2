@@ -21,9 +21,9 @@
     [:div.p-1
      [:form {:method "post"}
       (h/raw (anti-forgery-field))
-      [:input.border-1.border-solid.px-1 {:name "login" :placeholder "your account"}]
+      [:input.border-1.border-solid.px-1 {:name "login" :placeholder "account" :autocomplete "username"}]
       [:span.mx-1 ""]
-      [:input.border-1.border-solid.px-1 {:name "password" :placeholder "password" :type "password"}]
+      [:input.border-1.border-solid.px-1 {:name "password" :type "password" :placeholder "password" :autocomplete "current-password"}]
       [:button.mx-1.px-1.text-white.bg-sky-500.hover:bg-sky-700.active:bg-red-500.rounded-xl "LOGIN"]]]
     [:br]]))
 

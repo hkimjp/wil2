@@ -1,7 +1,6 @@
 # TODO
 
 - my - sort by date
-- `hover:text-2xl` is a right choise?
 - how to clj-reload?
 - test
 - restrict the period allowed uploading
@@ -12,17 +11,21 @@
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
     - after mark his/her markdown file, decrement the n
-- restore's return displayed on the terminal is noisy
+- restore's return value displayed on the terminal is noisy
+- sum received points
+- sum sent points
 
 # 0.2.9-SNAPSHOT
 
+- autocomplete="username" and autocomplete="current-password" in login.clj
 - alias `:run-m` which is called by `just run`
 - changed order calling - datascript first, then jetty (easy to find the port)
 - removed `:date` from point data structure
 - changed navbar - my -> points
 - use `---` (three dashes) for <hr>
 - sort `my` by date. reverse?
-- added `com.carmine` to dependencies
+- added `io.github.hkimjp/carmine-farm` to dependencies.
+- added `.env-template`
 
 # 0.2.8 (2025-09-06)
 

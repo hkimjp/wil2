@@ -6,22 +6,11 @@
    [nextjournal.markdown :as md]
    [taoensso.telemere :as t]))
 
-(def sent-pt '[:find ?e
-               :in $ ?login ?pt
-               :where
-               [?e :wil2 "point"]
-               [?e :login ?login]
-               [?e :pt ?pt]])
-
-(defn- ct [user pt]
-  (count (ds/qq sent-pt user pt)))
-
-(def my-uploads '[:find ?e ?date ?md
+(def my-uploads '[:find ?e ?md
                   :in $ ?login
                   :where
                   [?e :wil2 "upload"]
                   [?e :login ?login]
-                  [?e :date ?date]
                   [?e :md ?md]])
 
 (def my-point-sent '[:find ?e ?pt
@@ -39,7 +28,16 @@
                      [?e :to/id ?id]
                      [?id :login ?login]])
 
-(defn- points [eid]
+(defn- ct [user pt]
+  (count (ds/qq '[:find ?e
+                  :in $ ?login ?pt
+                  :where
+                  [?e :wil2 "point"]
+                  [?e :login ?login]
+                  [?e :pt ?pt]]
+                user pt)))
+
+(defn- received-points [eid]
   [:div.my-2
    [:span.font-bold.text-red-600 "received points: "]
    (str (reduce + (map second (ds/qq my-point-sent eid))))
@@ -48,31 +46,27 @@
 (defn my [request]
   (let [user (user request)
         recv (group-by second (ds/qq my-point-recv user))]
-    (t/log! :info (str "my " user))
+    (t/log! :info (str "my " user "recv " recv))
     (page
      [:div.mx-4
       [:div.text-2xl user "'s points"]
       [:div
        [:div.font-bold.py-2 "送信ポイント"]
+       ;; FIXME: 3 回まわるのはダサい。
        [:div.mx-4
-        "⬆️ " (ct user 2)
+        "⬆️ "   (ct user 2)
         ", ➡️ " (ct user 1)
         ", ⬇️ " (ct user -1)]
        [:div.font-bold.py-2 "受信ポイント"]
+       ;; FIXME: 合計点出す？
        [:div.mx-4
-        "⬆️ " (count (recv 2))
+        "⬆️ "   (count (recv 2))
         ", ➡️ " (count (recv 1))
-        ", ⬇️ " (count (recv -1))]]
-      [:div.font-bold.py-2 "自分 WIL"]
-      [:p.mx-4 "それぞれで受け取ったポイントを WIL の下に表示している。"]
-      [:div
-       (for [[e date md] (sort-by second (ds/qq my-uploads user))]
-         (conj (-> md
-                   md/parse
-                   md/->hiccup)
-               (points e)))]])))
-
-(comment
-  (ds/qq my-uploads "hkimura")
-  :rcf)
-
+        ", ⬇️ " (count (recv -1))]
+       [:p.mx-4.py-2 "WIL ごとの受信ポイントは以下。"]
+       [:div
+        (for [[e md] (sort-by second (ds/qq my-uploads user))]
+          (conj (-> md
+                    md/parse
+                    md/->hiccup)
+                (received-points e)))]]])))

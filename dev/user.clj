@@ -2,6 +2,7 @@
   (:require
    [clj-reload.core :as reload]
    [taoensso.telemere :as t]
+   [hkimjp.carmine-farm :as c]
    [hkimjp.datascript :as ds]
    [hkimjp.wil2.system :refer [start-system stop-system]]))
 
