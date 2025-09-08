@@ -15,7 +15,7 @@
 - sum received points
 - sum sent points
 
-# 0.2.9-SNAPSHOT
+# 0.2.9 (2025-09-08)
 
 - autocomplete="username" and autocomplete="current-password" in login.clj
 - alias `:run-m` which is called by `just run`
