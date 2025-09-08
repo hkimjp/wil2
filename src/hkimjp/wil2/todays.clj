@@ -59,9 +59,13 @@
                   :md (slurp u)
                   :date (today)
                   :updated (jt/local-date-time)})
-        (page [:div "upload success."]))
-      (page [:div.text-red-600 "error"
-             [:p "did not select a file to upload."]]))))
+        (page
+         [:div "upload success."]))
+      (page
+       [:div.mx-4
+        [:span.text-2xl.text-red-600 "error"]
+        [:br]
+        [:p "did not select a file to upload."]]))))
 
 (defn- pt [s]
   (condp = (last (str/split s #"/"))
@@ -69,7 +73,7 @@
     "soso" 1
     "bad" -1))
 
-;; ここで redis にメモる。
+;; ここで redis にメモる。ds と一緒にする？
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
@@ -101,9 +105,8 @@
             markdown
             [:div.flex.gap-x-4
              [:span.py-2.font-bold "評価: "]
-             (button "good" "⬆️")
-             (button "soso" "➡️")
-             (button "bad"  "⬇️")]])))))
+             (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
+               (button key sym))]])))))
 
 (defn- link [[eid login]]
   [:span.px-2.hover:underline
@@ -111,6 +114,7 @@
     :hx-target "#wil"}
    login])
 
+;; ここでフィルタする
 (defn todays
   [request]
   (t/log! :debug "todays")
