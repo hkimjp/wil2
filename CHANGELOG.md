@@ -6,7 +6,7 @@
 - restrict the period allowed uploading
 - restrict number of good/bad
 - time restrictions
-- prevent duplicate submissions to one upload
+
 - rename `login` namespace to `auth`
 - todays/todays - follow todays markdown files uploaded
     - choose n files.
@@ -14,6 +14,21 @@
 - restore's return value displayed on the terminal is noisy
 - sum received points
 - sum sent points
+- does not display /wil2/todays flash
+- wil2 stacks when not connected to redis-server
+
+# 0.3.0
+
+- update deps - hkimjp/carmine-farm 0.2.4
+- span.inline-block - why is this needed?
+- redis key:
+
+    (c/lpush (str "wil2:" user ":" (today)) id)
+    (c/setex (str "wil2:" user ":pt") 60 id)
+
+- prevent duplicate submissions to one upload by display filtered uploads after sending points.
+- renamed `todays/upload` to `todays/upload!`
+- renamed `/my` to `/points`
 
 # 0.2.9 (2025-09-08)
 

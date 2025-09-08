@@ -3,7 +3,7 @@
    [hiccup2.core :as h]
    [ring.util.response :as response]))
 
-(def version "0.2.9")
+(def version "0.3.0")
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-green-700")
 
@@ -12,7 +12,7 @@
    [:div.text-2xl.font-medium.text-white "WIL2"]
    [:div {:class menu} [:a {:href "/wil2"} "todays"]]
    [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
-   [:div {:class menu} [:a {:href "/wil2/my"} "points"]]
+   [:div {:class menu} [:a {:href "/wil2/points"} "points"]]
    [:div {:class menu} [:a {:href "/logout"} "logout"]]
    [:div {:class menu} [:a {:href "/help"} "HELP"]]
    [:div {:class menu} [:a {:href "/admin"} "(admin)"]]])
@@ -38,7 +38,7 @@
               :src  "/assets/js/htmx.min.js"
               :defer true}]
     [:title "WIL2"]]
-   [:body {:hx-boost "true"}
+   [:body#body {:hx-boost "true"}
     [:div
      (navbar)
      content

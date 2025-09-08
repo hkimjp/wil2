@@ -1,4 +1,4 @@
-(ns hkimjp.wil2.my
+(ns hkimjp.wil2.points
   (:require
    [hkimjp.datascript :as ds]
    [hkimjp.wil2.util :refer [user]]
@@ -43,7 +43,7 @@
    (str (reduce + (map second (ds/qq my-point-sent eid))))
    [:hr]])
 
-(defn my [request]
+(defn points [request]
   (let [user (user request)
         recv (group-by second (ds/qq my-point-recv user))]
     (t/log! :info (str "my " user "recv " recv))

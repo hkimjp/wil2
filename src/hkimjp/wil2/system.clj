@@ -4,7 +4,7 @@
    [ring.adapter.jetty :as jetty]
    [taoensso.telemere :as t]
    [hkimjp.wil2.routes :as routes]
-   [hkimjp.carmine-farm :as c]
+   [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]))
 
 (defonce server (atom nil))
@@ -23,13 +23,8 @@
     (.stop @server)
     (t/log! :info "server stopped.")))
 
-; (defn start-ds []
-;   (ds/start-or-restore {:url "jdbc:sqlite:storage/wil2.sqlite"}))
-
-; (defn stop-ds []
-;   (ds/stop))
-
-; the URL shoube be provided thru ENV VAR?
+; FIXME:
+; the JDBC-URL and REDIS-SERVER shoube be provided thru ENV VAR
 (defn start-system []
   (c/redis-server)
   (ds/start-or-restore {:url "jdbc:sqlite:storage/wil2.sqlite"})
