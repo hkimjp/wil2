@@ -47,4 +47,7 @@
   (str (jt/local-date))
 
   (dummy 10)
+
+  (some #(= "5"  %) ["1" "2" "3" "5"])
+
   :rcf)

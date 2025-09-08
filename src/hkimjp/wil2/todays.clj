@@ -116,17 +116,28 @@
     :hx-target "#wil"}
    login])
 
+(defn- filter-answered
+  [uploads answered]
+  (into #{}
+        (for [[id user] uploads]
+          (when-not (some #(= (str id) %) answered)
+            [id user]))))
+
 ;; ここでフィルタする
 (defn todays
   [request]
   (t/log! :debug "todays")
-  (let [uploads (ds/qq todays-uploads (today))]
+  (let [today (today)
+        answered (c/lrange (str "wil2:" (user request) ":" today))
+        uploads (ds/qq todays-uploads today)
+        filtered (filter-answered uploads answered)]
     (page
      [:div.mx-4
       [:div.text-2xl.font-medium "Todays"]
       [:p "他のユーザの WIL を読んで評価する。"]
       [:div.font-bold "uploaded"]
-      (into [:div.mx-2] (mapv link uploads))
+      (into [:div.mx-2]
+            (mapv link filtered))
       [:div#wil.py-2 [:span.font-bold "評価: "] " ⬆️ ➡️ ⬇️"]])))
 
 (defn switch [request]
