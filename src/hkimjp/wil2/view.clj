@@ -38,7 +38,7 @@
               :src  "/assets/js/htmx.min.js"
               :defer true}]
     [:title "WIL2"]]
-   [:body {:hx-boost "true"}
+   [:body#body {:hx-boost "true"}
     [:div
      (navbar)
      content

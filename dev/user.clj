@@ -25,10 +25,10 @@
 ;; (reload/reload)
 ;; (restart-system)
 
-(defn dummy [n]
+(defn dummy [user n]
   (doseq [n (range 10)]
     (ds/put! {:wil2 "upload"
-              :login "tue2"
+              :login user
               :md (str "# dummy\n" n)
               :date (today)
               :updated (jt/local-date-time)})))
@@ -46,8 +46,8 @@
   (today)
   (str (jt/local-date))
 
-  (dummy 10)
+  (dummy "hkimura" 10)
 
   (some #(= "5"  %) ["1" "2" "3" "5"])
-
+  (count (c/lrange "wil2:hkimura:2025-09-08"))
   :rcf)

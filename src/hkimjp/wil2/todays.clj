@@ -77,20 +77,38 @@
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
-        pt (pt (:uri request))]
+        pt (pt (:uri request))
+        one-minute? (some? (c/get (str "wil2:" user ":pt")))
+        count-range (count (c/lrange (str "wil2:" user ":" (today))))]
     (t/log! :info (str "point! " user " to " id " pt " pt))
-    (ds/put! {:wil2 "point"
-              :login user
-              :to/id id
-              :pt pt
-              :updated (jt/local-date-time)})
-    (c/lpush (str "wil2:" user ":" (today)) id)
-    (c/setex (str "wil2:" user ":pt") 60 id)
-    (resp/response "<p>received.</p>")))
+    (t/log! :debug (str "one-minute? " one-minute?))
+    (t/log! :debug (str "count-range " count-range))
+    (cond
+      one-minute?
+      (do
+        (t/log! :info "1分以内には出せない")
+        (-> (resp/redirect "/wil2/todays")
+            (assoc :session :flash "1分以内には出せない")))
+      (< 5 count-range)
+      (do
+        (t/log! :info "一日5通以上出せない。")
+        (-> (resp/redirect "/wil2/todays")
+            (assoc :session :flash "一日5通以上出せない。")))
+      :else
+      (do
+        (ds/put! {:wil2 "point"
+                  :login user
+                  :to/id id
+                  :pt pt
+                  :updated (jt/local-date-time)})
+        (c/lpush (str "wil2:" user ":" (today)) id)
+        (c/setex (str "wil2:" user ":pt") 60 id)
+        (resp/redirect "/wil2/todays")))))
 
 (defn- button [key sym]
   [:button {:hx-post (str "/wil2/point/" key)
-            :hx-target "#wil"}
+            :hx-target "#body"
+            :hx-swap "innerHTML"}
    [:span.hover:text-2xl sym]])
 
 (defn md
@@ -111,7 +129,7 @@
                (button key sym))]])))))
 
 (defn- link [[eid login]]
-  [:span.px-2.hover:underline
+  [:a.inline-block.pr-2.hover:underline
    {:hx-get (str "/wil2/md/" eid)
     :hx-target "#wil"}
    login])
@@ -134,10 +152,11 @@
     (page
      [:div.mx-4
       [:div.text-2xl.font-medium "Todays"]
+      (when-let [flash (:flash request)]
+        [:div {:class "text-red-500"} flash])
       [:p "他のユーザの WIL を読んで評価する。"]
       [:div.font-bold "uploaded"]
-      (into [:div.mx-2]
-            (mapv link filtered))
+      (into [:div] (mapv link filtered))
       [:div#wil.py-2 [:span.font-bold "評価: "] " ⬆️ ➡️ ⬇️"]])))
 
 (defn switch [request]
