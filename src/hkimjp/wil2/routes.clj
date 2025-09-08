@@ -7,7 +7,7 @@
    [hkimjp.wil2.admin :as admin]
    [hkimjp.wil2.help :refer [help]]
    [hkimjp.wil2.login :refer [login login! logout!]]
-   [hkimjp.wil2.my :refer [my]]
+   [hkimjp.wil2.points :refer [points]]
    [hkimjp.wil2.todays :as todays]
    [hkimjp.wil2.weeks :refer [list-days browse]]))
 
@@ -23,10 +23,10 @@
     ["/todays"       {:get todays/todays}]
     ["/upload"       {:get todays/upload :post todays/upload!}]
     ["/md/:eid"      {:get todays/md}]
-    ["/point/:pt"    {:post todays/point}]
+    ["/point/:pt"    {:post todays/point!}]
     ["/weeks"        {:get list-days}]
     ["/browse/:date" {:get browse}]
-    ["/my"      {:get my}]]])
+    ["/points"      {:get points}]]])
 
 (defn root-handler
   [request]

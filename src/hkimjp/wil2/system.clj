@@ -4,7 +4,7 @@
    [ring.adapter.jetty :as jetty]
    [taoensso.telemere :as t]
    [hkimjp.wil2.routes :as routes]
-   [hkimjp.carmine-farm :as c]
+   [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]))
 
 (defonce server (atom nil))

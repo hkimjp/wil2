@@ -15,6 +15,11 @@
 - sum received points
 - sum sent points
 
+# 0.3.0-SNAPSHOT (2025-09-08)
+
+- renamed `todays/upload` to `todays/upload!`
+- renamed `/my` to `/points`
+
 # 0.2.9 (2025-09-08)
 
 - autocomplete="username" and autocomplete="current-password" in login.clj
