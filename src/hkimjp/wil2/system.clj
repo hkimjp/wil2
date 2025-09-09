@@ -23,11 +23,10 @@
     (.stop @server)
     (t/log! :info "server stopped.")))
 
-; FIXME:
-; the JDBC-URL and REDIS-SERVER shoube be provided thru ENV VAR
 (defn start-system []
-  (c/redis-server)
-  (ds/start-or-restore {:url "jdbc:sqlite:storage/wil2.sqlite"})
+  (t/log! :info (str "start-system redis " (env :redis) " ds " (env :datascript)))
+  (c/redis-server (env :redis))
+  (ds/start-or-restore {:url (env :datascript)})
   (start-jetty))
 
 (defn stop-system []

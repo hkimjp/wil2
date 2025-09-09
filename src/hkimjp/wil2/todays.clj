@@ -9,7 +9,7 @@
    [taoensso.telemere :as t]
    [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]
-   [hkimjp.wil2.util :refer [user today]]
+   [hkimjp.wil2.util :refer [user today now]]
    [hkimjp.wil2.view :refer [page]]))
 
 (def uploaded? '[:find ?e
@@ -74,59 +74,84 @@
     "bad" -1))
 
 ;; ここで redis にメモる。
+; FIXME
+; check max votes limitation
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
-        pt (pt (:uri request))
-        one-minute? (some? (c/get (str "wil2:" user ":pt")))
-        count-range (count (c/lrange (str "wil2:" user ":" (today))))]
+        pt (pt (:uri request))]
     (t/log! :info (str "point! " user " to " id " pt " pt))
-    (t/log! :debug (str "one-minute? " one-minute?))
-    (t/log! :debug (str "count-range " count-range))
     (cond
-      one-minute?
+      (some? (c/get (str "wil2:" user ":pt")))
       (do
-        (t/log! :info "1分以内には出せない")
-        (-> (resp/redirect "/wil2/todays")
-            (assoc :session :flash "1分以内には出せない")))
-      (< 5 count-range)
+        (t/log! :error (str "point! error freq " user))
+        (c/setex (str "wil2:" user ":error") 1 "60秒以内に連投できない"))
+      (< 100 (count (c/lrange (str "wil2:" user ":" (today))))) ;;;
       (do
-        (t/log! :info "一日5通以上出せない。")
-        (-> (resp/redirect "/wil2/todays")
-            (assoc :session :flash "一日5通以上出せない。")))
+        (t/log! :error (str "point! error max a day " user))
+        (c/setex (str "wil2:" user ":error") 1 "一日の評価可能数を超えた"))
       :else
       (do
+        (t/log! :info "no error")
         (ds/put! {:wil2 "point"
                   :login user
                   :to/id id
                   :pt pt
                   :updated (jt/local-date-time)})
         (c/lpush (str "wil2:" user ":" (today)) id)
-        (c/setex (str "wil2:" user ":pt") 60 id)
-        (resp/redirect "/wil2/todays")))))
+        (c/setex (str "wil2:" user ":pt") 20 (now)))) ;;;
+    (resp/redirect "/wil2/todays")))
 
 (defn- button [key sym]
-  [:button {:hx-post (str "/wil2/point/" key)
+  [:button {:hx-post   (str "/wil2/point/" key)
             :hx-target "#body"
-            :hx-swap "innerHTML"}
+            :hx-swap   "innerHTML"
+            :hx-boost  "false"}
    [:span.hover:text-2xl sym]])
 
 (defn md
-  "get /wil2/md/:eid"
+  "called by `get /wil2/md/:eid`"
   [{{:keys [eid]} :path-params :as request}]
-  (let [md (:md (ds/pl (parse-long eid)))
-        markdown (-> md md/parse md/->hiccup)]
-    (t/log! :info (str "md " (user request) " " eid))
-    (resp/response
-     (str (h/html
-           [:form
-            (h/raw (anti-forgery-field))
-            [:input {:type "hidden" :name "eid" :value eid}]
-            markdown
-            [:div.flex.gap-x-4
-             [:span.py-2.font-bold "評価: "]
-             (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
-               (button key sym))]])))))
+  (let [user (user request)]
+    (t/log! :info (str "md " user " " eid))
+    (-> [:form
+         (h/raw (anti-forgery-field))
+         [:input {:type "hidden" :name "eid" :value eid}]
+         (-> (:md (ds/pl (parse-long eid)))
+             md/parse
+             md/->hiccup)
+         [:div.flex.gap-x-4
+          [:span.py-2.font-bold "評価: "]
+          (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
+            (button key sym))]]
+        h/html
+        str
+        resp/response)))
+
+; under construction
+; (defn- button [eid key sym]
+;   [:form {:method "post"
+;           :action (str "/wil2/point/" key)}
+;    (h/raw (anti-forgery-field))
+;    [:input {:type "hidden" :name "eid" :value eid}]
+;    [:button.hover:text-2xl sym]])
+
+; (defn md
+;   "get /wil2/md/:eid"
+;   [{{:keys [eid]} :path-params :as request}]
+;   (let [user (user request)]
+;     (t/log! :info (str "md " user " " eid))
+;     (page
+;      (str (-> (:md (ds/pl (parse-long eid)))
+;               md/parse
+;               md/->hiccup)
+;           (-> [:div.flex.gap-x-4
+;                [:span.py-2.font-bold "評価: "]
+;                (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
+;                  (button eid key sym))]
+;               h/html)))))
+
+;----------------
 
 (defn- link [[eid login]]
   [:a.inline-block.pr-2.hover:underline
@@ -153,14 +178,25 @@
      [:div.mx-4
       [:div.text-2xl.font-medium "Todays"]
       (when-let [flash (:flash request)]
-        [:div {:class "text-red-500"} flash])
+        [:div.text-red-500 flash])
       [:p "他のユーザの WIL を読んで評価する。"]
+      [:p "（今日の評価数: " (count answered)
+       ", 評価時刻: " (c/get (str "wil2:" (user request) ":pt")) "）"]
       [:div.font-bold "uploaded"]
       (into [:div] (mapv link filtered))
-      [:div#wil.py-2 [:span.font-bold "評価: "] " ⬆️ ➡️ ⬇️"]])))
+      (when-let [err (c/get (str "wil2:" (user request) ":error"))]
+        [:div.text-red-600 err])
+      [:div#wil.py-2 [:span.font-bold "評価: "]]])))
 
 (defn switch [request]
   (t/log! :debug "switch")
-  (if (some? (first (ds/qq uploaded? (user request) (today))))
-    (resp/redirect "/wil2/todays")
-    (resp/redirect "/wil2/upload")))
+  (page
+   [:div [:div "debug"]
+    [:ul
+     [:li [:a {:href "/wil2/todays"} "todays"]]
+     [:li [:a {:href "/wil2/upload"} "upload"]]]])
+  ; debug
+  ; (if (some? (first (ds/qq uploaded? (user request) (today))))
+  ;   (resp/redirect "/wil2/todays")
+  ;   (resp/redirect "/wil2/upload"))
+  )

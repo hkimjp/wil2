@@ -37,6 +37,8 @@
   (ds/qq '[:find ?e
            :where
            [?e _ _]])
+  (c/get (str "wil2:" "hkimura" ":pt"))
+  (some? (c/get (str "wil2:" "hkimura" ":pt")))
   (c/ping)
   (c/set "x" 3)
   (c/get "x")
