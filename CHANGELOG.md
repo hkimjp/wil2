@@ -12,7 +12,11 @@
 - sum sent points
 - does not display /wil2/todays flash
 - sort answers?
-- display time under `send-points` section
+- display time under `send-points` section.
+- bug: the second call wipes out flash.
+
+2025-09-09T01:29:36.608667Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
+2025-09-09T01:29:36.610139Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
 
 # 0.3.1-SNAPSHOT (2025-09-09)
 

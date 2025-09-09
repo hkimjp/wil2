@@ -88,7 +88,7 @@
       (do
         (t/log! :info (str "point! error freq " user))
         (page [:div "1分以内に連投できない"]))
-      (< 5 (count (c/lrange (str "wil2:" user ":" (today)))))
+      (< 100 (count (c/lrange (str "wil2:" user ":" (today)))))
       (do
         (t/log! :info (str "point! error max a day " user))
         (page [:div "一日5通以上出せない。"]))
@@ -109,28 +109,49 @@
             :hx-swap "innerHTML"}
    [:span.hover:text-2xl sym]])
 
-; frequency check
 (defn md
   "get /wil2/md/:eid"
   [{{:keys [eid]} :path-params :as request}]
   (let [user (user request)]
     (t/log! :info (str "md " user " " eid))
-    (-> (if false ; (some? (c/get (str "wil2:" user ":pt")))
-          [:div "Error"
-           [:div "1分以内に連取できない。"]]
-          [:form
-           (h/raw (anti-forgery-field))
-           [:input {:type "hidden" :name "eid" :value eid}]
-           (-> (:md (ds/pl (parse-long eid)))
-               md/parse
-               md/->hiccup)
-           [:div.flex.gap-x-4
-            [:span.py-2.font-bold "評価: "]
-            (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
-              (button key sym))]])
+    (-> [:form
+         (h/raw (anti-forgery-field))
+         [:input {:type "hidden" :name "eid" :value eid}]
+         (-> (:md (ds/pl (parse-long eid)))
+             md/parse
+             md/->hiccup)
+         [:div.flex.gap-x-4
+          [:span.py-2.font-bold "評価: "]
+          (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
+            (button key sym))]]
         h/html
         str
         resp/response)))
+
+; under construction
+; (defn- button [eid key sym]
+;   [:form {:method "post"
+;           :action (str "/wil2/point/" key)}
+;    (h/raw (anti-forgery-field))
+;    [:input {:type "hidden" :name "eid" :value eid}]
+;    [:button.hover:text-2xl sym]])
+
+; (defn md
+;   "get /wil2/md/:eid"
+;   [{{:keys [eid]} :path-params :as request}]
+;   (let [user (user request)]
+;     (t/log! :info (str "md " user " " eid))
+;     (page
+;      (str (-> (:md (ds/pl (parse-long eid)))
+;               md/parse
+;               md/->hiccup)
+;           (-> [:div.flex.gap-x-4
+;                [:span.py-2.font-bold "評価: "]
+;                (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
+;                  (button eid key sym))]
+;               h/html)))))
+
+;----------------
 
 (defn- link [[eid login]]
   [:a.inline-block.pr-2.hover:underline
@@ -157,11 +178,11 @@
      [:div.mx-4
       [:div.text-2xl.font-medium "Todays"]
       (when-let [flash (:flash request)]
-        [:div {:class "text-red-500"} flash])
+        [:div.text-red-500 flash])
       [:p "他のユーザの WIL を読んで評価する。"]
       [:div.font-bold "uploaded"]
       (into [:div] (mapv link filtered))
-      [:div#wil.py-2 [:span.font-bold "評価: "] " ⬆️ ➡️ ⬇️"]])))
+      [:div#wil.py-2 [:span.font-bold "評価: "]]])))
 
 (defn switch [request]
   (t/log! :debug "switch")
