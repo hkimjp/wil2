@@ -24,6 +24,7 @@
     (t/log! :info "server stopped.")))
 
 (defn start-system []
+  (t/log! :info (str "start-system redis " (env :redis) " ds " (env :datascript)))
   (c/redis-server (env :redis))
   (ds/start-or-restore {:url (env :datascript)})
   (start-jetty))

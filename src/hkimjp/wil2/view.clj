@@ -4,7 +4,7 @@
    [ring.util.response :as response]
    [taoensso.telemere :as t]))
 
-(def version "0.3.1-SNAPSHOT")
+(def version "0.3.1-SNAPSHOT-2")
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-green-700")
 
