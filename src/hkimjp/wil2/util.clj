@@ -9,8 +9,11 @@
 (defn today []
   (str (jt/local-date)))
 
+(defn now []
+  (subs (str (jt/local-time)) 0 8))
+
 (defn abbrev
-  "shorten string for concise log."
+  "shorten string s for concise log."
   ([s] (abbrev s 80))
   ([s n] (let [pat (re-pattern (str "(^.{" n "}).*"))]
            (str/replace-first s pat "$1..."))))

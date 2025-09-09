@@ -37,6 +37,8 @@
   (ds/qq '[:find ?e
            :where
            [?e _ _]])
+  (c/get (str "wil2:" "hkimura" ":pt"))
+  (some? (c/get (str "wil2:" "hkimura" ":pt")))
   (c/ping)
   (c/set "x" 3)
   (c/get "x")
@@ -46,7 +48,7 @@
   (today)
   (str (jt/local-date))
 
-  (dummy "chatgpt" 10)
+  (dummy "hkimura" 10)
 
   (some #(= "5"  %) ["1" "2" "3" "5"])
   (count (c/lrange "wil2:hkimura:2025-09-08"))
