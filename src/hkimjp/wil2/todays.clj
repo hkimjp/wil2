@@ -9,7 +9,7 @@
    [taoensso.telemere :as t]
    [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]
-   [hkimjp.wil2.util :refer [user today]]
+   [hkimjp.wil2.util :refer [user today now]]
    [hkimjp.wil2.view :refer [page]]))
 
 (def uploaded? '[:find ?e
@@ -79,31 +79,28 @@
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
-        pt (pt (:uri request))
-        ;count-range (count (c/lrange (str "wil2:" user ":" (today))))
-        ]
+        pt (pt (:uri request))]
     (t/log! :info (str "point! " user " to " id " pt " pt))
     (cond
       (some? (c/get (str "wil2:" user ":pt")))
       (do
-        (t/log! :info (str "point! error freq " user))
-        ; (page [:div "1分以内に連投できない"])
-        ; (resp/response (str (h/html [:div "1分以内に連投できない"])))
-        )
+        (t/log! :error (str "point! error freq " user))
+        (c/setex (str "wil2:" user ":error") 1 "60秒以内に連投できない"))
       (< 100 (count (c/lrange (str "wil2:" user ":" (today))))) ;;;
       (do
-        (t/log! :info (str "point! error max a day " user))
-        (page [:div "一日5通以上出せない。"]))
+        (t/log! :error (str "point! error max a day " user))
+        (c/setex (str "wil2:" user ":error") 1 "一日の評価可能数を超えた"))
       :else
       (do
+        (t/log! :info "no error")
         (ds/put! {:wil2 "point"
                   :login user
                   :to/id id
                   :pt pt
                   :updated (jt/local-date-time)})
         (c/lpush (str "wil2:" user ":" (today)) id)
-        (c/setex (str "wil2:" user ":pt") 20 (str (java.util.Date.))) ;;;
-        (resp/redirect "/wil2/todays")))))
+        (c/setex (str "wil2:" user ":pt") 20 (now)))) ;;;
+    (resp/redirect "/wil2/todays")))
 
 (defn- button [key sym]
   [:button {:hx-post   (str "/wil2/point/" key)
@@ -183,11 +180,12 @@
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
       [:p "他のユーザの WIL を読んで評価する。"]
+      [:p "（今日の評価数: " (count answered)
+       ", 評価時刻: " (c/get (str "wil2:" (user request) ":pt")) "）"]
       [:div.font-bold "uploaded"]
       (into [:div] (mapv link filtered))
-      [:div
-       [:p [:span.font-bold "todays comments: "] (count answered)]
-       [:p [:span.font-bold "last comment at: "] (c/get (str "wil2:" (user request) ":pt"))]]
+      (when-let [err (c/get (str "wil2:" (user request) ":error"))]
+        [:div.text-red-600 err])
       [:div#wil.py-2 [:span.font-bold "評価: "]]])))
 
 (defn switch [request]
