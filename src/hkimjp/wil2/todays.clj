@@ -87,7 +87,9 @@
       (some? (c/get (str "wil2:" user ":pt")))
       (do
         (t/log! :info (str "point! error freq " user))
-        (page [:div "1分以内に連投できない"]))
+        ; (page [:div "1分以内に連投できない"])
+        ; (resp/response (str (h/html [:div "1分以内に連投できない"])))
+        )
       (< 100 (count (c/lrange (str "wil2:" user ":" (today))))) ;;;
       (do
         (t/log! :info (str "point! error max a day " user))
@@ -100,17 +102,18 @@
                   :pt pt
                   :updated (jt/local-date-time)})
         (c/lpush (str "wil2:" user ":" (today)) id)
-        (c/setex (str "wil2:" user ":pt") 20 id) ;;;
+        (c/setex (str "wil2:" user ":pt") 20 (str (java.util.Date.))) ;;;
         (resp/redirect "/wil2/todays")))))
 
 (defn- button [key sym]
-  [:button {:hx-post (str "/wil2/point/" key)
+  [:button {:hx-post   (str "/wil2/point/" key)
             :hx-target "#body"
-            :hx-swap "innerHTML"}
+            :hx-swap   "innerHTML"
+            :hx-boost  "false"}
    [:span.hover:text-2xl sym]])
 
 (defn md
-  "get /wil2/md/:eid"
+  "called by `get /wil2/md/:eid`"
   [{{:keys [eid]} :path-params :as request}]
   (let [user (user request)]
     (t/log! :info (str "md " user " " eid))
@@ -182,6 +185,9 @@
       [:p "他のユーザの WIL を読んで評価する。"]
       [:div.font-bold "uploaded"]
       (into [:div] (mapv link filtered))
+      [:div
+       [:p [:span.font-bold "todays comments: "] (count answered)]
+       [:p [:span.font-bold "last comment at: "] (c/get (str "wil2:" (user request) ":pt"))]]
       [:div#wil.py-2 [:span.font-bold "評価: "]]])))
 
 (defn switch [request]
