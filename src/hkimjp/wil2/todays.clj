@@ -74,26 +74,24 @@
     "bad" -1))
 
 ;; ここで redis にメモる。
+; FIXME
+; check max votes limitation
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
         pt (pt (:uri request))
-        one-minute? (some? (c/get (str "wil2:" user ":pt")))
-        count-range (count (c/lrange (str "wil2:" user ":" (today))))]
+        ;count-range (count (c/lrange (str "wil2:" user ":" (today))))
+        ]
     (t/log! :info (str "point! " user " to " id " pt " pt))
-    (t/log! :debug (str "one-minute? " one-minute?))
-    (t/log! :debug (str "count-range " count-range))
     (cond
-      one-minute?
+      (some? (c/get (str "wil2:" user ":pt")))
       (do
-        (t/log! :info "1分以内には出せない")
-        (-> (resp/redirect "/wil2/todays")
-            (assoc :session :flash "1分以内には出せない")))
-      (< 5 count-range)
+        (t/log! :info (str "point! error freq " user))
+        (page [:div "1分以内に連投できない"]))
+      (< 5 (count (c/lrange (str "wil2:" user ":" (today)))))
       (do
-        (t/log! :info "一日5通以上出せない。")
-        (-> (resp/redirect "/wil2/todays")
-            (assoc :session :flash "一日5通以上出せない。")))
+        (t/log! :info (str "point! error max a day " user))
+        (page [:div "一日5通以上出せない。"]))
       :else
       (do
         (ds/put! {:wil2 "point"
@@ -111,22 +109,28 @@
             :hx-swap "innerHTML"}
    [:span.hover:text-2xl sym]])
 
+; frequency check
 (defn md
   "get /wil2/md/:eid"
   [{{:keys [eid]} :path-params :as request}]
-  (let [md (:md (ds/pl (parse-long eid)))
-        markdown (-> md md/parse md/->hiccup)]
-    (t/log! :info (str "md " (user request) " " eid))
-    (resp/response
-     (str (h/html
-           [:form
-            (h/raw (anti-forgery-field))
-            [:input {:type "hidden" :name "eid" :value eid}]
-            markdown
-            [:div.flex.gap-x-4
-             [:span.py-2.font-bold "評価: "]
-             (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
-               (button key sym))]])))))
+  (let [user (user request)]
+    (t/log! :info (str "md " user " " eid))
+    (-> (if false ; (some? (c/get (str "wil2:" user ":pt")))
+          [:div "Error"
+           [:div "1分以内に連取できない。"]]
+          [:form
+           (h/raw (anti-forgery-field))
+           [:input {:type "hidden" :name "eid" :value eid}]
+           (-> (:md (ds/pl (parse-long eid)))
+               md/parse
+               md/->hiccup)
+           [:div.flex.gap-x-4
+            [:span.py-2.font-bold "評価: "]
+            (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
+              (button key sym))]])
+        h/html
+        str
+        resp/response)))
 
 (defn- link [[eid login]]
   [:a.inline-block.pr-2.hover:underline

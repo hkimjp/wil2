@@ -1,7 +1,8 @@
 (ns hkimjp.wil2.view
   (:require
    [hiccup2.core :as h]
-   [ring.util.response :as response]))
+   [ring.util.response :as response]
+   [taoensso.telemere :as t]))
 
 (def version "0.3.1-SNAPSHOT")
 
@@ -46,6 +47,7 @@
 
 (defn page
   [content]
+  (t/log! :info (str "page"))
   (-> (str (h/html (h/raw "<!DOCTYPE html>") (base content)))
       response/response
       (response/header "Content-Type" "text/html")))

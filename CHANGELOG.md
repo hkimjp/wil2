@@ -12,10 +12,13 @@
 - sum sent points
 - does not display /wil2/todays flash
 - sort answers?
-
+- display time under `send-points` section
 
 # 0.3.1-SNAPSHOT (2025-09-09)
 
+- provide REDIS, DATASCRIPT via env var
+- when click `upload`, check frequency limit
+- when click `vote`, check maximum limit
 
 # 0.3.0 (2025-09-09)
 
