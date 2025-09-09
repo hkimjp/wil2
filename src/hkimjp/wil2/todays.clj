@@ -73,9 +73,11 @@
     "soso" 1
     "bad" -1))
 
+(defn- point!-error [user msg]
+  (t/log! :info (str "point! error " msg))
+  (c/setex (str "wil2:" user ":error") 1 msg))
+
 ;; ここで redis にメモる。
-; FIXME
-; check max votes limitation
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
@@ -83,23 +85,20 @@
     (t/log! :info (str "point! " user " to " id " pt " pt))
     (cond
       (some? (c/get (str "wil2:" user ":pt")))
-      (do
-        (t/log! :error (str "point! error freq " user))
-        (c/setex (str "wil2:" user ":error") 1 "60秒以内に連投できない"))
-      (< 100 (count (c/lrange (str "wil2:" user ":" (today))))) ;;;
-      (do
-        (t/log! :error (str "point! error max a day " user))
-        (c/setex (str "wil2:" user ":error") 1 "一日の評価可能数を超えた"))
+      (point!-error user "60秒以内に連投できない")
+      ;; FIXME: sync to error message
+      (< 100 (count (c/lrange (str "wil2:" user ":" (today)))))
+      (point!-error user "一日の最大可能評価数を超えた")
       :else
       (do
-        (t/log! :info "no error")
         (ds/put! {:wil2 "point"
                   :login user
                   :to/id id
                   :pt pt
                   :updated (jt/local-date-time)})
         (c/lpush (str "wil2:" user ":" (today)) id)
-        (c/setex (str "wil2:" user ":pt") 20 (now)))) ;;;
+        ;;; FIXME sync to message
+        (c/setex (str "wil2:" user ":pt") 20 (now))))
     (resp/redirect "/wil2/todays")))
 
 (defn- button [key sym]
@@ -127,29 +126,6 @@
         h/html
         str
         resp/response)))
-
-; under construction
-; (defn- button [eid key sym]
-;   [:form {:method "post"
-;           :action (str "/wil2/point/" key)}
-;    (h/raw (anti-forgery-field))
-;    [:input {:type "hidden" :name "eid" :value eid}]
-;    [:button.hover:text-2xl sym]])
-
-; (defn md
-;   "get /wil2/md/:eid"
-;   [{{:keys [eid]} :path-params :as request}]
-;   (let [user (user request)]
-;     (t/log! :info (str "md " user " " eid))
-;     (page
-;      (str (-> (:md (ds/pl (parse-long eid)))
-;               md/parse
-;               md/->hiccup)
-;           (-> [:div.flex.gap-x-4
-;                [:span.py-2.font-bold "評価: "]
-;                (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
-;                  (button eid key sym))]
-;               h/html)))))
 
 ;----------------
 
@@ -188,7 +164,7 @@
         [:div.text-red-600 err])
       [:div#wil.py-2 [:span.font-bold "評価: "]]])))
 
-(defn switch [request]
+(defn switch [_request]
   (t/log! :debug "switch")
   (page
    [:div [:div "debug"]
