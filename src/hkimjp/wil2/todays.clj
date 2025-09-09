@@ -88,7 +88,7 @@
       (do
         (t/log! :info (str "point! error freq " user))
         (page [:div "1分以内に連投できない"]))
-      (< 5 (count (c/lrange (str "wil2:" user ":" (today)))))
+      (< 100 (count (c/lrange (str "wil2:" user ":" (today))))) ;;;
       (do
         (t/log! :info (str "point! error max a day " user))
         (page [:div "一日5通以上出せない。"]))
@@ -100,7 +100,7 @@
                   :pt pt
                   :updated (jt/local-date-time)})
         (c/lpush (str "wil2:" user ":" (today)) id)
-        (c/setex (str "wil2:" user ":pt") 60 id)
+        (c/setex (str "wil2:" user ":pt") 20 id) ;;;
         (resp/redirect "/wil2/todays")))))
 
 (defn- button [key sym]
