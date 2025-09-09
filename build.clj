@@ -3,7 +3,7 @@
   (:require [clojure.tools.build.api :as b]))
 
 (def lib 'io.github.hkimjp/wil2)
-(def version "0.3.1-SNAPSHOT-2")
+(def version "0.3.1-SNAPSHOT-3")
 (def main 'hkimjp.wil2.core)
 (def class-dir "target/classes")
 

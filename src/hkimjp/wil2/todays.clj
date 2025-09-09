@@ -186,6 +186,13 @@
 
 (defn switch [request]
   (t/log! :debug "switch")
-  (if (some? (first (ds/qq uploaded? (user request) (today))))
-    (resp/redirect "/wil2/todays")
-    (resp/redirect "/wil2/upload")))
+  (page
+   [:div [:div "debug"]
+    [:ul
+     [:li [:a {:href "/wil2/todays"} "todays"]]
+     [:li [:a {:href "/wil2/upload"} "upload"]]]])
+  ; debug
+  ; (if (some? (first (ds/qq uploaded? (user request) (today))))
+  ;   (resp/redirect "/wil2/todays")
+  ;   (resp/redirect "/wil2/upload"))
+  )

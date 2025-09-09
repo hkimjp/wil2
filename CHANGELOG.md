@@ -18,7 +18,7 @@
 2025-09-09T01:29:36.608667Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
 2025-09-09T01:29:36.610139Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
 
-# 0.3.1-SNAPSHOT-2 (2025-09-09) (2025-09-09)
+# 0.3.1-SNAPSHOT-3 (2025-09-09)-2 (2025-09-09) (2025-09-09)
 
 - provide REDIS, DATASCRIPT via env var
 - when click `upload`, check frequency limit
