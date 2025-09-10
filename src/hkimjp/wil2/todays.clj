@@ -154,7 +154,6 @@
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
       [:p "他のユーザの WIL を読んで評価する。"]
-
       [:div.font-bold "uploaded"]
       (into [:div] (mapv link filtered))
       [:div#wil.py-2 [:span.font-bold "評価: "]
@@ -172,4 +171,3 @@
     (if (some? (first (ds/qq uploaded? (user request) (today))))
       (resp/redirect "/wil2/todays")
       (resp/redirect "/wil2/upload"))))
-
