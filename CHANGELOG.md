@@ -6,6 +6,9 @@
 - sum received points
 - sum sent points
 
+# 0.3.3-SNAPSHOT
+
+- display `develop` when DEVELOP=true
 
 # 0.3.2 (2025-09-10)
 
