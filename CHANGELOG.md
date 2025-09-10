@@ -10,6 +10,7 @@
 
 # 0.3.3-SNAPSHOT
 
+- removed slf4j-nop, muuntaja from `deps.edn`
 - display `develop` when DEVELOP=true
 - renamed `link` to `hx-link`, `button` to `hx-button` in todays.clj
 - ranamed Todays, "uploaded"  to "upload (filtered)"
