@@ -38,12 +38,12 @@
     (page
      [:div.mx-4
       [:div.text-2xl "Upload (" (user request) ")"]
-      [:p "今日の WIL を提出する。"]
+      [:p.py-4 "今日の WIL を提出する。"]
       [:div
-       [:span.font-bold "uploaded:"]
+       [:span.font-bold "Uploaded:"]
        [:p.m-4 (interpose " " (mapv second uploaded))]]
       [:div
-       [:span.font-bold "upload your markdown"]
+       [:span.font-bold "Upload yours:"]
        [:p "今日の WIL を書いたマークダウンを選んで upload ボタン。"]
        [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
         (h/raw (anti-forgery-field))
@@ -144,13 +144,13 @@
                                [id user])))]
     (page
      [:div.mx-4
-      [:div.text-2xl.font-medium "Todays"]
-      [:p "（今日の評価数: " (count answered)
-       ", 最終評価時刻: " (c/get (str "wil2:" (user request) ":pt")) "）"]
+      [:div.inline-block [:span.text-2xl.font-medium "Todays"]
+       [:span "（今日の評価数: " (count answered)
+        ", 最終評価時刻: " (c/get (str "wil2:" (user request) ":pt")) "）"]]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
-      [:p "他のユーザの WIL をきちんと読んで評価する。"]
-      [:div.font-bold "uploaded (filtered)"]
+      [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"]
+      [:div.font-bold "未評価 WIL:"]
       (into [:div] (mapv hx-link filtered))
       [:div#wil.py-2 [:span.font-bold "評価: "]
        (when-let [err (c/get (str "wil2:" (user request) ":error"))]

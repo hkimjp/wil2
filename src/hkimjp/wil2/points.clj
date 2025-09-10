@@ -63,7 +63,8 @@
         "⬆️ "   (count (recv 2))
         ", ➡️ " (count (recv 1))
         ", ⬇️ " (count (recv -1))]
-       [:div.font-bold.py-4 "自分の WIL についたポイントは？"]
+       [:div.font-bold.py-4 "自分の WIL とポイント"]
+       [:hr]
        [:div
         (for [[e md] (sort-by second (ds/qq my-uploads user))]
           (conj (-> md
