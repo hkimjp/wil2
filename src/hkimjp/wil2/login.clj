@@ -17,7 +17,7 @@
   (page
    [:div.mx-4
     [:div.font-bold.p-2 "LOGIN"
-     (when (env :develop) "(DEVELOP)")]
+     (when (env :develop) " (DEVELOP)")]
     (when-let [flash (:flash request)]
       [:div {:class "text-red-500"} flash])
     [:div.p-1

@@ -5,10 +5,12 @@
 - rename `login` namespace to `auth`
 - sum received points
 - sum sent points
+- Todays, uploaded is `filtered uploads`
 
 # 0.3.3-SNAPSHOT
 
 - display `develop` when DEVELOP=true
+- renamed `link` to `hx-link`, `button` to `hx-button` in todays.clj
 
 # 0.3.2 (2025-09-10)
 
