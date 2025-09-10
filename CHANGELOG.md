@@ -1,24 +1,13 @@
-# TODO
+# Unreleased
 
-- my - sort by date
-- how to clj-reload?
-- test
+- how to clj-reload
+- do test
 - rename `login` namespace to `auth`
-- todays/todays - follow todays markdown files uploaded
-    - choose n files.
-    - after mark his/her markdown file, decrement the n
-- restore's return value displayed on the terminal is noisy
 - sum received points
 - sum sent points
-- does not display /wil2/todays flash
-- sort answers?
-- display time under `send-points` section.
-- bug: the second call wipes out flash.
 
-2025-09-09T01:29:36.608667Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
-2025-09-09T01:29:36.610139Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
 
-# 0.3.2-SNAPSHOT
+# 0.3.2 (2025-09-10)
 
 - refactor
 - weeks.clj - (sort (dates))
@@ -27,10 +16,18 @@
 - log level - :info, :debug, :error, :warn
 - added view/html
 - added max-count and min-interval
+- sort dates
+- does not display /wil2/todays flash
+- display time under `send-points` section.
 
 # 0.3.1 (2025-09-09)
 
-- emulate flash by using REDIS.
+- bug: the second call wipes out flash.
+
+    2025-09-09T01:29:36.608667Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
+    2025-09-09T01:29:36.610139Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
+
+- solved by emulate flash by using REDIS.
 - provide REDIS, DATASCRIPT via env var
 - when click `upload`, check frequency limit
 - when click `vote`, check maximum limit
