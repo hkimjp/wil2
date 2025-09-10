@@ -63,7 +63,7 @@
         "⬆️ "   (count (recv 2))
         ", ➡️ " (count (recv 1))
         ", ⬇️ " (count (recv -1))]
-       [:p.mx-4.py-2 "WIL ごとの受信ポイントは以下。"]
+       [:div.font-bold.py-4 "自分の WIL についたポイントは？"]
        [:div
         (for [[e md] (sort-by second (ds/qq my-uploads user))]
           (conj (-> md

@@ -27,9 +27,9 @@
   (page
    [:div.mx-4
     [:div.text-2xl.font-meduim "Weeks"]
-    [:p.py-2 "日付をクリックで受け取った WIL を表示する。"]
-    (into [:div] (mapv link (ds/qq dates)))
-    [:div#weeks "[submissions]"]]))
+    [:p.py-2 "日付をクリックでその日の WIL を表示する。"]
+    (into [:div] (mapv link (sort (ds/qq dates))))
+    [:div#weeks "[wils]"]]))
 
 (defn browse [{{:keys [date]} :path-params}]
   (t/log! :debug (str "browse: date " date))
