@@ -7,6 +7,7 @@
    [ring.util.anti-forgery :refer [anti-forgery-field]]
    [ring.util.response :as resp]
    [taoensso.telemere :as t]
+   [hkimjp.wil2.util :refer [user]]
    [hkimjp.wil2.view :refer [page]]))
 
 (def l22 (or (env :auth) "https://l22.melt.kyutech.ac.jp"))
@@ -29,9 +30,9 @@
 
 (defn login!
   [{{:keys [login password]} :params}]
+  ;; always login success when (env :auth) is empty
   (if (empty? (env :auth))
     (do
-      ;; always login success when (env :auth) is empty
       (t/log! :info (str "no auth mode: " login))
       (-> (resp/redirect "/wil2")
           (assoc-in [:session :identity] login)))
@@ -47,6 +48,7 @@
             (t/log! :info (str "login failed: " login))
             (-> (resp/redirect "/")
                 (assoc :session {} :flash "login failed")))))
+      ;; happens?
       (catch Exception e
         (t/log! :warn (.getMessage e))
         (-> (resp/redirect "/")
@@ -54,6 +56,6 @@
 
 (defn logout!
   [request]
-  (t/log! :info (str "logout! " (get-in request [:session :identity])))
+  (t/log! :info (str "logout! " (user request)))
   (-> (resp/redirect "/")
       (assoc :session {})))

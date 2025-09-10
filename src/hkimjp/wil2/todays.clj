@@ -1,6 +1,7 @@
 (ns hkimjp.wil2.todays
   (:require
    [clojure.string :as str]
+   [environ.core :refer [env]]
    [hiccup2.core :as h]
    [java-time.api :as jt]
    [nextjournal.markdown :as md]
@@ -10,7 +11,11 @@
    [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]
    [hkimjp.wil2.util :refer [user today now]]
-   [hkimjp.wil2.view :refer [page]]))
+   [hkimjp.wil2.view :refer [page html]]))
+
+(def max-count "submisions allowed in a day" (if (env :develop) 100 5))
+
+(def min-interval "inteval between submissions" (if (env :develop) 20 60))
 
 (def uploaded? '[:find ?e
                  :in $ ?login ?date
@@ -28,8 +33,8 @@
 
 (defn upload
   [request]
-  (t/log! :debug "upload")
   (let [uploaded (ds/qq todays-uploads (today))]
+    (t/log! :info (str "upload " (user request)))
     (page
      [:div.mx-4
       [:div.text-2xl "Upload (" (user request) ")"]
@@ -39,7 +44,7 @@
        [:p.m-4 (interpose ", " (mapv second uploaded))]]
       [:div
        [:span.font-bold "upload your markdown"]
-       [:p "今日のWILを書いたマークダウンを選んで upload ボタン。"]
+       [:p "今日の WIL を書いたマークダウンを選んで upload ボタン。"]
        [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
         (h/raw (anti-forgery-field))
         [:input
@@ -50,12 +55,12 @@
          "upload"]]]])))
 
 (defn upload! [request]
-  (let [login (user request)]
-    (t/log! :info (str "upload! " login))
+  (let [user (user request)]
+    (t/log! :info (str "upload! " user))
     (if-let [u (get-in request [:params :file :tempfile])]
       (do
         (ds/put! {:wil2 "upload"
-                  :login login
+                  :login user
                   :md (slurp u)
                   :date (today)
                   :updated (jt/local-date-time)})
@@ -73,11 +78,11 @@
     "soso" 1
     "bad" -1))
 
-(defn- point!-error [user msg]
-  (t/log! :info (str "point! error " msg))
+(defn- warn [user msg]
+  (t/log! :warn (str "point! error " msg))
   (c/setex (str "wil2:" user ":error") 1 msg))
 
-;; ここで redis にメモる。
+;; don't forget to memo to REDIS
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
@@ -85,10 +90,9 @@
     (t/log! :info (str "point! " user " to " id " pt " pt))
     (cond
       (some? (c/get (str "wil2:" user ":pt")))
-      (point!-error user "60秒以内に連投できない")
-      ;; FIXME: sync to error message
-      (< 100 (count (c/lrange (str "wil2:" user ":" (today)))))
-      (point!-error user "一日の最大可能評価数を超えた")
+      (warn user (str min-interval "秒以内に連投できない " (now)))
+      (< max-count (count (c/lrange (str "wil2:" user ":" (today)))))
+      (warn user "一日の最大可能評価数を超えた")
       :else
       (do
         (ds/put! {:wil2 "point"
@@ -97,8 +101,7 @@
                   :pt pt
                   :updated (jt/local-date-time)})
         (c/lpush (str "wil2:" user ":" (today)) id)
-        ;;; FIXME sync to message
-        (c/setex (str "wil2:" user ":pt") 20 (now))))
+        (c/setex (str "wil2:" user ":pt") min-interval (now))))
     (resp/redirect "/wil2/todays")))
 
 (defn- button [key sym]
@@ -113,21 +116,19 @@
   [{{:keys [eid]} :path-params :as request}]
   (let [user (user request)]
     (t/log! :info (str "md " user " " eid))
-    (-> [:form
-         (h/raw (anti-forgery-field))
-         [:input {:type "hidden" :name "eid" :value eid}]
-         (-> (:md (ds/pl (parse-long eid)))
-             md/parse
-             md/->hiccup)
-         [:div.flex.gap-x-4
-          [:span.py-2.font-bold "評価: "]
-          (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
-            (button key sym))]]
-        h/html
-        str
-        resp/response)))
+    (html
+     [:form
+      (h/raw (anti-forgery-field))
+      [:input {:type "hidden" :name "eid" :value eid}]
+      (-> (:md (ds/pl (parse-long eid)))
+          md/parse
+          md/->hiccup)
+      [:div.flex.gap-x-4
+       [:span.py-2.font-bold "評価: "]
+       (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
+         (button key sym))]])))
 
-;----------------
+;------------------------
 
 (defn- link [[eid login]]
   [:a.inline-block.pr-2.hover:underline
@@ -135,44 +136,40 @@
     :hx-target "#wil"}
    login])
 
-(defn- filter-answered
-  [uploads answered]
-  (into #{}
-        (for [[id user] uploads]
-          (when-not (some #(= (str id) %) answered)
-            [id user]))))
-
-;; ここでフィルタする
+;; filter submissions have-read or not yet
 (defn todays
   [request]
-  (t/log! :debug "todays")
-  (let [today (today)
+  (t/log! :info (str "todays " (use request)))
+  (let [today    (today)
         answered (c/lrange (str "wil2:" (user request) ":" today))
-        uploads (ds/qq todays-uploads today)
-        filtered (filter-answered uploads answered)]
+        uploads  (ds/qq todays-uploads today)
+        filtered (into #{} (for [[id user] uploads]
+                             (when-not (some #(= (str id) %) answered)
+                               [id user])))]
     (page
      [:div.mx-4
       [:div.text-2xl.font-medium "Todays"]
+      [:p "（今日の評価数: " (count answered)
+       ", 最終評価時刻: " (c/get (str "wil2:" (user request) ":pt")) "）"]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
       [:p "他のユーザの WIL を読んで評価する。"]
-      [:p "（今日の評価数: " (count answered)
-       ", 評価時刻: " (c/get (str "wil2:" (user request) ":pt")) "）"]
+
       [:div.font-bold "uploaded"]
       (into [:div] (mapv link filtered))
-      (when-let [err (c/get (str "wil2:" (user request) ":error"))]
-        [:div.text-red-600 err])
-      [:div#wil.py-2 [:span.font-bold "評価: "]]])))
+      [:div#wil.py-2 [:span.font-bold "評価: "]
+       (when-let [err (c/get (str "wil2:" (user request) ":error"))]
+         [:span.text-red-600 err])]])))
 
-(defn switch [_request]
+(defn switch [request]
   (t/log! :debug "switch")
-  (page
-   [:div [:div "debug"]
-    [:ul
-     [:li [:a {:href "/wil2/todays"} "todays"]]
-     [:li [:a {:href "/wil2/upload"} "upload"]]]])
-  ; debug
-  ; (if (some? (first (ds/qq uploaded? (user request) (today))))
-  ;   (resp/redirect "/wil2/todays")
-  ;   (resp/redirect "/wil2/upload"))
-  )
+  (if (env :develop)
+    (page
+     [:div [:div "debug"]
+      [:ul
+       [:li [:a {:href "/wil2/todays"} "todays"]]
+       [:li [:a {:href "/wil2/upload"} "upload"]]]])
+    (if (some? (first (ds/qq uploaded? (user request) (today))))
+      (resp/redirect "/wil2/todays")
+      (resp/redirect "/wil2/upload"))))
+

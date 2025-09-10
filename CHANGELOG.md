@@ -18,6 +18,16 @@
 2025-09-09T01:29:36.608667Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
 2025-09-09T01:29:36.610139Z INFO LOG m24.local hkimjp.wil2.view[50,3] page
 
+# 0.3.2-SNAPSHOT
+
+- refactor
+- weeks.clj - (sort (dates))
+- bump-version-local.sh does not make .bak files
+- not DEBUG, DEVELOP - (if (env :develop) develop-code production-code)
+- log level - :info, :debug, :error, :warn
+- added view/html
+- added max-count and min-interval
+
 # 0.3.1 (2025-09-09)
 
 - emulate flash by using REDIS.

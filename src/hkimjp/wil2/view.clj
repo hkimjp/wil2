@@ -1,10 +1,10 @@
 (ns hkimjp.wil2.view
   (:require
    [hiccup2.core :as h]
-   [ring.util.response :as response]
+   [ring.util.response :as resp]
    [taoensso.telemere :as t]))
 
-(def version "0.3.1")
+(def version "0.3.2-SNAPSHOT")
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-green-700")
 
@@ -49,5 +49,10 @@
   [content]
   (t/log! :info (str "page"))
   (-> (str (h/html (h/raw "<!DOCTYPE html>") (base content)))
-      response/response
-      (response/header "Content-Type" "text/html")))
+      resp/response
+      (resp/header "Content-Type" "text/html")))
+
+;; htmx requires html response.
+;; appropriate in this namespace?
+(defn html [content]
+  (resp/response (str (h/html content))))

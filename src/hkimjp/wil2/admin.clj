@@ -3,6 +3,6 @@
    [hkimjp.wil2.view :refer [page]]))
 
 (defn admin
-  [request]
+  [_request]
   (page
    [:div "admin"]))

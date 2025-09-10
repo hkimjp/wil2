@@ -1,6 +1,7 @@
 (ns user
   (:require
    [clj-reload.core :as reload]
+   [environ.core :refer [env]]
    ; [clojure.java.io :as io]
    [java-time.api :as jt]
    [taoensso.telemere :as t]
@@ -35,6 +36,21 @@
               :updated (jt/local-date-time)})))
 
 (comment
+  (def x "this is a document about x." 3)
+  (def ^{:doc "which is easy to read?"} y 4)
+  x
+  y
+
+  (env :develop)
+  (if-not (env :develop)
+    "not develop"
+    "develop")
+  (if (env :develop)
+    "develop"
+    "not develop")
+  (= 1 1)
+
+  (env :home)
   (ds/qq '[:find ?e
            :where
            [?e _ _]])
@@ -49,7 +65,7 @@
   (today)
   (str (jt/local-date))
 
-  (dummy "tue2" 10)
+  (dummy "hkimura" 10)
 
   (some #(= "5"  %) ["1" "2" "3" "5"])
   (count (c/lrange "wil2:hkimura:2025-09-08"))
