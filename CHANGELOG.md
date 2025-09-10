@@ -1,12 +1,13 @@
 # Unreleased
 
 - how to clj-reload
-- do test
+- do tests
 - rename `login` namespace to `auth`
 - sum received points
 - sum sent points
 - shuffle upload?
-- Todays, uploaded is `filtered uploads`
+- sort points by date
+
 
 # 0.3.3-SNAPSHOT
 
