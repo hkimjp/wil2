@@ -11,7 +11,7 @@
     Done in 18µs
 
 
-# 0.3.3-SNAPSHOT
+# 0.3.3 (2025-09-12)
 
 - sort points by date, chronologically(ascending)
 - removed slf4j-nop, muuntaja from `deps.edn`
