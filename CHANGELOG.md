@@ -5,11 +5,13 @@
 - rename `login` namespace to `auth`
 - sum received points
 - sum sent points
-- shuffle upload?
-- Todays, uploaded is `filtered uploads`
+- upload is a set. need shuffle?
+- sort points.
+
 
 # 0.3.3-SNAPSHOT
 
+- added (resp/content-type "text/html") to `view/html`
 - removed slf4j-nop, muuntaja from `deps.edn`
 - display `develop` when DEVELOP=true
 - renamed `link` to `hx-link`, `button` to `hx-button` in todays.clj
