@@ -1,15 +1,20 @@
 # Unreleased
 
-- how to clj-reload
-- do tests
-- rename `login` namespace to `auth`
-- sum received points
-- sum sent points
-- shuffle uploads? they are sets.
-- noisy tailwindcss. /dev/null? but, want to see error messages.
+* how to clj-reload
+* do tests
+* rename `login` namespace to `auth`
+* sum received points
+* sum sent points
+* shuffle uploads? it is a set.
 
+
+# 0.3.4-SNAPSHOT
+
+- tailwindcss 2>/dev/niull
+
+    noisy tailwindcss. but, want to see error messages.
     Done in 18µs
-
+    Done in 1ms
 
 # 0.3.3 (2025-09-12)
 
