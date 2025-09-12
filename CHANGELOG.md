@@ -5,12 +5,15 @@
 - rename `login` namespace to `auth`
 - sum received points
 - sum sent points
-- shuffle upload?
-- sort points by date
+- shuffle uploads? they are sets.
+- noisy tailwindcss. /dev/null? but, want to see error messages.
+
+    Done in 18µs
 
 
 # 0.3.3-SNAPSHOT
 
+- sort points by date, chronologically(ascending)
 - removed slf4j-nop, muuntaja from `deps.edn`
 - display `develop` when DEVELOP=true
 - renamed `link` to `hx-link`, `button` to `hx-button` in todays.clj
