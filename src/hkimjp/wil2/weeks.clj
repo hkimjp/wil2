@@ -4,7 +4,7 @@
    [nextjournal.markdown :as md]
    [ring.util.response :as resp]
    [taoensso.telemere :as t]
-   [hkimjp.wil2.view :refer [page]]
+   [hkimjp.wil2.view :refer [page html]]
    [hkimjp.datascript :as ds]))
 
 (def dates '[:find [?date ...]
@@ -33,12 +33,8 @@
 
 (defn browse [{{:keys [date]} :path-params}]
   (t/log! :debug (str "browse: date " date))
-  (-> (for [upload (ds/qq uploads date)]
-        (conj (-> upload
-                  md/parse
-                  md/->hiccup)
-              [:hr]))
-      h/html
-      str
-      resp/response))
-
+  (html (for [upload (ds/qq uploads date)]
+          (conj (-> upload
+                    md/parse
+                    md/->hiccup)
+                [:hr]))))
