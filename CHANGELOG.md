@@ -1,17 +1,24 @@
 # Unreleased
 
-- how to clj-reload
-- do test
-- rename `login` namespace to `auth`
-- sum received points
-- sum sent points
-- upload is a set. need shuffle?
-- sort points.
+* how to clj-reload
+* do tests
+* rename `login` namespace to `auth`
+* sum received points
+* sum sent points
+* shuffle uploads? it is a set.
 
 
-# 0.3.3-SNAPSHOT
+# 0.3.4-SNAPSHOT
 
-- added (resp/content-type "text/html") to `view/html`
+- tailwindcss 2>/dev/niull
+
+    noisy tailwindcss. but, want to see error messages.
+    Done in 18µs
+    Done in 1ms
+
+# 0.3.3 (2025-09-12)
+
+- sort points by date, chronologically(ascending)
 - removed slf4j-nop, muuntaja from `deps.edn`
 - display `develop` when DEVELOP=true
 - renamed `link` to `hx-link`, `button` to `hx-button` in todays.clj
