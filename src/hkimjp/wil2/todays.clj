@@ -41,7 +41,7 @@
       [:p "今日の WIL を提出する。"]
       [:div
        [:span.font-bold "uploaded:"]
-       [:p.m-4 (interpose ", " (mapv second uploaded))]]
+       [:p.m-4 (interpose " " (mapv second uploaded))]]
       [:div
        [:span.font-bold "upload your markdown"]
        [:p "今日の WIL を書いたマークダウンを選んで upload ボタン。"]
@@ -64,8 +64,7 @@
                   :md (slurp u)
                   :date (today)
                   :updated (jt/local-date-time)})
-        (page
-         [:div "upload success."]))
+        (page [:div "upload success."]))
       (page
        [:div.mx-4
         [:span.text-2xl.text-red-600 "error"]
@@ -104,13 +103,6 @@
         (c/setex (str "wil2:" user ":pt") min-interval (now))))
     (resp/redirect "/wil2/todays")))
 
-(defn- button [key sym]
-  [:button {:hx-post   (str "/wil2/point/" key)
-            :hx-target "#body"
-            :hx-swap   "innerHTML"
-            :hx-boost  "false"}
-   [:span.hover:text-2xl sym]])
-
 (defn md
   "called by `get /wil2/md/:eid`"
   [{{:keys [eid]} :path-params :as request}]
@@ -126,11 +118,15 @@
       [:div.flex.gap-x-4
        [:span.py-2.font-bold "評価: "]
        (for [[key sym] [["good" "⬆️"] ["soso" "➡️"] ["bad"  "⬇️"]]]
-         (button key sym))]])))
+         [:button {:hx-post   (str "/wil2/point/" key)
+                   :hx-target "#body"
+                   :hx-swap   "innerHTML"
+                   :hx-boost  "false"}
+          [:span.hover:text-2xl sym]])]])))
 
 ;------------------------
 
-(defn- link [[eid login]]
+(defn- hx-link [[eid login]]
   [:a.inline-block.pr-2.hover:underline
    {:hx-get (str "/wil2/md/" eid)
     :hx-target "#wil"}
@@ -153,10 +149,9 @@
        ", 最終評価時刻: " (c/get (str "wil2:" (user request) ":pt")) "）"]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
-      [:p "他のユーザの WIL を読んで評価する。"]
-
-      [:div.font-bold "uploaded"]
-      (into [:div] (mapv link filtered))
+      [:p "他のユーザの WIL をきちんと読んで評価する。"]
+      [:div.font-bold "uploaded (filtered)"]
+      (into [:div] (mapv hx-link filtered))
       [:div#wil.py-2 [:span.font-bold "評価: "]
        (when-let [err (c/get (str "wil2:" (user request) ":error"))]
          [:span.text-red-600 err])]])))
@@ -165,11 +160,10 @@
   (t/log! :debug "switch")
   (if (env :develop)
     (page
-     [:div [:div "debug"]
+     [:div [:div "develop"]
       [:ul
        [:li [:a {:href "/wil2/todays"} "todays"]]
        [:li [:a {:href "/wil2/upload"} "upload"]]]])
     (if (some? (first (ds/qq uploaded? (user request) (today))))
       (resp/redirect "/wil2/todays")
       (resp/redirect "/wil2/upload"))))
-
