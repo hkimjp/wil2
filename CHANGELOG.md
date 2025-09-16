@@ -9,7 +9,7 @@
 
 
 
-# 0.3.4-SNAPSHOT
+# 0.3.4 (2025-09-16)
 
 - redirect tailwindcss outputs to `/dev/null` by Justfile
 
