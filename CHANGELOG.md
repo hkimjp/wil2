@@ -10,8 +10,7 @@
 
 # 0.3.5-SNAPSHOT
 
-* dates restriction - accept submissions only on tuesday.
-
+- dates restriction - accept submissions and comments only on tuesday.
 
 # 0.3.4 (2025-09-16)
 
