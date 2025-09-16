@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.hkimjp</groupId>
   <artifactId>wil2</artifactId>
-  <version>0.3.3</version>
+  <version>0.3.4</version>
   <name>hkimjp/wil2</name>
   <description>WIL2 for hkimura python class</description>
   <url>https://github.com/hkimjp/wil2</url>
@@ -22,7 +22,7 @@
     <url>https://github.com/hkimjp/wil2</url>
     <connection>scm:git:git://github.com/hkimjp/wil2.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/hkimjp/wil2.git</developerConnection>
-    <tag>v0.3.3</tag>
+    <tag>v0.3.4</tag>
   </scm>
   <dependencies>
     <dependency>
