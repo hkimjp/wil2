@@ -8,7 +8,7 @@
 - shuffle upload?
 - Todays, uploaded is `filtered uploads`
 
-# 0.3.3-SNAPSHOT
+# 0.3.3 (2025-09-16)
 
 - display `develop` when DEVELOP=true
 - renamed `link` to `hx-link`, `button` to `hx-button` in todays.clj
