@@ -55,4 +55,6 @@
 ;; htmx requires html response.
 ;; appropriate in this namespace?
 (defn html [content]
-  (resp/response (str (h/html content))))
+  (-> (str (h/html content))
+      resp/response
+      (resp/content-type "text/html")))
