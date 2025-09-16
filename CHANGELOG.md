@@ -8,6 +8,10 @@
 * shuffle uploads? it is a set.
 
 
+# 0.3.5-SNAPSHOT
+
+* dates restriction - accept submissions only on tuesday.
+
 
 # 0.3.4 (2025-09-16)
 
