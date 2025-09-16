@@ -6,12 +6,17 @@
    [nextjournal.markdown :as md]
    [taoensso.telemere :as t]))
 
-(def my-uploads '[:find ?e ?md
+(def my-uploads '[:find ?e ?date ?md
                   :in $ ?login
                   :where
                   [?e :wil2 "upload"]
+                  [?e :date ?date]
                   [?e :login ?login]
                   [?e :md ?md]])
+
+(comment
+  (first (ds/qq my-uploads "hkimura"))
+  (ds/pl 148))
 
 (def my-point-sent '[:find ?e ?pt
                      :in $ ?id
@@ -63,9 +68,10 @@
         "⬆️ "   (count (recv 2))
         ", ➡️ " (count (recv 1))
         ", ⬇️ " (count (recv -1))]
-       [:div.font-bold.py-4 "自分の WIL についたポイントは？"]
+       [:div.font-bold.py-4 "自分の WIL とポイント"]
+       [:hr]
        [:div
-        (for [[e md] (sort-by second (ds/qq my-uploads user))]
+        (for [[e _ md] (sort-by second (ds/qq my-uploads user))]
           (conj (-> md
                     md/parse
                     md/->hiccup)

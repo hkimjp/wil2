@@ -1,15 +1,22 @@
 # Unreleased
 
-- how to clj-reload
-- do test
-- rename `login` namespace to `auth`
-- sum received points
-- sum sent points
-- shuffle upload?
-- Todays, uploaded is `filtered uploads`
+* how to clj-reload
+* do tests
+* rename `login` namespace to `auth`
+* sum received points
+* sum sent points
+* shuffle uploads? it is a set.
 
-# 0.3.3 (2025-09-16)
 
+
+# 0.3.4 (2025-09-16)
+
+- redirect tailwindcss outputs to `/dev/null` by Justfile
+
+# 0.3.3 (2025-09-12)
+
+- sort points by date, chronologically(ascending)
+- removed slf4j-nop, muuntaja from `deps.edn`
 - display `develop` when DEVELOP=true
 - renamed `link` to `hx-link`, `button` to `hx-button` in todays.clj
 - ranamed Todays, "uploaded"  to "upload (filtered)"
