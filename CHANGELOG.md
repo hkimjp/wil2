@@ -8,6 +8,9 @@
 * shuffle uploads? it is a set.
 
 
+# 0.3.5 (2025-09-16)
+
+- weekday restriction - accept submissions/comments only on tuesday.
 
 # 0.3.4 (2025-09-16)
 
