@@ -4,7 +4,7 @@
    [ring.util.response :as resp]
    [taoensso.telemere :as t]))
 
-(def version "0.3.3")
+(def version "0.3.6-SNAPSHOT")
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-green-700")
 
@@ -55,4 +55,6 @@
 ;; htmx requires html response.
 ;; appropriate in this namespace?
 (defn html [content]
-  (resp/response (str (h/html content))))
+  (-> (str (h/html content))
+      resp/response
+      (resp/content-type "text/html")))

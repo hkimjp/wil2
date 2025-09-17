@@ -31,6 +31,11 @@
                       [?e :login ?login]
                       [?e :date ?today]])
 
+;; (some? (env :develop))
+;;(jt/tuesday? (jt/local-date))
+
+;; in production,
+;; allow submission only in Tuesdays.
 (defn upload
   [request]
   (let [uploaded (ds/qq todays-uploads (today))]
@@ -38,21 +43,24 @@
     (page
      [:div.mx-4
       [:div.text-2xl "Upload (" (user request) ")"]
-      [:p.py-4 "今日の WIL を提出する。"]
-      [:div
-       [:span.font-bold "Uploaded:"]
-       [:p.m-4 (interpose " " (mapv second uploaded))]]
-      [:div
-       [:span.font-bold "Upload yours:"]
-       [:p "今日の WIL を書いたマークダウンを選んで upload ボタン。"]
-       [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
-        (h/raw (anti-forgery-field))
-        [:input
-         {:type   "file"
-          :accept ".md"
-          :name   "file"}]
-        [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
-         "upload"]]]])))
+      (if (or (some? (env :develop)) (jt/tuesday? (jt/local-date)))
+        [:div
+         [:p.py-4 "今日の WIL を提出する。"]
+         [:div
+          [:span.font-bold "Uploaded:"]
+          [:p.m-4 (interpose " " (mapv second uploaded))]]
+         [:div
+          [:span.font-bold "Upload yours:"]
+          [:p "今日の WIL を書いたマークダウンを選んで upload ボタン。"]
+          [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
+           (h/raw (anti-forgery-field))
+           [:input
+            {:type   "file"
+             :accept ".md"
+             :name   "file"}]
+           [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
+            "upload"]]]]
+        [:div "今日は授業日じゃありません。"])])))
 
 (defn upload! [request]
   (let [user (user request)]

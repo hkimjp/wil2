@@ -7,10 +7,18 @@
 * sum sent points
 * shuffle uploads? it is a set.
 
-# 0.3.4-SNAPSHOT
+# 0.3.6-SNAPSHOT (2025-09-17)
 
-- redirect tailwindcss stderr to /dev/niull
+- no check weekday when DEVELOP=true
+- fixed typo in `Justfile`
 
+# 0.3.5 (2025-09-16)
+
+- weekday restriction - accept submissions/comments only on tuesday.
+
+# 0.3.4 (2025-09-16)
+
+- redirect tailwindcss outputs to `/dev/null` by Justfile
 
 # 0.3.3 (2025-09-12)
 

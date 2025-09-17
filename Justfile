@@ -6,7 +6,7 @@ help:
 CSS := "resources/public/assets/css"
 
 watch:
-  tailwindcss -i {{CSS}}/input.css -o {{CSS}}/output.css --watch=always 2>/dev/null
+  tailwindcss -i {{CSS}}/input.css -o {{CSS}}/output.css --watch=always
 
 minify:
   tailwindcss -i {{CSS}}/input.css -o {{CSS}}/output.css --minify
@@ -18,7 +18,7 @@ nrepl:
   clj -M:dev:nrepl
 
 dev:
-  just watch &
+  just watch >/dev/null 2>&1 &
   just nrepl
 
 test:
