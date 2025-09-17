@@ -31,6 +31,7 @@
                       [?e :login ?login]
                       [?e :date ?today]])
 
+;; (some? (env :develop))
 ;;(jt/tuesday? (jt/local-date))
 
 ;; in production,
@@ -42,7 +43,7 @@
     (page
      [:div.mx-4
       [:div.text-2xl "Upload (" (user request) ")"]
-      (if (jt/tuesday? (jt/local-date))
+      (if (or (some? (env :develop)) (jt/tuesday? (jt/local-date)))
         [:div
          [:p.py-4 "今日の WIL を提出する。"]
          [:div

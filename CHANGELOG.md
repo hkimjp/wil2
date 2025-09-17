@@ -7,6 +7,10 @@
 * sum sent points
 * shuffle uploads? it is a set.
 
+# 0.3.6-SNAPSHOT (2025-09-17)
+
+- no check weekday when DEVELOP=true
+- fixed typo in `Justfile`
 
 # 0.3.5 (2025-09-16)
 
