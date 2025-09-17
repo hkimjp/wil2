@@ -7,14 +7,10 @@
 * sum sent points
 * shuffle uploads? it is a set.
 
-
 # 0.3.4-SNAPSHOT
 
-- tailwindcss 2>/dev/niull
+- redirect tailwindcss stderr to /dev/niull
 
-    noisy tailwindcss. but, want to see error messages.
-    Done in 18µs
-    Done in 1ms
 
 # 0.3.3 (2025-09-12)
 
