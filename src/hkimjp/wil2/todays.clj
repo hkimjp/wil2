@@ -54,7 +54,7 @@
           [:p "今日の WIL を書いたマークダウンを選んで upload ボタン。"]
           [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
            (h/raw (anti-forgery-field))
-           [:input
+           [:input.border-1
             {:type   "file"
              :accept ".md"
              :name   "file"}]
