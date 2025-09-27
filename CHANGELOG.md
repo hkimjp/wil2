@@ -3,6 +3,10 @@
 * rename `login` namespace to `auth`
 * can check other student's point or average
 
+
+# 0.3.8-SNAPSHOT
+
+
 # 0.3.7 (2025-09-27)
 
 - `git flow release` again
