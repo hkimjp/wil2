@@ -13,9 +13,15 @@
    [hkimjp.wil2.util :refer [user today now]]
    [hkimjp.wil2.view :refer [page html]]))
 
-(def max-count "submisions allowed in a day" (if (env :develop) 100 5))
+(def max-count "submisions allowed in a day"
+  (if-let [v (env :max-count)]
+    (parse-long v)
+    10))
 
-(def min-interval "inteval between submissions" (if (env :develop) 20 60))
+(def min-interval "inteval between submissions"
+  (if-let [v (env :min-interval)]
+    (parse-long v)
+    60))
 
 (def uploaded? '[:find ?e
                  :in $ ?login ?date
@@ -30,9 +36,6 @@
                       [?e :wil2 "upload"]
                       [?e :login ?login]
                       [?e :date ?today]])
-
-;; (some? (env :develop))
-;;(jt/tuesday? (jt/local-date))
 
 ;; in production,
 ;; allow submission only in Tuesdays.

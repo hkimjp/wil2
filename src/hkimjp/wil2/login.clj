@@ -49,11 +49,10 @@
             (t/log! :info (str "login failed: " login))
             (-> (resp/redirect "/")
                 (assoc :session {} :flash "login failed")))))
-      ;; happens?
       (catch Exception e
-        (t/log! :warn (.getMessage e))
+        (t/log! :error (.getMessage e))
         (-> (resp/redirect "/")
-            (assoc :session {} :flash "enter login/password"))))))
+            (assoc :session {} :flash "server does not respond"))))))
 
 (defn logout!
   [request]
