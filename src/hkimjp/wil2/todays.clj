@@ -159,7 +159,12 @@
         ", 最終評価時刻: " (c/get (str "wil2:" (user request) ":pt")) "）"]]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
-      [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"]
+      [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"
+       [:ul
+        [:li "授業当日しか送信できない。"]
+        [:li (format "%d 秒以内に連投できない。" min-interval)]
+        [:li (format "最大で %d 個しか投げられない。" max-count)]]]
+      [:br]
       [:div.font-bold "未評価 WIL:"]
       (into [:div] (mapv hx-link filtered))
       [:div#wil.py-2 [:span.font-bold "評価: "]

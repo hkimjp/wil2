@@ -1,7 +1,7 @@
 # Unreleased
 
 * rename `login` namespace to `auth`
-* can check other student's point. or average
+* can check other student's point or average
 
 # 0.3.7 (2025-09-27)
 
@@ -9,7 +9,7 @@
 - displayed sum of received points
 - displayed sum of sent points
 
-# 0.3.6-SNAPSHOT (2025-09-17)
+# 0.3.6 (2025-09-17)
 
 - no check weekday when DEVELOP=true
 - fixed typo in `Justfile`
