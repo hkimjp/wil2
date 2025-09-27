@@ -1,16 +1,13 @@
 # Unreleased
 
-* do tests
 * rename `login` namespace to `auth`
-* sum received points
-* sum sent points
-* shuffle uploads? it is a set.
 * can check other student's point. or average
-
 
 # 0.3.7 (2025-09-27)
 
 - `git flow release` again
+- displayed sum of received points
+- displayed sum of sent points
 
 # 0.3.6-SNAPSHOT (2025-09-17)
 
