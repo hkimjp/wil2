@@ -37,9 +37,8 @@
                       [?e :login ?login]
                       [?e :date ?today]])
 
-;; in production,
-;; allow submission only in Tuesdays.
 (defn upload
+  "when (env :develop) or on tuesday, "
   [request]
   (let [uploaded (ds/qq todays-uploads (today))]
     (t/log! :info (str "upload " (user request)))
@@ -171,7 +170,8 @@
   (t/log! :debug "switch")
   (if (env :develop)
     (page
-     [:div [:div "develop"]
+     [:div.m-4
+      [:div.text-2xl "develop"]
       [:ul
        [:li [:a {:href "/wil2/todays"} "todays"]]
        [:li [:a {:href "/wil2/upload"} "upload"]]]])

@@ -55,21 +55,22 @@
     (page
      [:div.mx-4
       [:div.text-2xl user "'s points"]
+      [:p "送信ポイント、受信ポイントの和が平常点。"]
       [:div
        [:div.font-bold.py-2 "送信ポイント"]
-       ;; FIXME: 3 回まわるのはダサい。
        [:div.mx-4
-        "⬆️ "   (ct user 2)
-        ", ➡️ " (ct user 1)
-        ", ⬇️ " (ct user -1)]
+        (let [a (ct user 2)
+              b (ct user 1)
+              c (ct user -1)]
+          (format "⬆️ %d,  ➡️ %d, ⬇️ %d == %d" a b c (+ a b c)))]
        [:div.font-bold.py-2 "受信ポイント"]
-       ;; FIXME: 合計点出す？
        [:div.mx-4
-        "⬆️ "   (count (recv 2))
-        ", ➡️ " (count (recv 1))
-        ", ⬇️ " (count (recv -1))]
-       [:div.font-bold.py-4 "自分の WIL とポイント"]
-       [:hr]
+        (let [a (count (recv 2))
+              b (count (recv 1))
+              c (count (recv -1))]
+          (format "⬆️ %d,  ➡️ %d, ⬇️ %d == %d" a b c (+ (* 2 a) b (* -1 c))))]
+       [:div.font-bold.py-4 "自分の WIL と獲得ポイント"]
+       [:p "自分が提出した WIL の下に獲得ポイントを表示している。"]
        [:div
         (for [[e _ md] (sort-by second (ds/qq my-uploads user))]
           (conj (-> md
