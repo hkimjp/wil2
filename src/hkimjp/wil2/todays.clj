@@ -13,9 +13,15 @@
    [hkimjp.wil2.util :refer [user today now]]
    [hkimjp.wil2.view :refer [page html]]))
 
-(def max-count "submisions allowed in a day" (if (env :develop) 100 5))
+(def max-count "submisions allowed in a day"
+  (if-let [v (env :max-count)]
+    (parse-long v)
+    10))
 
-(def min-interval "inteval between submissions" (if (env :develop) 20 60))
+(def min-interval "inteval between submissions"
+  (if-let [v (env :min-interval)]
+    (parse-long v)
+    60))
 
 (def uploaded? '[:find ?e
                  :in $ ?login ?date
@@ -31,8 +37,6 @@
                       [?e :login ?login]
                       [?e :date ?today]])
 
-;;(jt/tuesday? (jt/local-date))
-
 ;; in production,
 ;; allow submission only in Tuesdays.
 (defn upload
@@ -42,7 +46,7 @@
     (page
      [:div.mx-4
       [:div.text-2xl "Upload (" (user request) ")"]
-      (if (jt/tuesday? (jt/local-date))
+      (if (or (some? (env :develop)) (jt/tuesday? (jt/local-date)))
         [:div
          [:p.py-4 "今日の WIL を提出する。"]
          [:div
@@ -53,7 +57,7 @@
           [:p "今日の WIL を書いたマークダウンを選んで upload ボタン。"]
           [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
            (h/raw (anti-forgery-field))
-           [:input
+           [:input.border-1
             {:type   "file"
              :accept ".md"
              :name   "file"}]

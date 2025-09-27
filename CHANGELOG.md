@@ -1,12 +1,17 @@
 # Unreleased
 
-* how to clj-reload
 * do tests
 * rename `login` namespace to `auth`
 * sum received points
 * sum sent points
 * shuffle uploads? it is a set.
+* can check other student's point. or average
 
+# 0.3.6-SNAPSHOT (2025-09-17)
+
+- no check weekday when DEVELOP=true
+- fixed typo in `Justfile`
+- refactored
 
 # 0.3.5 (2025-09-16)
 

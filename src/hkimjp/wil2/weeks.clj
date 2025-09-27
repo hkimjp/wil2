@@ -1,8 +1,8 @@
 (ns hkimjp.wil2.weeks
   (:require
-   [hiccup2.core :as h]
+   ; [hiccup2.core :as h]
    [nextjournal.markdown :as md]
-   [ring.util.response :as resp]
+   ; [ring.util.response :as resp]
    [taoensso.telemere :as t]
    [hkimjp.wil2.view :refer [page html]]
    [hkimjp.datascript :as ds]))

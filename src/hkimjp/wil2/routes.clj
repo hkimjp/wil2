@@ -16,9 +16,9 @@
   [["/"         {:get login :post login!}]
    ["/logout"   logout!]
    ["/help"     {:get help}]
-   ["/admin"    {:middleware [m/wrap-admin]}
+   ["/admin" {:middleware [m/wrap-admin]}
     [""           {:get admin/admin}]]
-   ["/wil2"     {:middleware [m/wrap-users]}
+   ["/wil2"  {:middleware [m/wrap-users]}
     [""              {:get todays/switch}]
     ["/todays"       {:get todays/todays}]
     ["/upload"       {:get todays/upload :post todays/upload!}]
@@ -26,7 +26,7 @@
     ["/point/:pt"    {:post todays/point!}]
     ["/weeks"        {:get list-days}]
     ["/browse/:date" {:get browse}]
-    ["/points"      {:get points}]]])
+    ["/points"       {:get points}]]])
 
 (defn root-handler
   [request]
