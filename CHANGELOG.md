@@ -7,6 +7,11 @@
 * shuffle uploads? it is a set.
 * can check other student's point. or average
 
+
+# 0.3.7-SNAPSHOT
+
+- `git flow release` again
+
 # 0.3.6-SNAPSHOT (2025-09-17)
 
 - no check weekday when DEVELOP=true
@@ -28,7 +33,6 @@
 - display `develop` when DEVELOP=true
 - renamed `link` to `hx-link`, `button` to `hx-button` in todays.clj
 - ranamed Todays, "uploaded"  to "upload (filtered)"
-
 
 # 0.3.2 (2025-09-10)
 
