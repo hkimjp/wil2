@@ -23,24 +23,41 @@
     (parse-long v)
     60))
 
-(def uploaded? '[:find ?e
-                 :in $ ?login ?date
-                 :where
-                 [?e :wil2 "upload"]
-                 [?e :login ?login]
-                 [?e :date ?date]])
+(def uploaded?
+  '[:find ?e
+    :in $ ?login ?date
+    :where
+    [?e :wil2 "upload"]
+    [?e :login ?login]
+    [?e :date ?date]])
 
-(def todays-uploads '[:find ?e ?login
-                      :in $ ?today
-                      :where
-                      [?e :wil2 "upload"]
-                      [?e :login ?login]
-                      [?e :date ?today]])
+(def uploads-today
+  '[:find ?e ?login
+    :in $ ?today
+    :where
+    [?e :wil2 "upload"]
+    [?e :login ?login]
+    [?e :date ?today]])
+
+(def uploads-after
+  '[:find ?e ?login
+    :in $ ?date
+    :where
+    [?e :wil2 "upload"]
+    [?e :login ?login]
+    [?e :updated ?updated]
+    [(java-time.api/after? ?updated ?date)]])
+
+(comment
+  (today)
+  (ds/qq uploads-today (today))
+  (ds/qq uploads-after (jt/minus (jt/local-date-time) (jt/days 7)))
+  :rcf)
 
 (defn upload
   "when (env :develop) or on tuesday, "
   [request]
-  (let [uploaded (ds/qq todays-uploads (today))]
+  (let [uploaded (ds/qq uploads-today (today))]
     (t/log! :info (str "upload " (user request)))
     (page
      [:div.mx-4
@@ -148,7 +165,8 @@
   (t/log! :info (str "todays " (use request)))
   (let [today    (today)
         answered (c/lrange (str "wil2:" (user request) ":" today))
-        uploads  (ds/qq todays-uploads today)
+        ; uploads  (ds/qq uploads-today today)
+        uploads  (ds/qq uploads-after (jt/minus (jt/local-date-time) (jt/days 7)))
         filtered (into #{} (for [[id user] uploads]
                              (when-not (some #(= (str id) %) answered)
                                [id user])))]
@@ -161,7 +179,7 @@
         [:div.text-red-500 flash])
       [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"
        [:ul
-        [:li "授業当日しか送信できない。"]
+        [:li "(授業当日しか送信できない。)"]
         [:li (format "%d 秒以内に連投できない。" min-interval)]
         [:li (format "最大で %d 個しか投げられない。" max-count)]]]
       [:br]
