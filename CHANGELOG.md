@@ -6,6 +6,8 @@
 
 # 0.3.8-SNAPSHOT
 
+* show not only todays, show last week's wils.
+* send wil only one from one account a week.
 
 # 0.3.7 (2025-09-27)
 
