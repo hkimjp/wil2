@@ -3,7 +3,7 @@
 * rename `login` namespace to `auth`
 * make it possible to check other student's points or average
 
-# 0.3.9-SNAPSHOT
+# 0.3.9 (2025-09-29)
 
 - refactored - 当初予定を変更すると、細々と変更が必要になり、気が付かない部分がある。
 　変更に強い方法を身につける、編み出さないと。
