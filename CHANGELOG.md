@@ -1,13 +1,33 @@
 # Unreleased
 
 * rename `login` namespace to `auth`
-* can check other student's point or average
+* make it possible to check other student's points or average
 
+# 0.3.9 (2025-09-29)
 
-# 0.3.8-SNAPSHOT
+- refactored - 当初予定を変更すると、細々と変更が必要になり、気が付かない部分がある。
+　変更に強い方法を身につける、編み出さないと。
+　develop/production をキレイに切り分けるにパワーをかけるのは無駄な気がする。
+　production メインで、develop はもっとゴツゴツでもいい。
+　具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
+　それとも、develop でひとまとめにするのをやめ、
+　細かく、develop-what みたいなので狙い撃ちにする。
+  コードを短くしようとするとどつぼる。
 
-* show not only todays, show last week's wils.
-* send wil only one from one account a week.
+# 0.3.8 (2025-09-29)
+
+- WIL の評価を送信できる期間を授業当日から3日間に広げた（動作未確認）
+- redirect "/wil2/todays" after uploading
+- updated libraries
+
+| :file    | :name                         | :current | :latest |
+|----------|-------------------------------|----------|---------|
+| deps.edn | io.github.hkimjp/carmine-farm | 0.2.4    | 0.2.9   |
+|          | org.clojure/clojure           | 1.12.2   | 1.12.3  |
+|          | ring/ring-defaults            | 0.6.0    | 0.7.0   |
+|          | ring/ring-jetty-adapter       | 1.14.2   | 1.15.3  |
+| pom.xml  | org.clojure/clojure           | 1.12.2   | 1.12.3  |
+
 
 # 0.3.7 (2025-09-27)
 
