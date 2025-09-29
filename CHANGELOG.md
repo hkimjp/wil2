@@ -1,19 +1,22 @@
 # Unreleased
 
-* rename `login` namespace to `auth`
 * make it possible to check other student's points or average
-* weeks ページでは author を表示する。
-
-# 0.3.9 (2025-09-29)
-
-- refactored - 当初予定を変更すると、細々と変更が必要になり、気が付かない部分が増える。変更に強い方法を身につける、編み出さないと。
-
+* develop をはっきり表示する。
+* 変更に強い方法を身につける、編み出さないと。
   - develop/production をキレイに切り分けるにパワーをかけるのは無駄か。
   - production メインで、develop はもっとゴツゴツでもいい。
   - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
-  - それとも、develop でひとまとめにするのをやめ、
-    細かく、develop-what みたいなので狙い撃ちにする。
+  - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
   - コードを短くしようとするとどつぼる。
+
+# 0.3.10-SNAPSHOT
+
+- display authors in the weeks page
+- anonymize uploaders
+
+# 0.3.9 (2025-09-29)
+
+- refactored
 
 # 0.3.8 (2025-09-29)
 

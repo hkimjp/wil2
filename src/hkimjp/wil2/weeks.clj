@@ -11,11 +11,19 @@
              :where
              [?e :date ?date]])
 
-(def uploads '[:find [?md ...]
-               :in $ ?date
-               :where
-               [?e :date ?date]
-               [?e :md ?md]])
+; (def uploads '[:find [?md ...]
+;                :in $ ?date
+;                :where
+;                [?e :date ?date]
+;                [?e :md ?md]])
+
+; (def uploads '[:find ?author ?md
+;                :in $ ?date
+;                :where
+;                [?e :wil2 "upload"]
+;                [?e :date ?date]
+;                [?e :login ?author]
+;                [?e :md ?md]])
 
 (defn- link [day]
   [:span.px-2.hover:underline
@@ -29,12 +37,22 @@
     [:div.text-2xl.font-meduim "Weeks"]
     [:p.py-2 "日付をクリックでその日の WIL を表示する。"]
     (into [:div] (mapv link (sort (ds/qq dates))))
+    [:br]
     [:div#weeks "[wils]"]]))
 
 (defn browse [{{:keys [date]} :path-params}]
-  (t/log! :debug (str "browse: date " date))
-  (html (for [upload (ds/qq uploads date)]
-          (conj (-> upload
-                    md/parse
-                    md/->hiccup)
-                [:hr]))))
+  (let [uploads '[:find ?author ?md
+                  :in $ ?date
+                  :where
+                  [?e :wil2 "upload"]
+                  [?e :date ?date]
+                  [?e :login ?author]
+                  [?e :md ?md]]]
+    (t/log! :debug (str "browse: date " date))
+    (html (for [[author upload] (ds/qq uploads date)]
+            [:div
+             [:hr]
+             [:div [:span.font-bold "author: "] author]
+             (-> upload
+                 md/parse
+                 md/->hiccup)]))))
