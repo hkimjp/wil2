@@ -24,47 +24,48 @@
     60))
 
 (def uploaded?
+  "who? sumbit his wil on date?"
   '[:find ?e
-    :in $ ?login ?date
+    :in $ ?who ?date
     :where
-    [?e :wil2 "upload"]
-    [?e :login ?login]
-    [?e :date ?date]])
+    [?e :wil2  "upload"]
+    [?e :login ?who]
+    [?e :date  ?date]])
 
-(def uploads-today
-  '[:find ?e ?login
-    :in $ ?today
-    :where
-    [?e :wil2 "upload"]
-    [?e :login ?login]
-    [?e :date ?today]])
+; (def uploads-today
+;   '[:find ?e ?login
+;     :in $ ?today
+;     :where
+;     [?e :wil2 "upload"]
+;     [?e :login ?login]
+;     [?e :date ?today]])
 
-(def uploads-after
-  '[:find ?e ?login
-    :in $ ?date
-    :where
-    [?e :wil2 "upload"]
-    [?e :login ?login]
-    [?e :updated ?updated]
-    [(java-time.api/after? ?updated ?date)]])
-
-(comment
-  (today)
-  (ds/qq uploads-today (today))
-  (ds/qq uploads-after (jt/minus (jt/local-date-time) (jt/days 7)))
-  :rcf)
+(defn- fetch-wils
+  "fetch all wils submited during last `days` days.
+   (fetch-wils 1) ... fetch today's wils
+   (fetch-wils 3) ... fetch wils between now and 3 days before "
+  [days]
+  (let [uploads-after '[:find ?e ?login
+                        :in $ ?date
+                        :where
+                        [?e :wil2 "upload"]
+                        [?e :login ?login]
+                        [?e :updated ?updated]
+                        [(java-time.api/after? ?updated ?date)]]]
+    (ds/qq uploads-after
+           (jt/minus (jt/local-date-time) (jt/days days)))))
 
 (defn upload
   "when (env :develop) or on tuesday, "
   [request]
-  (let [uploaded (ds/qq uploads-today (today))]
+  (let [uploaded (fetch-wils 3)]
     (t/log! :info (str "upload " (user request)))
     (page
      [:div.mx-4
       [:div.text-2xl "Submit (" (user request) ")"]
       (if (or (some? (env :develop)) (jt/tuesday? (jt/local-date)))
         [:div
-         [:p.py-4 "今日の WIL を提出する。このメニューは今日しか現れない。"]
+         [:p.py-4 "今日の WIL を提出する。このメニューは自分 WIL をアップロードする前しか現れない。"]
          [:div
           [:span.font-bold "Uploaded:"]
           [:p.m-4 (interpose " " (mapv second uploaded))]]
@@ -126,7 +127,8 @@
                   :to/id id
                   :pt pt
                   :updated (jt/local-date-time)})
-        (c/lpush (str "wil2:" user ":" (today)) id)
+        ; (c/lpush (str "wil2:" user ":" (today)) id)
+        (c/lpush (str "wil2:" user) id)
         (c/setex (str "wil2:" user ":pt") min-interval (now))))
     (resp/redirect "/wil2/todays")))
 
@@ -159,15 +161,12 @@
     :hx-target "#wil"}
    login])
 
+; rating
 (defn todays
   [request]
   (t/log! :info (str "todays " (use request)))
-  (let [today    (today)
-        ; this is bad.
-        answered (c/lrange (str "wil2:" (user request) ":" today))
-        ; uploads  (ds/qq uploads-today today)
-        uploads  (ds/qq uploads-after
-                        (jt/minus (jt/local-date-time) (jt/days 3)))
+  (let [answered (c/lrange (str "wil2:" (user request)))
+        uploads  (fetch-wils 3)
         filtered (into #{} (for [[id user] uploads]
                              (when-not (some #(= (str id) %) answered)
                                [id user])))]
@@ -180,7 +179,7 @@
         [:div.text-red-500 flash])
       [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"
        [:ul
-        [:li "(授業当日しか送信できない。)"]
+        [:li "授業当日以降3日間だけ評価できる。(動作未確認）"]
         [:li (format "%d 秒以内に連投できない。" min-interval)]
         [:li (format "最大で %d 個しか投げられない。" max-count)]]]
       [:br]
@@ -196,7 +195,7 @@
   (if (env :develop)
     (page
      [:div.m-4
-      [:div.text-2xl "今週の WIL"]
+      [:div.text-2xl "今週の WIL(DEVELOP)"]
       [:ul
        [:li [:a {:href "/wil2/upload"} "submit"]]
        [:li [:a {:href "/wil2/todays"} "rating"]]]])

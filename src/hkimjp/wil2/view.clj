@@ -11,12 +11,12 @@
 (defn navbar []
   [:div.flex.bg-green-900.items-baseline.gap-x-4
    [:div.text-2xl.font-medium.text-white "WIL"]
-   [:div {:class menu} [:a {:href "/wil2"} "todays"]]
-   [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
-   [:div {:class menu} [:a {:href "/wil2/points"} "points"]]
-   [:div {:class menu} [:a {:href "/logout"} "logout"]]
+   [:div {:class menu} [:a {:href "/wil2"} "Submit/Rating"]]
+   [:div {:class menu} [:a {:href "/wil2/weeks"} "Weeks"]]
+   [:div {:class menu} [:a {:href "/wil2/points"} "Points"]]
+   [:div {:class menu} [:a {:href "/logout"} "Logout"]]
    [:div {:class menu} [:a {:href "/help"} "HELP"]]
-   [:div {:class menu} [:a {:href "/admin"} "admin"]]])
+   [:div {:class menu} [:a {:href "/admin"} "Admin"]]])
 
 (def footer
   [:div.text-base
