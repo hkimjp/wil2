@@ -13,7 +13,7 @@ services:
       sh -c "clojure -J--enable-native-access=ALL-UNNAMED -M:run-m"
 
   redis:
-      image: redis:7
+    image: redis:7
     environment:
       TZ: Asia/Toky
     volumes:
