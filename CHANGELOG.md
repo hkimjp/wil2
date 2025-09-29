@@ -1,18 +1,31 @@
 # Unreleased
 
-* do tests
 * rename `login` namespace to `auth`
-* sum received points
-* sum sent points
-* shuffle uploads? it is a set.
-* can check other student's point. or average
+* make it possible to check other student's points or average
+
+
+# 0.3.8 (2025-09-29)
+
+- WIL の評価を送信できる期間を授業当日から3日間に広げた（動作未確認）
+- redirect "/wil2/todays" after uploading
+- updated libraries
+
+| :file    | :name                         | :current | :latest |
+|----------|-------------------------------|----------|---------|
+| deps.edn | io.github.hkimjp/carmine-farm | 0.2.4    | 0.2.9   |
+|          | org.clojure/clojure           | 1.12.2   | 1.12.3  |
+|          | ring/ring-defaults            | 0.6.0    | 0.7.0   |
+|          | ring/ring-jetty-adapter       | 1.14.2   | 1.15.3  |
+| pom.xml  | org.clojure/clojure           | 1.12.2   | 1.12.3  |
 
 
 # 0.3.7 (2025-09-27)
 
 - `git flow release` again
+- displayed sum of received points
+- displayed sum of sent points
 
-# 0.3.6-SNAPSHOT (2025-09-17)
+# 0.3.6 (2025-09-17)
 
 - no check weekday when DEVELOP=true
 - fixed typo in `Justfile`
