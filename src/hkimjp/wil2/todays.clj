@@ -155,8 +155,8 @@
     (page
      [:div.mx-4
       [:div.inline-block
-       [:span.text-2xl.font-medium "Rating"]]
-      [:span (format "今日の評価数: %d 最終評価時刻: %s"
+       [:span.text-2xl.font-medium "Rating "]]
+      [:span (format "(今日の評価数: %d 最終評価時刻: %s)"
                      (count answered)
                      (c/get (format "wil2:%s:pt" user)))]
       (when-let [flash (:flash request)]
@@ -177,19 +177,20 @@
 
 (defn switch [request]
   (t/log! :debug "switch")
-  (let [uploaded? '[:find ?e
+  (let [develop? (some? (env :develop))
+        uploaded? '[:find ?e
                     :in $ ?who ?date
                     :where
                     [?e :wil2  "upload"]
                     [?e :login ?who]
                     [?e :date  ?date]]]
-    (if (env :develop)
-      (page
-       [:div.m-4
-        [:div.text-2xl "今週の WIL(DEVELOP)"]
-        [:ul
-         [:li [:a {:href "/wil2/upload"} "submit"]]
-         [:li [:a {:href "/wil2/todays"} "rating"]]]])
-      (if (nil? (first (ds/qq uploaded? (user request) (today))))
-        (resp/redirect "/wil2/upload")
-        (resp/redirect "/wil2/todays")))))
+    (page
+     [:div.mx-4
+      [:div.text-2xl "今週の WIL"  (when develop? "(DEVELOP)")]
+      [:ul
+       (when (or develop?
+                 (nil? (first (ds/qq uploaded? (user request) (today)))))
+         [:li [:a {:href "/wil2/upload"} "submit"]])
+       [:li [:a {:href "/wil2/todays"} "rating"]]]])))
+
+
