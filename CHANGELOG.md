@@ -1,15 +1,13 @@
 # Unreleased
 
 * rename `login` namespace to `auth`
-* can check other student's point or average
+* make it possible to check other student's points or average
 
 
-# 0.3.8-SNAPSHOT
+# 0.3.8 (2025-09-29)
 
-* WIL の評価を送信できる期間を当日から2〜3日間に広げる。
-
+- WIL の評価を送信できる期間を授業当日から3日間に広げた（動作未確認）
 - redirect "/wil2/todays" after uploading
-
 - updated libraries
 
 | :file    | :name                         | :current | :latest |
