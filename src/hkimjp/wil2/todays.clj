@@ -176,21 +176,29 @@
          [:span.text-red-600 err])]])))
 
 (defn switch [request]
-  (t/log! :debug "switch")
   (let [develop? (some? (env :develop))
-        uploaded? '[:find ?e
-                    :in $ ?who ?date
-                    :where
-                    [?e :wil2  "upload"]
-                    [?e :login ?who]
-                    [?e :date  ?date]]]
+        query '[:find ?e
+                :in $ ?who ?date
+                :where
+                [?e :wil2  "upload"]
+                [?e :login ?who]
+                [?e :date  ?date]]
+        uploaded? (ds/qq query (user request) (today))]
+    (t/log! {:level :debug :id "switch" :data {:uploaded? uploaded?}})
     (page
-     [:div.mx-4
-      [:div.text-2xl "今週の WIL"  (when develop? "(DEVELOP)")]
-      [:ul
-       (when (or develop?
-                 (nil? (first (ds/qq uploaded? (user request) (today)))))
-         [:li [:a {:href "/wil2/upload"} "submit"]])
-       [:li [:a {:href "/wil2/todays"} "rating"]]]])))
+     (if develop?
+       [:div.mx-4
+        [:div.text-2xl "今週の WIL (DEVELOP)"]
+        [:ul
+         [:li [:a.hover:underline {:href "/wil2/upload"} "submit"]]
+         [:li [:a.hover:underline {:href "/wil2/todays"} "rating"]]]]
+       [:div.mx-4
+        [:div.text-2xl "今週の WIL"]
+        [:ul
+         [:li (if uploaded?
+                [:p "提出済みです。"]
+                [:a.hover:underline {:href "/wil2/upload"} "submit"])]
+         [:li [:a.hover:underline {:href "/wil2/todays"} "rating"]]]]))))
+
 
 
