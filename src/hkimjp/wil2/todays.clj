@@ -164,12 +164,13 @@
 ; rating
 (defn todays
   [request]
-  (t/log! :info (str "todays " (use request)))
-  (let [answered (c/lrange (str "wil2:" (user request)))
+  (let [user     (user request)
         uploads  (fetch-wils 3)
+        answered (c/lrange (str "wil2:" (user request)))
         filtered (into #{} (for [[id user] uploads]
                              (when-not (some #(= (str id) %) answered)
                                [id user])))]
+    (t/log! {:level :info :id "todays" :msg user})
     (page
      [:div.mx-4
       [:div.inline-block [:span.text-2xl.font-medium "Rating"]
