@@ -1,0 +1,29 @@
+services:
+  clojure:
+    image: clojure:latest
+    env_file: ".env"
+    volumes:
+      - .:/usr/src/app
+      - m2:/root/.m2
+      - gitlibs:/root/.gitlibs
+    working_dir: /usr/src/app
+    ports:
+      - 5555:5555
+    entrypoint: >
+      sh -c "clojure -J--enable-native-access=ALL-UNNAMED -M:run-m"
+
+services:
+  redis:
+    image: redis:7
+    environment:
+      TZ: Asia/Toky
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - ./redis:/data
+
+volumes:
+  m2:
+    external: true
+  gitlibs:
+    external: true
