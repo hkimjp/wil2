@@ -9,7 +9,7 @@
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
   - コードを短くしようとするとどつぼる。
 
-# 0.3.10-SNAPSHOT
+# 0.3.10 (2025-09-29)
 
 - display authors in the weeks page
 - anonymize uploaders
