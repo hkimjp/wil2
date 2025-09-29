@@ -23,23 +23,6 @@
     (parse-long v)
     60))
 
-(def uploaded?
-  "who? sumbit his wil on date?"
-  '[:find ?e
-    :in $ ?who ?date
-    :where
-    [?e :wil2  "upload"]
-    [?e :login ?who]
-    [?e :date  ?date]])
-
-; (def uploads-today
-;   '[:find ?e ?login
-;     :in $ ?today
-;     :where
-;     [?e :wil2 "upload"]
-;     [?e :login ?login]
-;     [?e :date ?today]])
-
 (defn- fetch-wils
   "fetch all wils submited during last `days` days.
    (fetch-wils 1) ... fetch today's wils
@@ -92,7 +75,6 @@
                   :md (slurp u)
                   :date (today)
                   :updated (jt/local-date-time)})
-        ; (page [:div "upload success."])
         (resp/redirect "/wil2/todays"))
       (page
        [:div.mx-4
@@ -127,7 +109,6 @@
                   :to/id id
                   :pt pt
                   :updated (jt/local-date-time)})
-        ; (c/lpush (str "wil2:" user ":" (today)) id)
         (c/lpush (str "wil2:" user) id)
         (c/setex (str "wil2:" user ":pt") min-interval (now))))
     (resp/redirect "/wil2/todays")))
@@ -164,18 +145,20 @@
 ; rating
 (defn todays
   [request]
-  (let [user     (user request)
-        uploads  (fetch-wils 3)
-        answered (c/lrange (str "wil2:" (user request)))
-        filtered (into #{} (for [[id user] uploads]
-                             (when-not (some #(= (str id) %) answered)
-                               [id user])))]
+  (let [user (user request)
+        uploads (fetch-wils 3)
+        answered (->> (c/lrange (format "wil2:%s" user))
+                      (map parse-long)
+                      set)
+        filtered (remove (fn [[eid _]] (answered eid)) uploads)]
     (t/log! {:level :info :id "todays" :msg user})
     (page
      [:div.mx-4
-      [:div.inline-block [:span.text-2xl.font-medium "Rating"]
-       [:span "（今日の評価数: " (count answered)
-        ", 最終評価時刻: " (c/get (str "wil2:" (user request) ":pt")) "）"]]
+      [:div.inline-block
+       [:span.text-2xl.font-medium "Rating"]]
+      [:span (format "今日の評価数: %d 最終評価時刻: %s"
+                     (count answered)
+                     (c/get (format "wil2:%s:pt" user)))]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
       [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"
@@ -184,22 +167,29 @@
         [:li (format "%d 秒以内に連投できない。" min-interval)]
         [:li (format "最大で %d 個しか投げられない。" max-count)]]]
       [:br]
-      [:div [:span.font-bold "未評価 WIL:"]
-       "アカウントをクリックするとWILと評価ボタンが出る。"]
+      [:div
+       [:span.font-bold "未評価 WIL:"]
+       "アカウントをクリックするとWILと評価ボタン"]
       (into [:div] (mapv hx-link filtered))
       [:div#wil.py-2
-       (when-let [err (c/get (str "wil2:" (user request) ":error"))]
+       (when-let [err (c/get (format "wil2:%s:error" user))]
          [:span.text-red-600 err])]])))
 
 (defn switch [request]
   (t/log! :debug "switch")
-  (if (env :develop)
-    (page
-     [:div.m-4
-      [:div.text-2xl "今週の WIL(DEVELOP)"]
-      [:ul
-       [:li [:a {:href "/wil2/upload"} "submit"]]
-       [:li [:a {:href "/wil2/todays"} "rating"]]]])
-    (if (nil? (first (ds/qq uploaded? (user request) (today))))
-      (resp/redirect "/wil2/upload")
-      (resp/redirect "/wil2/todays"))))
+  (let [uploaded? '[:find ?e
+                    :in $ ?who ?date
+                    :where
+                    [?e :wil2  "upload"]
+                    [?e :login ?who]
+                    [?e :date  ?date]]]
+    (if (env :develop)
+      (page
+       [:div.m-4
+        [:div.text-2xl "今週の WIL(DEVELOP)"]
+        [:ul
+         [:li [:a {:href "/wil2/upload"} "submit"]]
+         [:li [:a {:href "/wil2/todays"} "rating"]]]])
+      (if (nil? (first (ds/qq uploaded? (user request) (today))))
+        (resp/redirect "/wil2/upload")
+        (resp/redirect "/wil2/todays")))))
