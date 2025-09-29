@@ -1,7 +1,7 @@
 services:
   clojure:
     image: clojure:latest
-    env_file: ".env"
+    env_file: ".env-docker"
     volumes:
       - .:/usr/src/app
       - m2:/root/.m2
