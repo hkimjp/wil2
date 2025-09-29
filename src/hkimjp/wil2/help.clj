@@ -27,7 +27,7 @@
        [:p.mx-4 "WIL をログアウト。"]]
       [:div [:span.font-bold "HELP"]
        [:p.mx-4 "このページを表示。"]]
-      [:div [:span.font-bold "(admin)"]
+      [:div [:span.font-bold "admin"]
        [:p.mx-4 "hkimura 専用。"]]]]]))
 
 

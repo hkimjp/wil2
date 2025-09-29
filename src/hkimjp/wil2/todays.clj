@@ -140,7 +140,8 @@
   [:a.inline-block.pr-2.hover:underline
    {:hx-get (str "/wil2/md/" eid)
     :hx-target "#wil"}
-   login])
+   ;login
+   "******"])
 
 ; rating
 (defn todays
@@ -158,7 +159,9 @@
        [:span.text-2xl.font-medium "Rating "]]
       [:span (format "(今日の評価数: %d 最終評価時刻: %s)"
                      (count answered)
-                     (c/get (format "wil2:%s:pt" user)))]
+                     (if-let [tm (c/get (format "wil2:%s:pt" user))]
+                       tm
+                       "-:-:-"))]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
       [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"
@@ -168,29 +171,36 @@
         [:li (format "最大で %d 個しか投げられない。" max-count)]]]
       [:br]
       [:div
-       [:span.font-bold "未評価 WIL:"]
-       "アカウントをクリックするとWILと評価ボタン"]
-      (into [:div] (mapv hx-link filtered))
-      [:div#wil.py-2
+       [:span.font-bold "未評価 WIL:"] "アカウントをクリックするとWILと評価ボタン"]
+      (into [:div.m-4] (mapv hx-link filtered))
+      [:div#wil
        (when-let [err (c/get (format "wil2:%s:error" user))]
          [:span.text-red-600 err])]])))
 
 (defn switch [request]
-  (t/log! :debug "switch")
   (let [develop? (some? (env :develop))
-        uploaded? '[:find ?e
-                    :in $ ?who ?date
-                    :where
-                    [?e :wil2  "upload"]
-                    [?e :login ?who]
-                    [?e :date  ?date]]]
+        query '[:find ?e
+                :in $ ?who ?date
+                :where
+                [?e :wil2  "upload"]
+                [?e :login ?who]
+                [?e :date  ?date]]
+        uploaded? (ds/qq query (user request) (today))]
+    (t/log! {:level :debug :id "switch" :data {:uploaded? uploaded?}})
     (page
-     [:div.mx-4
-      [:div.text-2xl "今週の WIL"  (when develop? "(DEVELOP)")]
-      [:ul
-       (when (or develop?
-                 (nil? (first (ds/qq uploaded? (user request) (today)))))
-         [:li [:a {:href "/wil2/upload"} "submit"]])
-       [:li [:a {:href "/wil2/todays"} "rating"]]]])))
+     (if develop?
+       [:div.mx-4
+        [:div.text-2xl "今週の WIL (DEVELOP)"]
+        [:ul
+         [:li [:a.hover:underline {:href "/wil2/upload"} "submit"]]
+         [:li [:a.hover:underline {:href "/wil2/todays"} "rating"]]]]
+       [:div.mx-4
+        [:div.text-2xl "今週の WIL"]
+        [:ul
+         [:li (if uploaded?
+                [:span "提出済みです。"]
+                [:a.hover:underline {:href "/wil2/upload"} "submit"])]
+         [:li [:a.hover:underline {:href "/wil2/todays"} "rating"]]]]))))
+
 
 
