@@ -6,8 +6,20 @@
 
 # 0.3.8-SNAPSHOT
 
-* show not only todays, show last week's wils.
-* send wil only one from one account a week.
+* WIL の評価を送信できる期間を当日から2〜3日間に広げる。
+
+- redirect "/wil2/todays" after uploading
+
+- updated libraries
+
+| :file    | :name                         | :current | :latest |
+|----------|-------------------------------|----------|---------|
+| deps.edn | io.github.hkimjp/carmine-farm | 0.2.4    | 0.2.9   |
+|          | org.clojure/clojure           | 1.12.2   | 1.12.3  |
+|          | ring/ring-defaults            | 0.6.0    | 0.7.0   |
+|          | ring/ring-jetty-adapter       | 1.14.2   | 1.15.3  |
+| pom.xml  | org.clojure/clojure           | 1.12.2   | 1.12.3  |
+
 
 # 0.3.7 (2025-09-27)
 
