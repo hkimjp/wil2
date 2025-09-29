@@ -8,8 +8,10 @@
   - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
   - コードを短くしようとするとどつぼる。
-* docker container
 
+# 0.3.11-SNAPSHOT
+
+- docker container - docker 母艦上でファイル .env 中の PORT, AUTH を調整すること。
 
 # 0.3.10 (2025-09-29)
 
