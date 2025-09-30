@@ -136,7 +136,7 @@
 
 ;------------------------
 
-(defn- hx-link [[eid login]]
+(defn- hx-link [[eid _login]]
   [:a.inline-block.pr-2.hover:underline
    {:hx-get (str "/wil2/md/" eid)
     :hx-target "#wil"}
@@ -171,7 +171,7 @@
         [:li (format "最大で %d 個しか投げられない。" max-count)]]]
       [:br]
       [:div
-       [:span.font-bold "未評価 WIL:"] "アカウントをクリックするとWILと評価ボタン"]
+       [:span.font-bold "未評価 WIL:"] "*で塗りつぶしたアカウントをクリックすると評価ボタン"]
       (into [:div.m-4] (mapv hx-link filtered))
       [:div#wil
        (when-let [err (c/get (format "wil2:%s:error" user))]
@@ -194,12 +194,14 @@
         [:ul
          [:li [:a.hover:underline {:href "/wil2/upload"} "submit"]]
          [:li [:a.hover:underline {:href "/wil2/todays"} "rating"]]]]
+       ; production
        [:div.mx-4
         [:div.text-2xl "今週の WIL"]
         [:ul
-         [:li (if uploaded?
-                [:span "提出済みです。"]
-                [:a.hover:underline {:href "/wil2/upload"} "submit"])]
+         [:li (cond
+                (jt/tuesday? (jt/local-date)) [:span "WIL が提出できるのは授業のあった日です。"]
+                uploaded? [:span "提出済みです。"]
+                :else [:a.hover:underline {:href "/wil2/upload"} "submit"])]
          [:li [:a.hover:underline {:href "/wil2/todays"} "rating"]]]]))))
 
 
