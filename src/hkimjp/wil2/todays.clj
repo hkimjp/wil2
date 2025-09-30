@@ -54,7 +54,7 @@
           [:p.m-4 (interpose " " (mapv second uploaded))]]
          [:div
           [:span.font-bold "Upload yours:"]
-          [:p "今日の WIL を書いたマークダウンを選んで upload ボタン。"]
+          [:p "今日の WIL を書いたマークダウンを選んで upload。"]
           [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
            (h/raw (anti-forgery-field))
            [:input.border-1.rounded-md
@@ -185,7 +185,7 @@
                 [?e :wil2  "upload"]
                 [?e :login ?who]
                 [?e :date  ?date]]
-        uploaded? (ds/qq query (user request) (today))]
+        uploaded? (seq (ds/qq query (user request) (today)))]
     (t/log! {:level :debug :id "switch" :data {:uploaded? uploaded?}})
     (page
      (if develop?
@@ -199,10 +199,25 @@
         [:div.text-2xl "今週の WIL"]
         [:ul
          [:li (cond
-                (jt/tuesday? (jt/local-date)) [:span "WIL が提出できるのは授業のあった日です。"]
+                (not (jt/tuesday? (jt/local-date)))
+                [:span "WIL が提出できるのは授業のあった日。"]
                 uploaded? [:span "提出済みです。"]
-                :else [:a.hover:underline {:href "/wil2/upload"} "submit"])]
-         [:li [:a.hover:underline {:href "/wil2/todays"} "rating"]]]]))))
+                :else [:a.hover:underline {:href "/wil2/upload"} "今日のWILを提出"])]
+         [:li [:a.hover:underline {:href "/wil2/todays"} "今週のWILを評価"]]]]))))
 
+(comment
 
-
+  (let [query '[:find ?e
+                :in $ ?who ?date
+                :where
+                [?e :wil2  "upload"]
+                [?e :login ?who]
+                [?e :date  ?date]]
+        uploaded? (seq (ds/qq query "hkimura" (today)))]
+    (when uploaded?
+      (println uploaded?))
+    (cond
+      (some? uploaded?) 2
+      uploaded? 1
+      :else 3))
+  :rcf)

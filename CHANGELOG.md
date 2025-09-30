@@ -9,6 +9,13 @@
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
   - コードを短くしようとするとどつぼる。
 
+
+# 0.3.12-SNAPSHOT
+
+- bug fixed - true/false がひっくり返っていた。
+
+    uploaded? (seq (ds/qq query (user request) (today)))
+
 # 0.3.11 (2025-09-29)
 
 - docker container - docker 母艦上でファイル .env 中の PORT, AUTH を調整すること。
