@@ -70,7 +70,9 @@
               c (count (recv -1))]
           (format "⬆️ %d,  ➡️ %d, ⬇️ %d == %d" a b c (+ (* 2 a) b (* -1 c))))]
        [:div.font-bold.py-4 "自分の WIL と獲得ポイント"]
-       [:p "自分が提出した WIL の下に獲得ポイントを表示している。"]
+       [:p "自分が提出した WIL の下に"
+        [:span.text-red-600 "獲得ポイント"]
+        "を表示している。"]
        [:div
         (for [[e _ md] (sort-by second (ds/qq my-uploads user))]
           (conj (-> md
