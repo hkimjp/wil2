@@ -2,15 +2,16 @@ services:
   clojure:
     image: clojure:latest
     env_file: ".env-docker"
+    working_dir: /usr/src/app
     volumes:
       - .:/usr/src/app
       - m2:/root/.m2
       - gitlibs:/root/.gitlibs
-    working_dir: /usr/src/app
     ports:
+      - 5555:5555
       - 3010:3000
     entrypoint: >
-      sh -c "clojure -J--enable-native-access=ALL-UNNAMED -M:run-m"
+      sh -c "clojure -X:dev:plus"
 
   redis:
     image: redis:7

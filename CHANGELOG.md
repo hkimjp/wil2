@@ -9,8 +9,16 @@
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
   - コードを短くしようとするとどつぼる。
 
+# 0.3.13-SNAPSHOT (2025-10-02)
 
-# 0.3.12-SNAPSHOT (2025-09-30)
+- resolved by tonsky/clojure-plus
+
+    clojure -M:dev:nrepl -b 0.0.0.0 -p 5555
+
+ で起動するが、compose.yml に書くとエラー。
+
+
+# 0.3.12 (2025-09-30)
 
 - bug fixed - true/false がひっくり返っていた。
 

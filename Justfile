@@ -35,8 +35,10 @@ deploy: build
   ssh ${DEST} 'sudo systemctl restart wil'
   ssh ${DEST} 'systemctl status wil'
 
+up: container-nrepl
 container-nrepl:
-  clj -M:dev -m nrepl.cmdline -b 0.0.0.0 -p 5555
+  docker compose up
+  # clj -M:dev:nrepl -b 0.0.0.0 -p 5555
 
 update:
   clojure -Tantq outdated :upgrade true :force true
