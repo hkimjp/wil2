@@ -17,12 +17,12 @@ services:
     environment:
       TZ: Asia/Toky
     volumes:
-      - data:/data
+      - redis:/data
 
 volumes:
   m2:
     external: true
   gitlibs:
     external: true
-  data:
+  redis:
     driver: local
