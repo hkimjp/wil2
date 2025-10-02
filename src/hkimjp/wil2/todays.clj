@@ -171,7 +171,7 @@
         [:li (format "最大で %d 個しか投げられない。" max-count)]]]
       [:br]
       [:div
-       [:span.font-bold "未評価 WIL:"] "*で塗りつぶしたアカウントをクリックすると評価ボタン"]
+       [:span.font-bold "未評価 WIL:"] "アカウント(*で塗りつぶした)をクリックすると評価ボタン"]
       (into [:div.m-4] (mapv hx-link filtered))
       [:div#wil
        (when-let [err (c/get (format "wil2:%s:error" user))]
@@ -197,6 +197,9 @@
        ; production
        [:div.mx-4
         [:div.text-2xl "今週の WIL"]
+        [:p.py-2 "授業日中に今日の WIL を提出、"
+         "授業後3日以内に他受講生の WIL を評価する。"
+         "送信と受信の両方が平常点。"]
         [:ul
          [:li (cond
                 (not (jt/tuesday? (jt/local-date)))
@@ -220,4 +223,5 @@
       (some? uploaded?) 2
       uploaded? 1
       :else 3))
+
   :rcf)
