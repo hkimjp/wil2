@@ -11,7 +11,7 @@
 * develop を各ページに表示する。
 
 
-# 0.3.14-SNAPSHOT
+# 0.3.14 (2025-10-02)
 
 - divided todays.clj into upload.clj and rating.clj
 - removed todays.clj
