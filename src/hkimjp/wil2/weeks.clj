@@ -1,6 +1,7 @@
 (ns hkimjp.wil2.weeks
   (:require
    ; [hiccup2.core :as h]
+   [java-time :as jt]
    [nextjournal.markdown :as md]
    ; [ring.util.response :as resp]
    [taoensso.telemere :as t]
@@ -10,20 +11,6 @@
 (def dates '[:find [?date ...]
              :where
              [?e :date ?date]])
-
-; (def uploads '[:find [?md ...]
-;                :in $ ?date
-;                :where
-;                [?e :date ?date]
-;                [?e :md ?md]])
-
-; (def uploads '[:find ?author ?md
-;                :in $ ?date
-;                :where
-;                [?e :wil2 "upload"]
-;                [?e :date ?date]
-;                [?e :login ?author]
-;                [?e :md ?md]])
 
 (defn- link [day]
   [:span.px-2.hover:underline
@@ -41,18 +28,20 @@
     [:div#weeks "[wils]"]]))
 
 (defn browse [{{:keys [date]} :path-params}]
-  (let [uploads '[:find ?author ?md
+  (let [uploads '[:find ?author ?updated ?md
                   :in $ ?date
                   :where
                   [?e :wil2 "upload"]
                   [?e :date ?date]
                   [?e :login ?author]
+                  [?e :updated ?updated]
                   [?e :md ?md]]]
     (t/log! :debug (str "browse: date " date))
-    (html (for [[author upload] (ds/qq uploads date)]
+    (html (for [[_author date-time upload] (ds/qq uploads date)]
             [:div
              [:hr]
-             [:div [:span.font-bold "author: "] author]
+             ; [:div [:span.font-bold "author: "] author]
+             [:div [:span.font-bold "date: "] (jt/format "YYYY-MM-dd HH:mm:ss" date-time)]
              (-> upload
                  md/parse
                  md/->hiccup)]))))

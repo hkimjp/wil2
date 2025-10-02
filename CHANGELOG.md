@@ -1,13 +1,42 @@
 # Unreleased
 
 * make it possible to check other student's points or average
-* develop をはっきり表示する。
 * 変更に強い方法を身につける、編み出さないと。
   - develop/production をキレイに切り分けるにパワーをかけるのは無駄か。
   - production メインで、develop はもっとゴツゴツでもいい。
   - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
-  - コードを短くしようとするとどつぼる。
+  - コードを短くしようとするとドツボる。
+* 30秒以内ルールに抵触はマイナス点とか。
+* develop を各ページに表示する。
+
+
+# 0.3.14 (2025-10-02)
+
+- divided todays.clj into upload.clj and rating.clj
+- removed todays.clj
+
+# 0.3.13 (2025-10-02)
+
+- **BREAKING** changed/added radis vars rols
+
+    wil2:<user>     list of rating times
+    wil2:<user>:eid list of `eids` to which have sent ratings
+    wil2:<user>:pt  last answered time
+
+- fixed by the following change: submit/rating で塗りつぶしたのに、weeks の author: で表示している。
+- changed: author の表示やめて updated に変えた。
+- submit やめてやっぱり upload
+- added todays/can-upload?
+- changed todays/hxlink - hx-tigger "mouseenter"
+- added `:nrepl` alias in `deps.edn`
+- docker volume /usr/src/app/storage
+
+# 0.3.12 (2025-09-30)
+
+- bug fixed - true/false がひっくり返っていた。
+
+    uploaded? (seq (ds/qq query (user request) (today)))
 
 # 0.3.11 (2025-09-29)
 

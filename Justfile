@@ -18,7 +18,7 @@ nrepl:
   clj -M:dev:nrepl
 
 dev:
-  just watch >/dev/null 2>&1 &
+  just watch >/dev/null 2>&1
   just nrepl
 
 test:
@@ -27,6 +27,16 @@ test:
 run:
   clojure -J--enable-native-access=ALL-UNNAMED -M:run-m
 
+up: container-nrepl
+container-nrepl:
+  docker compose up -d
+
+down:
+  docker compose down
+
+update:
+  clojure -Tantq outdated :upgrade true :force true
+
 build:
   clojure -T:build ci
 
@@ -34,12 +44,6 @@ deploy: build
   scp target/io.github.hkimjp/wil2-*.jar ${DEST}:wil/wil.jar
   ssh ${DEST} 'sudo systemctl restart wil'
   ssh ${DEST} 'systemctl status wil'
-
-container-nrepl:
-  clj -M:dev -m nrepl.cmdline -b 0.0.0.0 -p 5555
-
-update:
-  clojure -Tantq outdated :upgrade true :force true
 
 clean:
   rm -rf target

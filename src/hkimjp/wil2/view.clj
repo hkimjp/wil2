@@ -4,14 +4,14 @@
    [ring.util.response :as resp]
    [taoensso.telemere :as t]))
 
-(def version "0.3.11")
+(def version "0.3.14")
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-green-700")
 
 (defn navbar []
   [:div.flex.bg-green-900.items-baseline.gap-x-4
    [:div.text-2xl.font-medium.text-white "WIL"]
-   [:div {:class menu} [:a {:href "/wil2"} "submit/rating"]]
+   [:div {:class menu} [:a {:href "/wil2"} "upload/rating"]]
    [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
    [:div {:class menu} [:a {:href "/wil2/points"} "points"]]
    [:div {:class menu} [:a {:href "/logout"} "logout"]]
