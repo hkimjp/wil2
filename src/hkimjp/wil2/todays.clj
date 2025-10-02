@@ -52,7 +52,6 @@
     (ds/qq uploads-after
            (jt/minus (jt/local-date-time) (jt/days days)))))
 
-; (fetch-wils 1)
 (defn upload
   "when (env :develop) or on tuesday, "
   [request]
@@ -107,15 +106,30 @@
   (t/log! :warn (str "point! error " msg))
   (c/setex (str "wil2:" user ":error") 1 msg))
 
+(defn- todays-ratings [user]
+  (let [today (re-pattern (today))]
+    (->> (c/lrange (format "wil2:%s" user))
+         (filter (fn [d] (re-find today d))))))
+
+(comment
+  (re-pattern (today))
+  (c/lrange (format "wil2:%s" "hkimura"))
+  (-> (todays-ratings "hkimura")
+      count)
+  :rcf)
+
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
-        pt (pt (:uri request))]
+        pt (pt (:uri request))
+        ;now (jt/local-date-time)
+        ]
     (t/log! :info (str "point! " user " to " id " pt " pt))
     (cond
       (some? (c/get (str "wil2:" user ":pt")))
       (warn user (str min-interval "秒以内に連投できない " (now)))
-      (< max-count (count (c/lrange (str "wil2:" user ":" (today)))))
+      ; (< max-count (count (c/lrange (str "wil2:" user ":" (today)))))
+      (< max-count (count (todays-ratings user)))
       (warn user "一日の最大可能評価数を超えた")
       :else
       (do
@@ -123,9 +137,9 @@
                   :login user
                   :to/id id
                   :pt pt
-                  :updated (jt/local-date-time)})
-        (c/lpush (str "wil2:" user) id)
-        (c/setex (str "wil2:" user ":pt") min-interval (now))))
+                  :updated now})
+        (c/lpush (format "wil2:%s" user) (str (jt/local-date-time))
+                 (c/setex (str (format "wil2:%s:pt" user) min-interval (now))))))
     (resp/redirect "/wil2/todays")))
 
 (defn md

@@ -7,7 +7,8 @@
   - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
   - コードを短くしようとするとドツボる。
-* FIXME: submit/rating で塗りつぶしたのに、weeks の author: で表示している。
+* submit/rating で塗りつぶしたのに、weeks の author: で表示している。
+* todays.clj を upload.clj/rating.clj に分割する。
 
 
 # 0.3.13-SNAPSHOT
@@ -15,8 +16,9 @@
 allow-submit, allow-ratings のような関数を設ける。
 表示をコントロールするのはredis.
 
-* author の表示やめて updated に変える。
 * BUG: 今日の評価数がリセットされていない。
+- **BREAKING** lpush wil2:<user> local-date-time
+- changed: author の表示やめて updated に変えた。
 - submit やめてやっぱり upload
 - added todays/can-upload?
 - changed todays/hxlink - hx-tigger "mouseenter"
