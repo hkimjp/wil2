@@ -1,27 +1,28 @@
 # Unreleased
 
 * make it possible to check other student's points or average
-* develop をはっきり表示する。
 * 変更に強い方法を身につける、編み出さないと。
   - develop/production をキレイに切り分けるにパワーをかけるのは無駄か。
   - production メインで、develop はもっとゴツゴツでもいい。
   - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
-  - コードを短くしようとするとどつぼる。
-  - develop でひとまとめをやめ、細かく狙い撃ちにする。
-  - コードを短くしようとすると、どつぼる。
-* FIXME: submit/rating で塗りつぶしたのに、weeks の author: で表示している。
-* click じゃなく、hover で hx fire はどうか？
+  - コードを短くしようとするとドツボる。
+* submit/rating で塗りつぶしたのに、weeks の author: で表示している。
+* todays.clj を upload.clj/rating.clj に分割する。
 
 
-# 0.3.13-SNAPSHOT (2025-10-02)
+# 0.3.13-SNAPSHOT
 
-- resolved by tonsky/clojure-plus
+allow-submit, allow-ratings のような関数を設ける。
+表示をコントロールするのはredis.
 
-    clojure -M:dev:nrepl -b 0.0.0.0 -p 5555
-
- で起動するが、compose.yml に書くとエラー。
-
+* BUG: 今日の評価数がリセットされていない。
+- **BREAKING** lpush wil2:<user> local-date-time
+- changed: author の表示やめて updated に変えた。
+- submit やめてやっぱり upload
+- added todays/can-upload?
+- changed todays/hxlink - hx-tigger "mouseenter"
+- added `:nrepl` alias in `deps.edn`
 - docker volume /usr/src/app/storage
 
 # 0.3.12 (2025-09-30)

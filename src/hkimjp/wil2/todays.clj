@@ -23,6 +23,20 @@
     (parse-long v)
     60))
 
+; need generalize
+(defn- can-upload?
+  "today is allowed to upload wils?"
+  []
+  (or (env :develop) (jt/tuesday? (jt/local-date))))
+
+(defn- can-rate?
+  "in the period of rating allowed?"
+  []
+  (let [today (jt/local-date)]
+    (or (jt/tuesday? today)
+        (jt/wednesday? today)
+        (jt/thursday? today))))
+
 (defn- fetch-wils
   "fetch all wils submited during last `days` days.
    (fetch-wils 1) ... fetch today's wils
@@ -45,8 +59,8 @@
     (t/log! :info (str "upload " (user request)))
     (page
      [:div.mx-4
-      [:div.text-2xl "Submit (" (user request) ")"]
-      (if (or (some? (env :develop)) (jt/tuesday? (jt/local-date)))
+      [:div.text-2xl "Upload (" (user request) ")"]
+      (if (can-upload?)
         [:div
          [:p.py-4 "今日の WIL を提出する。このメニューは自分 WIL をアップロードする前しか現れない。"]
          [:div
@@ -92,15 +106,22 @@
   (t/log! :warn (str "point! error " msg))
   (c/setex (str "wil2:" user ":error") 1 msg))
 
+(defn- todays-ratings [user]
+  (let [today (re-pattern (today))]
+    (->> (c/lrange (format "wil2:%s" user))
+         (filter (fn [d] (re-find today d))))))
+
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
-        pt (pt (:uri request))]
+        pt (pt (:uri request))
+        now (jt/local-date-time)
+        HH:mm:ss (jt/format "HH:mm:ss" now)]
     (t/log! :info (str "point! " user " to " id " pt " pt))
     (cond
       (some? (c/get (str "wil2:" user ":pt")))
-      (warn user (str min-interval "秒以内に連投できない " (now)))
-      (< max-count (count (c/lrange (str "wil2:" user ":" (today)))))
+      (warn user (str min-interval "秒以内に連投できない " HH:mm:ss))
+      (< max-count (count (todays-ratings user)))
       (warn user "一日の最大可能評価数を超えた")
       :else
       (do
@@ -108,9 +129,9 @@
                   :login user
                   :to/id id
                   :pt pt
-                  :updated (jt/local-date-time)})
-        (c/lpush (str "wil2:" user) id)
-        (c/setex (str "wil2:" user ":pt") min-interval (now))))
+                  :updated now})
+        (c/lpush (format "wil2:%s" user) (str now))
+        (c/setex (str (format "wil2:%s:pt" user)) min-interval HH:mm:ss)))
     (resp/redirect "/wil2/todays")))
 
 (defn md
@@ -139,6 +160,7 @@
 (defn- hx-link [[eid _login]]
   [:a.inline-block.pr-2.hover:underline
    {:hx-get (str "/wil2/md/" eid)
+    :hx-trigger "click"
     :hx-target "#wil"}
    ;login
    "******"])
@@ -166,12 +188,13 @@
         [:div.text-red-500 flash])
       [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"
        [:ul
-        [:li "授業当日以降3日間だけ評価できる。(動作未確認）"]
+        [:li "授業当日以降3日間だけ評価できる。"]
         [:li (format "%d 秒以内に連投できない。" min-interval)]
         [:li (format "最大で %d 個しか投げられない。" max-count)]]]
       [:br]
       [:div
-       [:span.font-bold "未評価 WIL:"] "アカウント(*で塗りつぶした)をクリックすると評価ボタン"]
+       [:span.font-bold "未評価 WIL: "]
+       "塗りつぶしたアカウントにカーソル乗せると WIL とその下に評価ボタンを表示する。"]
       (into [:div.m-4] (mapv hx-link filtered))
       [:div#wil
        (when-let [err (c/get (format "wil2:%s:error" user))]
@@ -191,8 +214,9 @@
      (if develop?
        [:div.mx-4
         [:div.text-2xl "今週の WIL (DEVELOP)"]
+        [:p "DEVELOP ではいつでも upload/rating できる。"]
         [:ul
-         [:li [:a.hover:underline {:href "/wil2/upload"} "submit"]]
+         [:li [:a.hover:underline {:href "/wil2/upload"} "upload"]]
          [:li [:a.hover:underline {:href "/wil2/todays"} "rating"]]]]
        ; production
        [:div.mx-4
@@ -202,26 +226,9 @@
          "送信と受信の両方が平常点。"]
         [:ul
          [:li (cond
-                (not (jt/tuesday? (jt/local-date)))
-                [:span "WIL が提出できるのは授業のあった日。"]
+                (not (can-upload?)) [:span "WIL が提出できるのは授業のあった日。"]
                 uploaded? [:span "提出済みです。"]
                 :else [:a.hover:underline {:href "/wil2/upload"} "今日のWILを提出"])]
-         [:li [:a.hover:underline {:href "/wil2/todays"} "今週のWILを評価"]]]]))))
-
-(comment
-
-  (let [query '[:find ?e
-                :in $ ?who ?date
-                :where
-                [?e :wil2  "upload"]
-                [?e :login ?who]
-                [?e :date  ?date]]
-        uploaded? (seq (ds/qq query "hkimura" (today)))]
-    (when uploaded?
-      (println uploaded?))
-    (cond
-      (some? uploaded?) 2
-      uploaded? 1
-      :else 3))
-
-  :rcf)
+         [:li (if (can-rate?)
+                [:a.hover:underline {:href "/wil2/todays"} "今週のWILを評価"]
+                [:span "rating 期間終了。"])]]]))))
