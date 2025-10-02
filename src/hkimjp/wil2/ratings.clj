@@ -10,7 +10,7 @@
    [taoensso.telemere :as t]
    [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]
-   [hkimjp.wil2.util :refer [user today now]]
+   [hkimjp.wil2.util :refer [user today]]
    [hkimjp.wil2.view :refer [page html]]))
 
 (def max-count "submisions allowed in a day"
@@ -24,18 +24,18 @@
     60))
 
 ; need generalize
-(defn- can-upload?
-  "today is allowed to upload wils?"
-  []
-  (or (env :develop) (jt/tuesday? (jt/local-date))))
+; (defn- can-upload?
+;   "today is allowed to upload wils?"
+;   []
+;   (or (env :develop) (jt/tuesday? (jt/local-date))))
 
-(defn- can-rate?
-  "in the period of rating allowed?"
-  []
-  (let [today (jt/local-date)]
-    (or (jt/tuesday? today)
-        (jt/wednesday? today)
-        (jt/thursday? today))))
+; (defn- can-rate?
+;   "in the period of rating allowed?"
+;   []
+;   (let [today (jt/local-date)]
+;     (or (jt/tuesday? today)
+;         (jt/wednesday? today)
+;         (jt/thursday? today))))
 
 (defn- fetch-wils
   "fetch all wils submited during last `days` days.
