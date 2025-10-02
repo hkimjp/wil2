@@ -11,17 +11,17 @@
   - develop でひとまとめをやめ、細かく狙い撃ちにする。
   - コードを短くしようとすると、どつぼる。
 * FIXME: submit/rating で塗りつぶしたのに、weeks の author: で表示している。
-* click じゃなく、hover で hx fire はどうか？
 
 
 # 0.3.13-SNAPSHOT (2025-10-02)
 
-- resolved by tonsky/clojure-plus
+* allow-submit, allow-ratings のような関数を設ける。
+* 表示をコントロールするのはredis.
 
-    clojure -M:dev:nrepl -b 0.0.0.0 -p 5555
-
- で起動するが、compose.yml に書くとエラー。
-
+- submit やめてやっぱり upload
+- added todays/can-upload?
+- changed todays/hxlink - hx-tigger "mouseenter"
+- added `:nrepl` alias in `deps.edn`
 - docker volume /usr/src/app/storage
 
 # 0.3.12 (2025-09-30)
