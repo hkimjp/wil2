@@ -27,7 +27,7 @@
   (t/log! :info (str "start-system develop: " (env :develop)))
   (t/log! :info (str "redis " (env :redis) " ds " (env :datascript)))
   (try
-    (c/redis-server (env :redis))
+    (c/create-conn (env :redis))
     (ds/start-or-restore {:url (env :datascript)})
     (start-jetty)
     (catch Exception e

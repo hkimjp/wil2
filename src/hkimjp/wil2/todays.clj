@@ -111,24 +111,16 @@
     (->> (c/lrange (format "wil2:%s" user))
          (filter (fn [d] (re-find today d))))))
 
-(comment
-  (re-pattern (today))
-  (c/lrange (format "wil2:%s" "hkimura"))
-  (-> (todays-ratings "hkimura")
-      count)
-  :rcf)
-
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
         pt (pt (:uri request))
-        ;now (jt/local-date-time)
-        ]
+        now (jt/local-date-time)
+        HH:mm:ss (jt/format "HH:mm:ss" now)]
     (t/log! :info (str "point! " user " to " id " pt " pt))
     (cond
       (some? (c/get (str "wil2:" user ":pt")))
-      (warn user (str min-interval "秒以内に連投できない " (now)))
-      ; (< max-count (count (c/lrange (str "wil2:" user ":" (today)))))
+      (warn user (str min-interval "秒以内に連投できない " HH:mm:ss))
       (< max-count (count (todays-ratings user)))
       (warn user "一日の最大可能評価数を超えた")
       :else
@@ -138,8 +130,8 @@
                   :to/id id
                   :pt pt
                   :updated now})
-        (c/lpush (format "wil2:%s" user) (str (jt/local-date-time))
-                 (c/setex (str (format "wil2:%s:pt" user) min-interval (now))))))
+        (c/lpush (format "wil2:%s" user) (str now))
+        (c/setex (str (format "wil2:%s:pt" user)) min-interval HH:mm:ss)))
     (resp/redirect "/wil2/todays")))
 
 (defn md
@@ -168,7 +160,7 @@
 (defn- hx-link [[eid _login]]
   [:a.inline-block.pr-2.hover:underline
    {:hx-get (str "/wil2/md/" eid)
-    :hx-trigger "mouseenter"
+    :hx-trigger "click"
     :hx-target "#wil"}
    ;login
    "******"])
