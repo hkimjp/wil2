@@ -12,7 +12,7 @@ services:
       - 5555:5555
       - 3010:3000
     entrypoint: >
-      sh -c "clojure -M:dev:nrepl"
+      sh -c "clojure -X:dev:plus"
 
   redis:
     image: redis:7

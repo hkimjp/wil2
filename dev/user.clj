@@ -2,7 +2,6 @@
   (:require
    [clj-reload.core :as reload]
    [environ.core :refer [env]]
-   ; [clojure.java.io :as io]
    [java-time.api :as jt]
    [taoensso.telemere :as t]
    [hkimjp.carmine :as c]
@@ -11,21 +10,23 @@
    [hkimjp.wil2.system :refer [start-system stop-system]]))
 
 (t/set-min-level! :debug)
+(start-system)
 
 (reload/init
  {:dirs ["src" "dev" "test"]
-  :no-reload '#{user}})
+  :no-reload '#{user}
+  :unload-hook 'before-unload
+  :after-reload 'start-system})
 
-(defn restart-system
-  []
-  (stop-system)
-  (reload/reload)
+(defn before-unload []
+  (stop-system))
+
+(defn after-reload []
   (start-system))
 
-(start-system)
+; (reload/reload)
 
-;; (reload/reload
-;; (restart-system)
+;--------------------------
 
 (defn dummy [user n]
   (doseq [n (range 10)]
