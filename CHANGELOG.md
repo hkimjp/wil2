@@ -1,23 +1,22 @@
 # Unreleased
 
 * make it possible to check other student's points or average
-* develop をはっきり表示する。
 * 変更に強い方法を身につける、編み出さないと。
   - develop/production をキレイに切り分けるにパワーをかけるのは無駄か。
   - production メインで、develop はもっとゴツゴツでもいい。
   - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
-  - コードを短くしようとするとどつぼる。
-  - develop でひとまとめをやめ、細かく狙い撃ちにする。
-  - コードを短くしようとすると、どつぼる。
+  - コードを短くしようとするとドツボる。
 * FIXME: submit/rating で塗りつぶしたのに、weeks の author: で表示している。
 
 
-# 0.3.13-SNAPSHOT (2025-10-02)
+# 0.3.13-SNAPSHOT
 
-* allow-submit, allow-ratings のような関数を設ける。
-* 表示をコントロールするのはredis.
+allow-submit, allow-ratings のような関数を設ける。
+表示をコントロールするのはredis.
 
+* author の表示やめて updated に変える。
+* BUG: 今日の評価数がリセットされていない。
 - submit やめてやっぱり upload
 - added todays/can-upload?
 - changed todays/hxlink - hx-tigger "mouseenter"

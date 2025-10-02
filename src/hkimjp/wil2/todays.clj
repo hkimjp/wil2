@@ -23,6 +23,7 @@
     (parse-long v)
     60))
 
+; need generalize
 (defn- can-upload?
   "today is allowed to upload wils?"
   []
@@ -34,9 +35,7 @@
   (let [today (jt/local-date)]
     (or (jt/tuesday? today)
         (jt/wednesday? today)
-        (jt/thursday? today)))
-
-  true)
+        (jt/thursday? today))))
 
 (defn- fetch-wils
   "fetch all wils submited during last `days` days.
@@ -53,6 +52,7 @@
     (ds/qq uploads-after
            (jt/minus (jt/local-date-time) (jt/days days)))))
 
+; (fetch-wils 1)
 (defn upload
   "when (env :develop) or on tuesday, "
   [request]
