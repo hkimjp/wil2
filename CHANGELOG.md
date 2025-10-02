@@ -7,11 +7,11 @@
   - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
   - コードを短くしようとするとドツボる。
-
+* 30秒以内ルールに抵触はマイナス点とか。
 
 # 0.3.14-SNAPSHOT
 
-* todays.clj を upload.clj/rating.clj に分割する。
+- todays.clj を upload.clj/rating.clj に分割する。
 
 # 0.3.13 (2025-10-02)
 

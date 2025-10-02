@@ -71,12 +71,17 @@
   (let [user (user request)
         id (parse-long (:eid params))
         pt (pt (:uri request))
-        now (jt/local-date-time)
-        HH:mm:ss (jt/format "HH:mm:ss" now)]
-    (t/log! :info (str "point! " user " to " id " pt " pt))
+        local-date-time (jt/local-date-time)
+        now (jt/format "HH:mm:ss" local-date-time)]
+    (t/log! {:level :info
+             :data {:user user
+                    :id id
+                    :pt pt
+                    :now local-date-time
+                    :hh now}})
     (cond
       (some? (c/get (format "wil2:%s:pt" user)))
-      (warn user (str min-interval "秒以内に連投できない " HH:mm:ss))
+      (warn user (str min-interval "秒以内に連投できない " now))
       (<= max-count (count (todays-ratings user)))
       (warn user (format "一日の最大可能評価数 %d を超えた" max-count))
       :else
@@ -86,10 +91,10 @@
                   :to/id id
                   :pt pt
                   :updated now})
-        (c/lpush (format "wil2:%s" user) (str now))
+        (c/lpush (format "wil2:%s" user) (str local-date-time))
         (c/lpush (format "wil2:%s:eid" user) (str id))
-        (c/setex (str (format "wil2:%s:pt" user)) min-interval HH:mm:ss)))
-    (resp/redirect "/wil2/todays")))
+        (c/setex (format "wil2:%s:pt" user) min-interval now)))
+    (resp/redirect "/wil2/rating")))
 
 (defn md
   "called by `get /wil2/md/:eid`"
@@ -114,13 +119,14 @@
 
 ;------------------------
 
-(defn- hx-link [[eid _login]]
+(defn- hx-link [[eid login]]
   [:a.inline-block.pr-2.hover:underline
    {:hx-get (str "/wil2/md/" eid)
     :hx-trigger "click"
     :hx-target "#wil"}
-   ;login
-   "******"])
+   (if (env :develop)
+     login
+     "******")])
 
 (defn rating
   [request]
@@ -133,13 +139,13 @@
     (t/log! {:level :info :id "todays" :msg user})
     (page
      [:div.mx-4
-      [:div.inline-block
-       [:span.text-2xl.font-medium "Rating "]]
-      [:span (format "(今日の評価数: %d 最終評価時刻: %s)"
+      [:div.flex.gap-x-4
+       [:div.text-2xl.font-medium "Rating"]
+       [:div (format "(今日の評価数: %d 最終評価時刻: %s)"
                      (count answered)
                      (if-let [tm (c/get (format "wil2:%s:pt" user))]
                        tm
-                       "-:-:-"))]
+                       "-:-:-"))]]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
       [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"
@@ -151,8 +157,9 @@
       [:div
        [:span.font-bold "未評価 WIL: "]
        "塗りつぶしたアカウントにカーソル乗せると WIL とその下に評価ボタンを表示する。"]
+      (when (some? (env :develop))
+        [:p "(本番では塗りつぶす。開発中に **** だとちょっと面倒だ。)"])
       (into [:div.m-4] (mapv hx-link filtered))
       [:div#wil
        (when-let [err (c/get (format "wil2:%s:error" user))]
          [:span.text-red-600 err])]])))
-

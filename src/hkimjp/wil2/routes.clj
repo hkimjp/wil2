@@ -23,8 +23,8 @@
    ["/wil2"  {:middleware [m/wrap-users]}
     [""              {:get switch/switch}]
     ["/upload"       {:get uploads/upload :post uploads/upload!}]
-    ["/rating"       {:get ratings/rating}]
-    ["/md/:eid"      {:get ratings/md}]
+    ["/rating"       {:get  ratings/rating}]
+    ["/md/:eid"      {:get  ratings/md}]
     ["/point/:pt"    {:post ratings/point!}]
     ["/weeks"        {:get list-days}]
     ["/browse/:date" {:get browse}]
