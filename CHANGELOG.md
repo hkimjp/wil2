@@ -17,6 +17,7 @@
 
  で起動するが、compose.yml に書くとエラー。
 
+- docker volume /usr/src/app/storage
 
 # 0.3.12 (2025-09-30)
 

@@ -1,10 +1,11 @@
 services:
   clojure:
     image: clojure:latest
-    env_file: ".env-docker"
+    env_file: ".env"
     working_dir: /usr/src/app
     volumes:
       - .:/usr/src/app
+      - storage:/usr/src/app/storage
       - m2:/root/.m2
       - gitlibs:/root/.gitlibs
     ports:
@@ -25,5 +26,7 @@ volumes:
     external: true
   gitlibs:
     external: true
+  storage:
+    driver: local
   redis:
     driver: local
