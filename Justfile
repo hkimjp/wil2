@@ -37,8 +37,10 @@ deploy: build
 
 up: container-nrepl
 container-nrepl:
-  docker compose up
-  # clj -M:dev:nrepl -b 0.0.0.0 -p 5555
+  docker compose up -d
+
+down:
+  docker compose down
 
 update:
   clojure -Tantq outdated :upgrade true :force true
