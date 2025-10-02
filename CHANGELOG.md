@@ -11,12 +11,12 @@
 
 # 0.3.14-SNAPSHOT
 
-- divide todays.clj into upload.clj and rating.clj.
+- divided todays.clj into upload.clj and rating.clj
 - removed todays.clj
 
 # 0.3.13 (2025-10-02)
 
-- **BREAKING** changed/added radis vars rols.
+- **BREAKING** changed/added radis vars rols
 
     wil2:<user>     list of rating times
     wil2:<user>:eid list of `eids` to which have sent ratings

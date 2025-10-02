@@ -139,13 +139,14 @@
     (t/log! {:level :info :id "todays" :msg user})
     (page
      [:div.mx-4
-      [:div.flex.gap-x-4
-       [:div.text-2xl.font-medium "Rating"]
-       [:div (format "(今日の評価数: %d 最終評価時刻: %s)"
-                     (count answered)
-                     (if-let [tm (c/get (format "wil2:%s:pt" user))]
-                       tm
-                       "-:-:-"))]]
+      [:div.inline-block
+       [:span.text-2xl.font-medium "Rating: " user]
+       [:span.mx-2]
+       [:span (format "(今日の評価数: %d 最終評価時刻: %s)"
+                      (count answered)
+                      (if-let [tm (c/get (format "wil2:%s:pt" user))]
+                        tm
+                        "-:-:-"))]]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
       [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"

@@ -45,14 +45,14 @@
     (t/log! :info (str "upload " (user request)))
     (page
      [:div.mx-4
-      [:div.text-2xl "Upload (" (user request) ")"]
+      [:div.text-2xl "Upload: " (user request)]
       [:div
        [:p.py-4 "今日の WIL を提出する。"]
        [:div
-        [:span.font-bold "Uploaded:"]
+        [:span.font-bold "提出済み:"]
         [:p.m-4 (interpose " " (mapv second uploaded))]]
        [:div
-        [:span.font-bold "Upload yours:"]
+        [:span.font-bold "自分のWIL(What I Learned?)を提出:"]
         [:p "今日の WIL を書いたマークダウンを選んで upload。"]
         [:form.m-4 {:method "post" :action "/wil2/upload" :enctype "multipart/form-data"}
          (h/raw (anti-forgery-field))
@@ -60,6 +60,7 @@
           {:type   "file"
            :accept ".md"
            :name   "file"}]
+         [:span.mx-2]
          [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
           "upload"]]]]])))
 
