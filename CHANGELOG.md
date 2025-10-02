@@ -13,11 +13,12 @@
 
 # 0.3.13-SNAPSHOT
 
-allow-submit, allow-ratings のような関数を設ける。
-表示をコントロールするのはredis.
+- **BREAKING** changed/added radis vars rols.
 
-* BUG: 今日の評価数がリセットされていない。
-- **BREAKING** lpush wil2:<user> local-date-time
+    wil2:<user>     list of rating times
+    wil2:<user>:eid list of `eids` to which have sent ratings
+    wil2:<user>:pt  last answered time
+
 - changed: author の表示やめて updated に変えた。
 - submit やめてやっぱり upload
 - added todays/can-upload?
