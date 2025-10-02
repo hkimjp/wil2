@@ -6,9 +6,10 @@
   - develop/production をキレイに切り分けるにパワーをかけるのは無駄か。
   - production メインで、develop はもっとゴツゴツでもいい。
   - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
-  - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
-  - コードを短くしようとするとどつぼる。
-
+  - develop でひとまとめをやめ、細かく狙い撃ちにする。
+  - コードを短くしようとすると、どつぼる。
+* FIXME: submit/rating で塗りつぶしたのに、weeks の author: で表示している。
+* click じゃなく、hover で hx fire はどうか？
 
 # 0.3.12-SNAPSHOT (2025-09-30)
 
