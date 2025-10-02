@@ -18,7 +18,7 @@ nrepl:
   clj -M:dev:nrepl
 
 dev:
-  just watch >/dev/null 2>&1 &
+  just watch >/dev/null 2>&1
   just nrepl
 
 test:
@@ -35,8 +35,12 @@ deploy: build
   ssh ${DEST} 'sudo systemctl restart wil'
   ssh ${DEST} 'systemctl status wil'
 
+up: container-nrepl
 container-nrepl:
-  clj -M:dev -m nrepl.cmdline -b 0.0.0.0 -p 5555
+  docker compose up -d
+
+down:
+  docker compose down
 
 update:
   clojure -Tantq outdated :upgrade true :force true
