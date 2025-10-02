@@ -1,7 +1,7 @@
 (ns hkimjp.wil2.admin
   (:require
    [environ.core :refer [env]]
-   [hkimjp.wil2.todays :refer [max-count min-interval]]
+   [hkimjp.wil2.uploads :refer [max-count min-interval]]
    [hkimjp.wil2.view :refer [page]]))
 
 (defn admin
