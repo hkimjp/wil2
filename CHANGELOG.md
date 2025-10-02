@@ -7,11 +7,14 @@
   - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
   - コードを短くしようとするとドツボる。
-* submit/rating で塗りつぶしたのに、weeks の author: で表示している。
-* todays.clj を upload.clj/rating.clj に分割する。
+* 30秒以内ルールに抵触はマイナス点とか。
 
+# 0.3.14-SNAPSHOT
+
+- todays.clj を upload.clj/rating.clj に分割する。
 
 # 0.3.13 (2025-10-02)
+
 
 - **BREAKING** changed/added radis vars rols.
 
@@ -19,6 +22,7 @@
     wil2:<user>:eid list of `eids` to which have sent ratings
     wil2:<user>:pt  last answered time
 
+- fixed by the following change: submit/rating で塗りつぶしたのに、weeks の author: で表示している。
 - changed: author の表示やめて updated に変えた。
 - submit やめてやっぱり upload
 - added todays/can-upload?
