@@ -121,8 +121,8 @@
     (cond
       (some? (c/get (str "wil2:" user ":pt")))
       (warn user (str min-interval "秒以内に連投できない " HH:mm:ss))
-      (< max-count (count (todays-ratings user)))
-      (warn user "一日の最大可能評価数を超えた")
+      (<= max-count (count (todays-ratings user)))
+      (warn user (format "一日の最大可能評価数 %d を超えた" max-count))
       :else
       (do
         (ds/put! {:wil2 "point"
@@ -131,6 +131,7 @@
                   :pt pt
                   :updated now})
         (c/lpush (format "wil2:%s" user) (str now))
+        (c/lpush (format "wil2:%s:eid" user) (str id))
         (c/setex (str (format "wil2:%s:pt" user)) min-interval HH:mm:ss)))
     (resp/redirect "/wil2/todays")))
 
@@ -170,7 +171,7 @@
   [request]
   (let [user (user request)
         uploads (fetch-wils 3)
-        answered (->> (c/lrange (format "wil2:%s" user))
+        answered (->> (c/lrange (format "wil2:%s:eid" user))
                       (map parse-long)
                       set)
         filtered (remove (fn [[eid _]] (answered eid)) uploads)]

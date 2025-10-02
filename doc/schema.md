@@ -17,7 +17,9 @@
 :pt      <int>
 :updated <jt/local-date-time>}
 
+
 # redis
 
-wil2:<user>     list
+wil2:<user>     list of rating times
+wil2:<user>:eid list of eids to which have sent ratings
 wil2:<user>:pt  last answered time
