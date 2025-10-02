@@ -11,7 +11,7 @@
 * todays.clj を upload.clj/rating.clj に分割する。
 
 
-# 0.3.13-SNAPSHOT
+# 0.3.13 (2025-10-02)
 
 - **BREAKING** changed/added radis vars rols.
 
