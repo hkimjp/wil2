@@ -7,6 +7,7 @@
    [hkimjp.wil2.util :refer [user today]]
    [hkimjp.wil2.view :refer [page]]))
 
+;; FIXME: generalize
 (defn- can-upload?
   "today is allowed to upload wils?"
   []

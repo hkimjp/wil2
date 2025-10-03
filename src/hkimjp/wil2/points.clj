@@ -14,10 +14,6 @@
                   [?e :login ?login]
                   [?e :md ?md]])
 
-(comment
-  (first (ds/qq my-uploads "hkimura"))
-  (ds/pl 148))
-
 (def my-point-sent '[:find ?e ?pt
                      :in $ ?id
                      :where

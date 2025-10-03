@@ -10,9 +10,8 @@
    [taoensso.telemere :as t]
    ; [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]
-   ; [hkimjp.wil2.util :refer [user today now]]
-   ; [hkimjp.wil2.view :refer [page html]]
-   ))
+   [hkimjp.wil2.util :refer [user today]]
+   [hkimjp.wil2.view :refer [page]]))
 
 (def max-count "submisions allowed in a day"
   (if-let [v (env :max-count)]

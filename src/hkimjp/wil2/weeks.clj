@@ -1,7 +1,7 @@
 (ns hkimjp.wil2.weeks
   (:require
    ; [hiccup2.core :as h]
-   [java-time :as jt]
+   [java-time.api :as jt]
    [nextjournal.markdown :as md]
    ; [ring.util.response :as resp]
    [taoensso.telemere :as t]

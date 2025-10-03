@@ -23,20 +23,6 @@
     (parse-long v)
     60))
 
-; need generalize
-; (defn- can-upload?
-;   "today is allowed to upload wils?"
-;   []
-;   (or (env :develop) (jt/tuesday? (jt/local-date))))
-
-; (defn- can-rate?
-;   "in the period of rating allowed?"
-;   []
-;   (let [today (jt/local-date)]
-;     (or (jt/tuesday? today)
-;         (jt/wednesday? today)
-;         (jt/thursday? today))))
-
 (defn- fetch-wils
   "fetch all wils submited during last `days` days.
    (fetch-wils 1) ... fetch today's wils
@@ -124,9 +110,7 @@
    {:hx-get (str "/wil2/md/" eid)
     :hx-trigger "click"
     :hx-target "#wil"}
-   (if (env :develop)
-     login
-     "******")])
+   (if (env :develop) login "******")])
 
 (defn rating
   [request]
@@ -144,9 +128,7 @@
        [:span.mx-2]
        [:span (format "(今日の評価数: %d 最終評価時刻: %s)"
                       (count answered)
-                      (if-let [tm (c/get (format "wil2:%s:pt" user))]
-                        tm
-                        "-:-:-"))]]
+                      (if-let [tm (c/get (format "wil2:%s:pt" user))] tm "-:-:-"))]]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
       [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"

@@ -12,24 +12,27 @@
 (t/set-min-level! :debug)
 (start-system)
 
+
+
 (reload/init
  {:dirs ["src" "dev" "test"]
   :no-reload '#{user}
   :unload-hook 'before-unload
   :after-reload 'start-system})
 
-(defn before-unload []
+(defn- before-unload []
   (stop-system))
 
-(defn after-reload []
+(defn- after-reload []
   (start-system))
+
 
 ; (reload/reload)
 
 ;--------------------------
 
-(defn dummy [user n]
-  (doseq [n (range 10)]
+(defn dummy [user m]
+  (doseq [n (range m)]
     (ds/put! {:wil2 "upload"
               :login user
               :md (str "# dummy\n" n)
