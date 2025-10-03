@@ -10,7 +10,7 @@
 * 30秒以内ルールに抵触はマイナス点とか。
 * develop を各ページに表示する。
 
-# 0.3.15-SNAPSHOT
+# 0.3.15 (2025-10-03)
 
 - **BREAKING** changed REDIS data.
 
