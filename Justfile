@@ -41,12 +41,13 @@ build:
   clojure -T:build ci
 
 deploy: build
-  scp target/io.github.hkimjp/wil2-*.jar ${DEST}:wil/wil.jar
+  scp target/io.github.hkimjp/wil2-*.jar ${DEST}:wil2/wil.jar
   ssh ${DEST} 'sudo systemctl restart wil'
   ssh ${DEST} 'systemctl status wil'
 
-eq:
-  ssh eq.local 'cd wil2 && git pull && docker compose restart'
+eq: build
+  scp target/io.github.hkimjp/wil2-*.jar eq.local:wil2/wil2.jar
+  ssh eq.local 'cd wil2 && docker compose restart'
 
 clean:
   rm -rf target
