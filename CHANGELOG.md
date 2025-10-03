@@ -10,6 +10,9 @@
 * 30秒以内ルールに抵触はマイナス点とか。
 * develop を各ページに表示する。
 
+# 0.3.15-SNAPSHOT
+
+- compose switched to use nrepl - calva can not talk to socket-repl.
 
 # 0.3.14 (2025-10-02)
 
