@@ -45,6 +45,9 @@ deploy: build
   ssh ${DEST} 'sudo systemctl restart wil'
   ssh ${DEST} 'systemctl status wil'
 
+eq:
+  ssh eq.local 'cd wil2 && git pull && docker compose restart'
+
 clean:
   rm -rf target
   fd -I bak --exec rm

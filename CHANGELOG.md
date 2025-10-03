@@ -10,6 +10,15 @@
 * 30秒以内ルールに抵触はマイナス点とか。
 * develop を各ページに表示する。
 
+# 0.3.15 (2025-10-03)
+
+- **BREAKING** changed REDIS data.
+
+    wil2:<user>          last rating time. expires after min-interval.
+    wil2:<user>:<date>   user's local-time of rating time on date.
+    wil2:<user>:answered user's answered eid.
+
+- compose switched to use nrepl - calva can not talk to socket-repl.
 
 # 0.3.14 (2025-10-02)
 
