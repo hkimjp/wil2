@@ -1,14 +1,11 @@
 (ns hkimjp.wil2.uploads
   (:require
-   ; [clojure.string :as str]
    [environ.core :refer [env]]
    [hiccup2.core :as h]
    [java-time.api :as jt]
-   ; [nextjournal.markdown :as md]
    [ring.util.anti-forgery :refer [anti-forgery-field]]
    [ring.util.response :as resp]
    [taoensso.telemere :as t]
-   ; [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]
    [hkimjp.wil2.util :refer [user today]]
    [hkimjp.wil2.view :refer [page]]))
@@ -80,4 +77,3 @@
         [:span.text-2xl.text-red-600 "error"]
         [:br]
         [:p "did not select a file to upload."]]))))
-

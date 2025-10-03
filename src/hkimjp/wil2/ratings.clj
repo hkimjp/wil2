@@ -10,9 +10,10 @@
    [taoensso.telemere :as t]
    [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]
-   [hkimjp.wil2.util :refer [user today]]
+   [hkimjp.wil2.util :refer [user today local-time]]
    [hkimjp.wil2.view :refer [page html]]))
 
+; refer from admin.clj. must be public.
 (def max-count "submisions allowed in a day"
   (if-let [v (env :max-count)]
     (parse-long v)
@@ -48,27 +49,57 @@
   (t/log! :warn (str "point! error " msg))
   (c/setex (str "wil2:" user ":error") 1 msg))
 
-(defn- todays-ratings [user]
-  (let [today (re-pattern (today))]
-    (->> (c/lrange (format "wil2:%s" user))
-         (filter (fn [d] (re-find today d))))))
+; (defn- todays-ratings [user]
+;   (let [today (re-pattern (today))]
+;     (->> (c/lrange (format "wil2:%s:%" user))
+;          (filter (fn [d] (re-find today d))))))
+
+(defn- count-todays-ratings [user]
+  (c/llen (format "wil2:%s:%s" user (today))))
+
+(defn- update-todays-ratings [user time]
+  (c/lpush (format "wil2:%s:%s" user (today)) time))
+
+(comment
+  (<= max-count (count-todays-ratings user))
+  (count-todays-ratings "hkimura")
+  (update-todays-ratings "hkimura" (local-time))
+  (count-todays-ratings "hkimura")
+  :rcf)
+
+(defn- last-rating-time [user]
+  (first (c/lrange (format "wil2:%s:%s" user (today)))))
+
+(defn- in-interval? [user]
+  (some? (c/get (format "wil2:%s" user))))
+
+(defn- update-interval [user]
+  (c/setex (format "wil2:%s" user) min-interval 1)) ;1?
+
+(defn- answered [user]
+  (c/lrange (format "wil2:%s:answerd" user)))
+
+(defn- update-answered [user id]
+  (c/lpush (format "wil2:%s:answerd" user) id))
+
+(comment
+  (last-rating-time "hkimura")
+  (answered "hkimura")
+  (update-answered "hkimura" 3)
+  (answered "hkimura")
+  :rcf)
 
 (defn point! [{params :params :as request}]
   (let [user (user request)
         id (parse-long (:eid params))
         pt (pt (:uri request))
         local-date-time (jt/local-date-time)
-        now (jt/format "HH:mm:ss" local-date-time)]
-    (t/log! {:level :info
-             :data {:user user
-                    :id id
-                    :pt pt
-                    :now local-date-time
-                    :hh now}})
+        now (local-time)]
+    (t/log! {:level :info :id "point!"})
     (cond
-      (some? (c/get (format "wil2:%s:pt" user)))
+      (in-interval? user)
       (warn user (str min-interval "秒以内に連投できない " now))
-      (<= max-count (count (todays-ratings user)))
+      (<= max-count (count-todays-ratings user))
       (warn user (format "一日の最大可能評価数 %d を超えた" max-count))
       :else
       (do
@@ -76,10 +107,10 @@
                   :login user
                   :to/id id
                   :pt pt
-                  :updated now})
-        (c/lpush (format "wil2:%s" user) (str local-date-time))
-        (c/lpush (format "wil2:%s:eid" user) (str id))
-        (c/setex (format "wil2:%s:pt" user) min-interval now)))
+                  :updated local-date-time})
+        (update-interval user)
+        (update-todays-ratings user now)
+        (update-answered user id)))
     (resp/redirect "/wil2/rating")))
 
 (defn md
@@ -112,23 +143,26 @@
     :hx-target "#wil"}
    (if (env :develop) login "******")])
 
+(comment
+  (fetch-wils 3)
+  (answered "hkimura")
+  :rcf)
+
 (defn rating
   [request]
   (let [user (user request)
         uploads (fetch-wils 3)
-        answered (->> (c/lrange (format "wil2:%s:eid" user))
-                      (map parse-long)
-                      set)
+        answered (->> (answered user) (map parse-long) set)
         filtered (remove (fn [[eid _]] (answered eid)) uploads)]
-    (t/log! {:level :info :id "todays" :msg user})
+    (t/log! {:level :info :id "rating" :data {:filtered filtered}})
     (page
      [:div.mx-4
       [:div.inline-block
        [:span.text-2xl.font-medium "Rating: " user]
        [:span.mx-2]
        [:span (format "(今日の評価数: %d 最終評価時刻: %s)"
-                      (count answered)
-                      (if-let [tm (c/get (format "wil2:%s:pt" user))] tm "-:-:-"))]]
+                      (count-todays-ratings user)
+                      (if-let [tm (last-rating-time user)] tm "-:-:-"))]]
       (when-let [flash (:flash request)]
         [:div.text-red-500 flash])
       [:p.py-4 "他のユーザの WIL をきちんと読んで評価する。"

@@ -9,8 +9,8 @@
 (defn today []
   (str (jt/local-date)))
 
-;; (defn now []
-;;   (subs (str (jt/local-time)) 0 8))
+(defn local-time []
+  (jt/format "HH:mm:ss" (jt/local-time)))
 
 ;; (defn abbrev
 ;;   "shorten string s for concise log."
