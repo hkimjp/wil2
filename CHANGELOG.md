@@ -8,7 +8,8 @@
   - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
   - コードを短くしようとするとドツボる。
 * 30秒以内ルールに抵触はマイナス点とか。
-* develop を各ページに表示する。
+* like konpy2, display env vars etc. in admin page.
+
 
 # 0.3.16-SNAPSHOT
 
