@@ -6,17 +6,10 @@ services:
     volumes:
       - .:/usr/src/app
     ports:
-      - 3010:3000
+      - 3012:3000
     entrypoint: >
       sh -c "java --enable-native-access=ALL-UNNAMED -jar wil2.jar"
-
   redis:
     image: redis:7
     environment:
       TZ: Asia/Toky
-    volumes:
-      - redis:/data
-
-volumes:
-  redis:
-    driver: local

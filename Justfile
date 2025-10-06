@@ -28,8 +28,7 @@ run:
   clojure -J--enable-native-access=ALL-UNNAMED -M:run-m
 
 up: container-nrepl
-container-nrepl:
-  docker compose up -d
+  docker compose up
 
 down:
   docker compose down
