@@ -4,7 +4,7 @@
 * 30秒以内ルールに抵触はマイナス点とか。
 
 
-# 0.3.16-SNAPSHOT
+# 0.3.16 (2025-10-06)
 
 - htmx-2.0.7
 - improve admin page - show redis vars
