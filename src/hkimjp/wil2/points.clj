@@ -14,10 +14,6 @@
                   [?e :login ?login]
                   [?e :md ?md]])
 
-(comment
-  (first (ds/qq my-uploads "hkimura"))
-  (ds/pl 148))
-
 (def my-point-sent '[:find ?e ?pt
                      :in $ ?id
                      :where
@@ -54,7 +50,7 @@
     (t/log! :info (str "my " user "recv " recv))
     (page
      [:div.mx-4
-      [:div.text-2xl user "'s points"]
+      [:div.text-2xl "Points: " user]
       [:p "送信ポイント、受信ポイントの和が平常点。"]
       [:div
        [:div.font-bold.py-2 "送信ポイント"]
@@ -71,8 +67,7 @@
           (format "⬆️ %d,  ➡️ %d, ⬇️ %d == %d" a b c (+ (* 2 a) b (* -1 c))))]
        [:div.font-bold.py-4 "自分の WIL と獲得ポイント"]
        [:p "自分が提出した WIL の下に"
-        [:span.text-red-600 "獲得ポイント"]
-        "を表示している。"]
+        [:span.text-red-600 "獲得ポイント"] "。"]
        [:div
         (for [[e _ md] (sort-by second (ds/qq my-uploads user))]
           (conj (-> md

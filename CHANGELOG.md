@@ -1,24 +1,38 @@
 # Unreleased
 
 * make it possible to check other student's points or average
-* 変更に強い方法を身につける、編み出さないと。
-  - develop/production をキレイに切り分けるにパワーをかけるのは無駄か。
-  - production メインで、develop はもっとゴツゴツでもいい。
-  - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
-  - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
-  - コードを短くしようとするとドツボる。
-* submit/rating で塗りつぶしたのに、weeks の author: で表示している。
-* todays.clj を upload.clj/rating.clj に分割する。
+* 30秒以内ルールに抵触はマイナス点とか。
 
+
+# 0.3.16 (2025-10-06)
+
+- htmx-2.0.7
+- improve admin page - show redis vars
+
+# 0.3.15 (2025-10-03)
+
+- **BREAKING** changed REDIS data.
+
+    wil2:<user>          last rating time. expires after min-interval.
+    wil2:<user>:<date>   user's local-time of rating time on date.
+    wil2:<user>:answered user's answered eid.
+
+- compose switched to use nrepl - calva can not talk to socket-repl.
+
+# 0.3.14 (2025-10-02)
+
+- divided todays.clj into upload.clj and rating.clj
+- removed todays.clj
 
 # 0.3.13 (2025-10-02)
 
-- **BREAKING** changed/added radis vars rols.
+- **BREAKING** changed/added radis vars rols
 
     wil2:<user>     list of rating times
     wil2:<user>:eid list of `eids` to which have sent ratings
     wil2:<user>:pt  last answered time
 
+- fixed by the following change: submit/rating で塗りつぶしたのに、weeks の author: で表示している。
 - changed: author の表示やめて updated に変えた。
 - submit やめてやっぱり upload
 - added todays/can-upload?
