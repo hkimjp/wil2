@@ -3,6 +3,9 @@
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
 
+# 0.3.17-SNAPSHOT
+
+- fix Justfile - had removed container-repl recipe
 
 # 0.3.16 (2025-10-06)
 
