@@ -5,6 +5,7 @@
 
 # 0.3.17-SNAPSHOT
 
+- display number of unread wils.
 - fix Justfile - had removed container-repl recipe
 
 # 0.3.16 (2025-10-06)

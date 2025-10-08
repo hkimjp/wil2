@@ -49,23 +49,11 @@
   (t/log! :warn (str "point! error " msg))
   (c/setex (str "wil2:" user ":error") 1 msg))
 
-; (defn- todays-ratings [user]
-;   (let [today (re-pattern (today))]
-;     (->> (c/lrange (format "wil2:%s:%" user))
-;          (filter (fn [d] (re-find today d))))))
-
 (defn- count-todays-ratings [user]
   (c/llen (format "wil2:%s:%s" user (today))))
 
 (defn- update-todays-ratings [user time]
   (c/lpush (format "wil2:%s:%s" user (today)) time))
-
-(comment
-  (<= max-count (count-todays-ratings user))
-  (count-todays-ratings "hkimura")
-  (update-todays-ratings "hkimura" (local-time))
-  (count-todays-ratings "hkimura")
-  :rcf)
 
 (defn- last-rating-time [user]
   (first (c/lrange (format "wil2:%s:%s" user (today)))))
@@ -74,20 +62,13 @@
   (some? (c/get (format "wil2:%s" user))))
 
 (defn- update-interval [user]
-  (c/setex (format "wil2:%s" user) min-interval 1)) ;1?
+  (c/setex (format "wil2:%s" user) min-interval 1)) ; better value than 1?
 
 (defn- answered [user]
   (c/lrange (format "wil2:%s:answerd" user)))
 
 (defn- update-answered [user id]
   (c/lpush (format "wil2:%s:answerd" user) id))
-
-(comment
-  (last-rating-time "hkimura")
-  (answered "hkimura")
-  (update-answered "hkimura" 3)
-  (answered "hkimura")
-  :rcf)
 
 (defn point! [{params :params :as request}]
   (let [user (user request)
@@ -143,11 +124,6 @@
     :hx-target "#wil"}
    (if (env :develop) login "******")])
 
-(comment
-  (fetch-wils 3)
-  (answered "hkimura")
-  :rcf)
-
 (defn rating
   [request]
   (let [user (user request)
@@ -172,8 +148,8 @@
         [:li (format "最大で %d 個しか投げられない。" max-count)]]]
       [:br]
       [:div
-       [:span.font-bold "未評価 WIL: "]
-       "塗りつぶしたアカウントにカーソル乗せると WIL とその下に評価ボタンを表示する。"]
+       [:span.font-bold (format "未評価 WIL(%d): " (count filtered))]
+       "塗りつぶしたアカウントをクリックで WIL とその下に評価ボタンを表示する。"]
       (when (some? (env :develop))
         [:p "(本番では塗りつぶす。開発中に **** だとちょっと面倒だ。)"])
       (into [:div.m-4] (mapv hx-link filtered))
