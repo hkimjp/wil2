@@ -3,7 +3,7 @@
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
 
-# 0.3.17-SNAPSHOT
+# 0.3.17 (2025-10-08)
 
 - display number of unread wils.
 - fix Justfile - had removed container-repl recipe
