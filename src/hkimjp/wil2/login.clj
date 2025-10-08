@@ -16,21 +16,24 @@
   [request]
   (page
    [:div.mx-4
-    [:div.font-bold.p-2 "LOGIN"]
+    [:div.font-bold.p-2 "LOGIN"
+     (when (env :develop) " (DEVELOP)")]
     (when-let [flash (:flash request)]
       [:div {:class "text-red-500"} flash])
     [:div.p-1
      [:form {:method "post"}
       (h/raw (anti-forgery-field))
-      [:input.border-1.border-solid.px-1 {:name "login" :placeholder "account" :autocomplete "username"}]
+      [:input.border-1.px-1.rounded-md
+       {:name "login" :placeholder "account" :autocomplete "username"}]
       [:span.mx-1 ""]
-      [:input.border-1.border-solid.px-1 {:name "password" :type "password" :placeholder "password" :autocomplete "current-password"}]
+      [:input.border-1.px-1.rounded-md
+       {:name "password" :type "password" :placeholder "password" :autocomplete "current-password"}]
       [:button.mx-1.px-1.text-white.bg-sky-500.hover:bg-sky-700.active:bg-red-500.rounded-xl "LOGIN"]]]
     [:br]]))
 
 (defn login!
   [{{:keys [login password]} :params}]
-  ;; always login success when (env :auth) is empty
+  (t/log! {:level :debug :id "login!" :msg (env :auth)})
   (if (empty? (env :auth))
     (do
       (t/log! :info (str "no auth mode: " login))
@@ -48,11 +51,10 @@
             (t/log! :info (str "login failed: " login))
             (-> (resp/redirect "/")
                 (assoc :session {} :flash "login failed")))))
-      ;; happens?
       (catch Exception e
-        (t/log! :warn (.getMessage e))
+        (t/log! :error (.getMessage e))
         (-> (resp/redirect "/")
-            (assoc :session {} :flash "enter login/password"))))))
+            (assoc :session {} :flash "server does not respond"))))))
 
 (defn logout!
   [request]

@@ -1,0 +1,27 @@
+services:
+  clojure:
+    image: clojure:latest
+    env_file: ".env"
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+      - storage:/usr/src/app/storage
+      - m2:/root/.m2
+      - gitlibs:/root/.gitlibs
+    ports:
+      - 5555:5555
+      - 3000:3000
+    entrypoint: >
+      sh -c "clojure -M:dev:nrepl -b '0.0.0.0' -p 5555"
+  redis:
+    image: redis:7
+    environment:
+      TZ: Asia/Toky
+
+volumes:
+  m2:
+    external: true
+  gitlibs:
+    external: true
+  storage:
+    driver: local

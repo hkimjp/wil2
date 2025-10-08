@@ -4,19 +4,19 @@
    [ring.util.response :as resp]
    [taoensso.telemere :as t]))
 
-(def version "0.3.2")
+(def version "0.3.17")
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-green-700")
 
 (defn navbar []
   [:div.flex.bg-green-900.items-baseline.gap-x-4
-   [:div.text-2xl.font-medium.text-white "WIL2"]
-   [:div {:class menu} [:a {:href "/wil2"} "todays"]]
+   [:div.text-2xl.font-medium.text-white "WIL"]
+   [:div {:class menu} [:a {:href "/wil2"} "upload/rating"]]
    [:div {:class menu} [:a {:href "/wil2/weeks"} "weeks"]]
    [:div {:class menu} [:a {:href "/wil2/points"} "points"]]
    [:div {:class menu} [:a {:href "/logout"} "logout"]]
    [:div {:class menu} [:a {:href "/help"} "HELP"]]
-   [:div {:class menu} [:a {:href "/admin"} "(admin)"]]])
+   [:div {:class menu} [:a {:href "/admin"} "admin"]]])
 
 (def footer
   [:div.text-base
@@ -47,12 +47,15 @@
 
 (defn page
   [content]
-  (t/log! :info (str "page"))
+  (t/log! :info "page")
   (-> (str (h/html (h/raw "<!DOCTYPE html>") (base content)))
       resp/response
       (resp/header "Content-Type" "text/html")))
 
 ;; htmx requires html response.
 ;; appropriate in this namespace?
+;; name `hx`?
 (defn html [content]
-  (resp/response (str (h/html content))))
+  (-> (str (h/html content))
+      resp/response
+      (resp/content-type "text/html")))

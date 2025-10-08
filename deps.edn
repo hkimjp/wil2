@@ -1,25 +1,39 @@
 {:paths ["src" "resources"]
 
  :deps
- {org.clojure/clojure     {:mvn/version "1.12.2"}
+ {org.clojure/clojure     {:mvn/version "1.12.3"}
+  org.slf4j/slf4j-nop     {:mvn/version "2.0.17"}
   buddy/buddy-hashers     {:mvn/version "2.0.167"}
   com.taoensso/telemere   {:mvn/version "1.1.0"}
   environ/environ         {:mvn/version "1.2.0"}
   io.github.nextjournal/markdown {:mvn/version "0.7.189"}
-  org.slf4j/slf4j-nop     {:mvn/version "2.0.17"}
-  ring/ring-jetty-adapter {:mvn/version "1.14.2"}
-  ring/ring-defaults      {:mvn/version "0.6.0"}
+  ring/ring-jetty-adapter {:mvn/version "1.15.3"}
+  ring/ring-defaults      {:mvn/version "0.7.0"}
   metosin/reitit-ring     {:mvn/version "0.9.1"}
-  metosin/muuntaja        {:mvn/version "0.6.11"}
   hato/hato               {:mvn/version "1.0.0"}
   hiccup/hiccup           {:mvn/version "2.0.0"}
-  ;
-  io.github.hkimjp/carmine-farm {:git/tag "0.2.4" :git/sha "663693a"}
+  io.github.hkimjp/carmine-farm {:git/tag "0.2.9" :git/sha "5fcacc1"}
   io.github.hkimjp/datascript-storage-javatime {:git/tag "0.7.4" :git/sha "f5c3196"}}
 
  :aliases
  {:run-m {:main-opts ["-m" "hkimjp.wil2.core"]}
 
+  :dev
+  {:extra-paths ["dev"]
+   :extra-deps  {io.github.tonsky/clj-reload {:mvn/version "1.0.0"}}
+   :jvm-opts    ["--add-opens=java.base/java.nio=ALL-UNNAMED"
+                 "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"
+                 "--enable-native-access=ALL-UNNAMED"]}
+  :nrepl
+  {:extra-deps {nrepl/nrepl {:mvn/version "1.4.0"}}
+   :main-opts  ["-m" "nrepl.cmdline"]}
+
+  :plus
+  {:extra-deps {io.github.tonsky/clojure-plus {:mvn/version "1.6.3"}}
+   :exec-fn    clojure+.core.server/start-server
+   :exec-args  {:name    "socket repl(plus)"
+                :address "0.0.0.0"
+                :port    5555}}
   :test
   {:extra-paths ["test"]
    :extra-deps {org.clojure/test.check {:mvn/version "1.1.1"}

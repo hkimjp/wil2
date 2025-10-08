@@ -27,8 +27,8 @@
 /target
 
 .env
+.env-docker
 .nrepl-port
 resources/public/assets/css/output.css
-!/storage/.keep
 /storage/*
-
+!/storage/.keep

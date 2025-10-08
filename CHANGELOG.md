@@ -1,11 +1,110 @@
 # Unreleased
 
-- how to clj-reload
-- do test
-- rename `login` namespace to `auth`
-- sum received points
-- sum sent points
+* make it possible to check other student's points or average
+* 30秒以内ルールに抵触はマイナス点とか。
 
+# 0.3.17 (2025-10-08)
+
+- display number of unread wils.
+- fix Justfile - had removed container-repl recipe
+
+# 0.3.16 (2025-10-06)
+
+- htmx-2.0.7
+- improve admin page - show redis vars
+
+# 0.3.15 (2025-10-03)
+
+- **BREAKING** changed REDIS data.
+
+    wil2:<user>          last rating time. expires after min-interval.
+    wil2:<user>:<date>   user's local-time of rating time on date.
+    wil2:<user>:answered user's answered eid.
+
+- compose switched to use nrepl - calva can not talk to socket-repl.
+
+# 0.3.14 (2025-10-02)
+
+- divided todays.clj into upload.clj and rating.clj
+- removed todays.clj
+
+# 0.3.13 (2025-10-02)
+
+- **BREAKING** changed/added radis vars rols
+
+    wil2:<user>     list of rating times
+    wil2:<user>:eid list of `eids` to which have sent ratings
+    wil2:<user>:pt  last answered time
+
+- fixed by the following change: submit/rating で塗りつぶしたのに、weeks の author: で表示している。
+- changed: author の表示やめて updated に変えた。
+- submit やめてやっぱり upload
+- added todays/can-upload?
+- changed todays/hxlink - hx-tigger "mouseenter"
+- added `:nrepl` alias in `deps.edn`
+- docker volume /usr/src/app/storage
+
+# 0.3.12 (2025-09-30)
+
+- bug fixed - true/false がひっくり返っていた。
+
+    uploaded? (seq (ds/qq query (user request) (today)))
+
+# 0.3.11 (2025-09-29)
+
+- docker container - docker 母艦上でファイル .env 中の PORT, AUTH を調整すること。
+
+# 0.3.10 (2025-09-29)
+
+- display authors in the weeks page
+- anonymize uploaders
+
+# 0.3.9 (2025-09-29)
+
+- refactored
+
+# 0.3.8 (2025-09-29)
+
+- WIL の評価を送信できる期間を授業当日から3日間に広げた（動作未確認）
+- redirect "/wil2/todays" after uploading
+- updated libraries
+
+| :file    | :name                         | :current | :latest |
+|----------|-------------------------------|----------|---------|
+| deps.edn | io.github.hkimjp/carmine-farm | 0.2.4    | 0.2.9   |
+|          | org.clojure/clojure           | 1.12.2   | 1.12.3  |
+|          | ring/ring-defaults            | 0.6.0    | 0.7.0   |
+|          | ring/ring-jetty-adapter       | 1.14.2   | 1.15.3  |
+| pom.xml  | org.clojure/clojure           | 1.12.2   | 1.12.3  |
+
+
+# 0.3.7 (2025-09-27)
+
+- `git flow release` again
+- displayed sum of received points
+- displayed sum of sent points
+
+# 0.3.6 (2025-09-17)
+
+- no check weekday when DEVELOP=true
+- fixed typo in `Justfile`
+- refactored
+
+# 0.3.5 (2025-09-16)
+
+- weekday restriction - accept submissions/comments only on tuesday.
+
+# 0.3.4 (2025-09-16)
+
+- redirect tailwindcss outputs to `/dev/null` by Justfile
+
+# 0.3.3 (2025-09-12)
+
+- sort points by date, chronologically(ascending)
+- removed slf4j-nop, muuntaja from `deps.edn`
+- display `develop` when DEVELOP=true
+- renamed `link` to `hx-link`, `button` to `hx-button` in todays.clj
+- ranamed Todays, "uploaded"  to "upload (filtered)"
 
 # 0.3.2 (2025-09-10)
 

@@ -3,12 +3,14 @@
    [reitit.ring :as rr]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
    [taoensso.telemere :as t]
-   [hkimjp.wil2.middleware :as m]
    [hkimjp.wil2.admin :as admin]
    [hkimjp.wil2.help :refer [help]]
    [hkimjp.wil2.login :refer [login login! logout!]]
+   [hkimjp.wil2.middleware :as m]
    [hkimjp.wil2.points :refer [points]]
-   [hkimjp.wil2.todays :as todays]
+   [hkimjp.wil2.ratings :as ratings]
+   [hkimjp.wil2.switch :as switch]
+   [hkimjp.wil2.uploads :as uploads]
    [hkimjp.wil2.weeks :refer [list-days browse]]))
 
 (defn routes
@@ -16,17 +18,17 @@
   [["/"         {:get login :post login!}]
    ["/logout"   logout!]
    ["/help"     {:get help}]
-   ["/admin"    {:middleware [m/wrap-admin]}
+   ["/admin" {:middleware [m/wrap-admin]}
     [""           {:get admin/admin}]]
-   ["/wil2"     {:middleware [m/wrap-users]}
-    [""              {:get todays/switch}]
-    ["/todays"       {:get todays/todays}]
-    ["/upload"       {:get todays/upload :post todays/upload!}]
-    ["/md/:eid"      {:get todays/md}]
-    ["/point/:pt"    {:post todays/point!}]
+   ["/wil2"  {:middleware [m/wrap-users]}
+    [""              {:get switch/switch}]
+    ["/upload"       {:get uploads/upload :post uploads/upload!}]
+    ["/rating"       {:get  ratings/rating}]
+    ["/md/:eid"      {:get  ratings/md}]
+    ["/point/:pt"    {:post ratings/point!}]
     ["/weeks"        {:get list-days}]
     ["/browse/:date" {:get browse}]
-    ["/points"      {:get points}]]])
+    ["/points"       {:get points}]]])
 
 (defn root-handler
   [request]
