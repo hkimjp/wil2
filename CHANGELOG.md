@@ -6,7 +6,7 @@
 
 # 0.3.18 (2025-10-15)
 
-* do not display rating link before uploading self wil.
+- do not display the rating link before uploading self wil.
 
 # 0.3.17 (2025-10-08)
 
