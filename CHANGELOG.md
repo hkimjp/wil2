@@ -4,7 +4,7 @@
 * 30秒以内ルールに抵触はマイナス点とか。
 * which is bad forgetting cloing " ", put evil spaces inside?
 
-# 0.3.18-SNAPSHOT
+# 0.3.18 (2025-10-15)
 
 * do not display rating link before uploading self wil.
 
