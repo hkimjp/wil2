@@ -2,7 +2,7 @@
 
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
-
+* which is bad forgetting cloing " ", put evil spaces inside?
 
 # 0.3.18-SNAPSHOT
 
