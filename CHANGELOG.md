@@ -3,7 +3,12 @@
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
 
-# 0.3.17-SNAPSHOT
+
+# 0.3.18-SNAPSHOT
+
+* 自分WILを出さなければ rating が出ないように。
+
+# 0.3.17
 
 - fix Justfile - had removed container-repl recipe
 

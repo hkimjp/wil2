@@ -1,4 +1,4 @@
-# upload
+s# upload
 
 :db/id   <id>
 :wil2    "upload"
