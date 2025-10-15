@@ -13,23 +13,30 @@
   []
   (or (env :develop) (jt/tuesday? (jt/local-date))))
 
+(defn- rated?
+  "has user sent his ratings?"
+  [user]
+  true)
+
 (defn- can-rate?
   "in the period of rating allowed?"
   []
   (let [today (jt/local-date)]
-    (or (jt/tuesday? today)
-        (jt/wednesday? today)
-        (jt/thursday? today))))
+    (and (rated? user)
+         (or (jt/tuesday? today)
+             (jt/wednesday? today)
+             (jt/thursday? today)))))
 
 (defn switch [request]
-  (let [develop? (some? (env :develop))
+  (let [user (user request)
+        develop? (some? (env :develop))
         query '[:find ?e
                 :in $ ?who ?date
                 :where
                 [?e :wil2  "upload"]
                 [?e :login ?who]
                 [?e :date  ?date]]
-        uploaded? (seq (ds/qq query (user request) (today)))]
+        uploaded? (seq (ds/qq query user (today)))]
     (t/log! {:level :debug :id "switch" :data {:uploaded? uploaded?}})
     (page
      [:div.mx-4
@@ -38,7 +45,9 @@
       (if develop?
         [:ul
          [:li.py-2 [:a.hover:underline {:href "/wil2/upload"} "今日のWILを提出"]]
-         [:li.py-2 [:a.hover:underline {:href "/wil2/rating"} "今週のWILを評価"]]]
+         [:li.py-2 (if (can-rate?)
+                     [:a.hover:underline {:href "/wil2/rating"} "今週のWILを評価"]
+                     [:span "自分 WIL を出してから。"])]]
         [:ul
          [:li.py-2 (cond
                      (not (can-upload?)) [:span "WIL が提出できるのは授業のあった日。"]
@@ -47,6 +56,6 @@
                                           {:href "/wil2/upload"} "今日のWILを提出"])]
          [:li.py-2 (if (can-rate?)
                      [:a.hover:underline {:href "/wil2/rating"} "今週のWILを評価"]
-                     [:span "rating 期間終了。"])]])
+                     [:span "自分 WIL を出してから。"])]])
       [:br]])))
 
