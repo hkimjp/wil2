@@ -145,7 +145,7 @@
        [:ul
         [:li "授業当日以降3日間だけ評価できる。"]
         [:li (format "%d 秒以内に連投できない。" min-interval)]
-        [:li (format "最大で %d 個しか投げられない。" max-count)]]]
+        [:li (format "一日最大で %d 個しか投げられない。" max-count)]]]
       [:br]
       [:div
        [:span.font-bold (format "未評価 WIL(%d): " (count filtered))]
