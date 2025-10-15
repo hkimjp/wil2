@@ -8,8 +8,9 @@
 
 * 自分WILを出さなければ rating が出ないように。
 
-# 0.3.17
+# 0.3.17 (2025-10-08)
 
+- display number of unread wils.
 - fix Justfile - had removed container-repl recipe
 
 # 0.3.16 (2025-10-06)

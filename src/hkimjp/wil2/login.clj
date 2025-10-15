@@ -33,7 +33,7 @@
 
 (defn login!
   [{{:keys [login password]} :params}]
-  ;; always login success when (env :auth) is empty
+  (t/log! {:level :debug :id "login!" :msg (env :auth)})
   (if (empty? (env :auth))
     (do
       (t/log! :info (str "no auth mode: " login))
