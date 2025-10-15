@@ -13,10 +13,10 @@
   []
   (or (env :develop) (jt/tuesday? (jt/local-date))))
 
-(defn- rated?
-  "has user sent his ratings?"
-  [user]
-  true)
+; (defn- rated?
+;   "has user sent his ratings?"
+;   [user]
+;   true)
 
 (defn- can-rate?
   "in the period of rating allowed?"
