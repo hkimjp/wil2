@@ -6,7 +6,7 @@
 
 # 0.3.18-SNAPSHOT
 
-* 自分WILを出さなければ rating が出ないように。
+* do not display rating link before uploading self wil.
 
 # 0.3.17 (2025-10-08)
 
