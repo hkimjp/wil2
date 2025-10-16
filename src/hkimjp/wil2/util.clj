@@ -17,3 +17,12 @@
 ;;   ([s] (abbrev s 80))
 ;;   ([s n] (let [pat (re-pattern (str "(^.{" n "}).*"))]
 ;;            (str/replace-first s pat "$1..."))))
+
+(defn safe-vec
+  [v]
+  (if (seq v)
+    (pr-str (interpose " " v))
+    "NIL"))
+
+
+

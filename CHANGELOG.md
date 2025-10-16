@@ -1,14 +1,17 @@
 # Unreleased
 
 * make it possible to check other student's points or average
-* 変更に強い方法を身につける、編み出さないと。
-  - develop/production をキレイに切り分けるにパワーをかけるのは無駄か。
-  - production メインで、develop はもっとゴツゴツでもいい。
-  - 具体的には、細かく if/when で条件分けすると変更に弱いコードになる。
-  - develop でひとまとめをやめ、細かく develop-what みたいなので狙い撃ちにする。
-  - コードを短くしようとするとドツボる。
 * 30秒以内ルールに抵触はマイナス点とか。
-* develop を各ページに表示する。
+
+# 0.3.17 (2025-10-08)
+
+- display number of unread wils.
+- fix Justfile - had removed container-repl recipe
+
+# 0.3.16 (2025-10-06)
+
+- htmx-2.0.7
+- improve admin page - show redis vars
 
 # 0.3.15 (2025-10-03)
 
