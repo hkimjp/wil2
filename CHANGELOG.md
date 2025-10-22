@@ -3,6 +3,10 @@
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
 
+# 0.3.19-SNAPSHOT
+
+* localhost:3000/wil2 では「今週の WIL を評価」になるが、
+　wil.melt では「自分WILを出してから」になってしまう。
 
 # 0.3.16 (2025-10-06)
 
