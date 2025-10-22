@@ -18,7 +18,7 @@ nrepl:
   clj -M:dev:nrepl
 
 dev:
-  just watch >/dev/null 2>&1
+  just watch >/dev/null 2>&1 &
   just nrepl
 
 test:
@@ -28,7 +28,11 @@ run:
   clojure -J--enable-native-access=ALL-UNNAMED -M:run-m
 
 up:
+<<<<<<< HEAD
   docker compose up
+=======
+  docker compose up -d
+>>>>>>> hotfix/0.3.19
 
 down:
   docker compose down

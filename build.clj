@@ -3,7 +3,11 @@
   (:require [clojure.tools.build.api :as b]))
 
 (def lib 'io.github.hkimjp/wil2)
+<<<<<<< HEAD
 (def version "0.3.18")
+=======
+(def version "0.3.19")
+>>>>>>> hotfix/0.3.19
 (def main 'hkimjp.wil2.core)
 (def class-dir "target/classes")
 

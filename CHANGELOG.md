@@ -2,16 +2,14 @@
 
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
-* which is bad forgetting cloing " ", put evil spaces inside?
+* 0.3.17, 0.3.18 を取りこぼし - 図書館で　m1 でプログラムした分。
+  午後のジョブはこれからスタート。
 
-# 0.3.18 (2025-10-15)
 
-- do not display the rating link before uploading self wil.
+# 0.3.19-SNAPSHOT
 
-# 0.3.17 (2025-10-08)
-
-- display number of unread wils.
-- fix Justfile - had removed container-repl recipe
+- fixed - localhost:3000/wil2 では「今週の WIL を評価」になるが、
+　wil.melt では「自分 WIL を出してから」になってしまう。
 
 # 0.3.16 (2025-10-06)
 
