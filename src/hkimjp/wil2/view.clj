@@ -4,11 +4,7 @@
    [ring.util.response :as resp]
    [taoensso.telemere :as t]))
 
-<<<<<<< HEAD
-(def version "0.3.18")
-=======
 (def version "0.3.19")
->>>>>>> hotfix/0.3.19
 
 (def ^:private menu "text-xl font-medium text-white px-1 hover:bg-green-700")
 

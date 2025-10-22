@@ -28,11 +28,7 @@ run:
   clojure -J--enable-native-access=ALL-UNNAMED -M:run-m
 
 up:
-<<<<<<< HEAD
-  docker compose up
-=======
   docker compose up -d
->>>>>>> hotfix/0.3.19
 
 down:
   docker compose down
