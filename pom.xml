@@ -22,7 +22,11 @@
     <url>https://github.com/hkimjp/wil2</url>
     <connection>scm:git:git://github.com/hkimjp/wil2.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/hkimjp/wil2.git</developerConnection>
+<<<<<<< HEAD
     <tag>v0.3.19</tag>
+=======
+    <tag>v0.3.18</tag>
+>>>>>>> refs/remotes/origin/main
   </scm>
   <dependencies>
     <dependency>

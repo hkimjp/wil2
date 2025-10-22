@@ -12,8 +12,6 @@
 (t/set-min-level! :debug)
 (start-system)
 
-
-
 (reload/init
  {:dirs ["src" "dev" "test"]
   :no-reload '#{user}
@@ -25,7 +23,6 @@
 
 (defn- after-reload []
   (start-system))
-
 
 ; (reload/reload)
 
