@@ -6,7 +6,7 @@
   午後のジョブはこれからスタート。
 
 
-# 0.3.20-SNAPSHOT
+# 0.3.20 (2025-10-27)
 
 - after the voting period is over, the author's names are displayed.
 - fixed - localhost:3000/wil2 では「今週の WIL を評価」になるが、
