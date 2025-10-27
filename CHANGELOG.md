@@ -6,8 +6,9 @@
   午後のジョブはこれからスタート。
 
 
-# 0.3.19-SNAPSHOT
+# 0.3.20-SNAPSHOT
 
+- after the voting period is over, the author's names are displayed.
 - fixed - localhost:3000/wil2 では「今週の WIL を評価」になるが、
 　wil.melt では「自分 WIL を出してから」になってしまう。
 
