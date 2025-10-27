@@ -3,6 +3,7 @@
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
 * 投票が終わった WILの author を曝す。
+* fake-today
 
 
 # 0.3.20-SNAPSHOT
