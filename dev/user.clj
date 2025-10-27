@@ -28,15 +28,23 @@
 
 ;--------------------------
 
-(defn dummy [user m]
-  (doseq [n (range m)]
-    (ds/put! {:wil2 "upload"
-              :login user
-              :md (str "# dummy\n" n)
-              :date (today)
-              :updated (jt/local-date-time)})))
+(jt/local-date)
+(jt/local-date 2025 10 24)
 
 (comment
+  (re-seq #"\d+" (str (jt/local-date)))
+
+  ; feature/display-authors
+  (+ 3 (jt/time-between (jt/local-date) (jt/local-date 2025 10 24) :days))
+
+  (defn dummy [user m]
+    (doseq [n (range m)]
+      (ds/put! {:wil2 "upload"
+                :login user
+                :md (str "# dummy\n" n)
+                :date (today)
+                :updated (jt/local-date-time)})))
+
   (def x "this is a document about x." 3)
   (def ^{:doc "which is easy to read?"} y 4)
   x
