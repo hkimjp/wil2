@@ -52,10 +52,7 @@
       resp/response
       (resp/header "Content-Type" "text/html")))
 
-;; htmx requires html response.
-;; appropriate in this namespace?
-;; name `hx`?
-(defn html [content]
+(defn htmx [content]
   (-> (str (h/html content))
       resp/response
       (resp/content-type "text/html")))

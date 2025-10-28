@@ -2,12 +2,12 @@
 
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
-* 投票が終わった WILの author を曝す。
 * fake-today
-* 0.3.17, 0.3.18 を取りこぼし - 図書館で m1 でプログラムした分。
-  午後のジョブはこれからスタート。
-* which is bad forgetting cloing " ", put evil spaces inside?
 
+
+# 0.3.22-SNAPSHOT
+
+- renamed `view/html` as `view/htmx`
 
 # 0.3.21 (2025-10-28)
 

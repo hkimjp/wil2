@@ -8,7 +8,7 @@
    [hkimjp.datascript :as ds]
    [hkimjp.wil2.uploads :refer [max-count min-interval]]
    [hkimjp.wil2.util :refer [user today safe-vec]]
-   [hkimjp.wil2.view :refer [page html]]))
+   [hkimjp.wil2.view :refer [page htmx]]))
 
 (defn- env-var-section []
   [:div.m-4
@@ -55,7 +55,7 @@
   [{{:keys [eid]} :params}]
   (t/log! {:level :info :data {:eid eid}})
   (ds/put! {:db/id (parse-long eid) :wil2 "delete"})
-  (html
+  (htmx
    [:div (str "eid:" eid " deleted")]))
 
 (defn admin

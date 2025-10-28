@@ -11,7 +11,7 @@
    [hkimjp.carmine :as c]
    [hkimjp.datascript :as ds]
    [hkimjp.wil2.util :refer [user today local-time]]
-   [hkimjp.wil2.view :refer [page html]]))
+   [hkimjp.wil2.view :refer [page htmx]]))
 
 ; refer from admin.clj. must be public.
 (def max-count "submisions allowed in a day"
@@ -99,7 +99,7 @@
   [{{:keys [eid]} :path-params :as request}]
   (let [user (user request)]
     (t/log! :info (str "md " user " " eid))
-    (html
+    (htmx
      [:form
       (h/raw (anti-forgery-field))
       [:input {:type "hidden" :name "eid" :value eid}]

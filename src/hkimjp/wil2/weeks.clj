@@ -5,7 +5,7 @@
    [nextjournal.markdown :as md]
    ; [ring.util.response :as resp]
    [taoensso.telemere :as t]
-   [hkimjp.wil2.view :refer [page html]]
+   [hkimjp.wil2.view :refer [page htmx]]
    [hkimjp.datascript :as ds]))
 
 (def dates '[:find [?date ...]
@@ -44,7 +44,7 @@
         diff (jt/time-between (jt/local-date y m d) (jt/local-date) :days)
         display-author? (< 3 diff)]
     (t/log! :debug (str "browse: date " date))
-    (html (for [[author date-time upload] (ds/qq uploads date)]
+    (htmx (for [[author date-time upload] (ds/qq uploads date)]
             [:div
              [:hr]
              (when display-author?
