@@ -12,6 +12,9 @@
              :where
              [?e :date ?date]])
 
+(comment
+  (ds/qq dates)
+  :rcf)
 (defn- link [day]
   [:span.px-2.hover:underline
    {:hx-get (str "/wil2/browse/" day)
@@ -22,7 +25,7 @@
   (page
    [:div.mx-4
     [:div.text-2xl.font-meduim "Weeks"]
-    [:p.py-2 "日付をクリックでその日の WIL を表示する。"]
+    [:p.py-2 "日付をクリックでその週の WIL を表示する。"]
     (into [:div] (mapv link (sort (ds/qq dates))))
     [:br]
     [:div#weeks "[wils]"]]))
@@ -50,12 +53,3 @@
              (-> upload
                  md/parse
                  md/->hiccup)]))))
-(comment
-
-  (let [[y m d] (->> (re-seq #"\d+" "2025-10-21")
-                     (map parse-long))]
-    (jt/time-between (jt/local-date) (jt/local-date y m d) :days))
-
-  :rcf)
-
-

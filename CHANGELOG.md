@@ -2,15 +2,26 @@
 
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
-* 0.3.17, 0.3.18 を取りこぼし - 図書館で　m1 でプログラムした分。
-  午後のジョブはこれからスタート。
+* 投票が終わった WILの author を曝す。
+* fake-today
 
 
 # 0.3.20-SNAPSHOT
 
+- libraries updated
+
+    | :file    | :name                                        | :current | :latest |
+    |----------|----------------------------------------------|----------|---------|
+    | deps.edn | io.github.hkimjp/datascript-storage-javatime | 0.7.4    | 0.7.6   |
+    |          | io.github.tonsky/clojure-plus                | 1.6.3    | 1.7.0   |
+    |          | nrepl/nrepl                                  | 1.4.0    | 1.5.1   |
+
+
+# 0.3.19
+
 - after the voting period is over, the author's names are displayed.
 - fixed - localhost:3000/wil2 では「今週の WIL を評価」になるが、
-　wil.melt では「自分 WIL を出してから」になってしまう。
+  wil.melt では「自分 WIL を出してから」になってしまう。
 
 # 0.3.16 (2025-10-06)
 
