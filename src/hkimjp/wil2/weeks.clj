@@ -1,16 +1,19 @@
 (ns hkimjp.wil2.weeks
   (:require
-   ; [hiccup2.core :as h]
+   [environ.core :refer [env]]
    [java-time.api :as jt]
    [nextjournal.markdown :as md]
-   ; [ring.util.response :as resp]
    [taoensso.telemere :as t]
-   [hkimjp.wil2.view :refer [page html]]
-   [hkimjp.datascript :as ds]))
+   [hkimjp.datascript :as ds]
+   [hkimjp.wil2.view :refer [page htmx]]))
 
 (def dates '[:find [?date ...]
              :where
              [?e :date ?date]])
+
+(comment
+  (ds/qq dates)
+  :rcf)
 
 (defn- link [day]
   [:span.px-2.hover:underline
@@ -22,7 +25,7 @@
   (page
    [:div.mx-4
     [:div.text-2xl.font-meduim "Weeks"]
-    [:p.py-2 "日付をクリックでその日の WIL を表示する。"]
+    [:p.py-2 "日付をクリックでその週の WIL を表示する。"]
     (into [:div] (mapv link (sort (ds/qq dates))))
     [:br]
     [:div#weeks "[wils]"]]))
@@ -41,21 +44,12 @@
         diff (jt/time-between (jt/local-date y m d) (jt/local-date) :days)
         display-author? (< 3 diff)]
     (t/log! :debug (str "browse: date " date))
-    (html (for [[author date-time upload] (ds/qq uploads date)]
+    (htmx (for [[author date-time upload] (ds/qq uploads date)]
             [:div
              [:hr]
-             (when display-author?
+             (when (or (env :develop) display-author?)
                [:div [:span.font-bold "author: "] author])
              [:div [:span.font-bold "date: "] (jt/format "YYYY-MM-dd HH:mm:ss" date-time)]
              (-> upload
                  md/parse
                  md/->hiccup)]))))
-(comment
-
-  (let [[y m d] (->> (re-seq #"\d+" "2025-10-21")
-                     (map parse-long))]
-    (jt/time-between (jt/local-date) (jt/local-date y m d) :days))
-
-  :rcf)
-
-

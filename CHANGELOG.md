@@ -2,12 +2,30 @@
 
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
-* 0.3.17, 0.3.18 を取りこぼし - 図書館で m1 でプログラムした分。
-  午後のジョブはこれからスタート。
-* which is bad forgetting cloing " ", put evil spaces inside?
+* fake-today
 
+
+# 0.3.22 (2025-10-28)
+
+- renamed `view/html` as `view/htmx`
+- in develop mode, author will be displayed even if in rating period.
+
+# 0.3.21 (2025-10-28)
+
+- added `post /admin/delete` - put! {:db/id eid, :wil2 "delete"}
 
 # 0.3.20 (2025-10-27)
+
+- libraries updated
+
+    | :file    | :name                                        | :current | :latest |
+    |----------|----------------------------------------------|----------|---------|
+    | deps.edn | io.github.hkimjp/datascript-storage-javatime | 0.7.4    | 0.7.6   |
+    |          | io.github.tonsky/clojure-plus                | 1.6.3    | 1.7.0   |
+    |          | nrepl/nrepl                                  | 1.4.0    | 1.5.1   |
+
+
+# 0.3.19
 
 - after the voting period is over, the author's names are displayed.
 - fixed - localhost:3000/wil2 では「今週の WIL を評価」になるが、

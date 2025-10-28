@@ -1,10 +1,14 @@
 (ns hkimjp.wil2.admin
   (:require
    [environ.core :refer [env]]
+   [hiccup2.core :as h]
+   [ring.util.anti-forgery :refer [anti-forgery-field]]
+   [taoensso.telemere :as t]
    [hkimjp.carmine :as c]
+   [hkimjp.datascript :as ds]
    [hkimjp.wil2.uploads :refer [max-count min-interval]]
    [hkimjp.wil2.util :refer [user today safe-vec]]
-   [hkimjp.wil2.view :refer [page]]))
+   [hkimjp.wil2.view :refer [page htmx]]))
 
 (defn- env-var-section []
   [:div.m-4
@@ -34,6 +38,28 @@
     [:div (-> (c/lrange (format "wil2:%s:%s" user (today)))
               safe-vec)]]])
 
+(defn- delete-section []
+  [:div.m-4
+   [:div.text-2xl "Delete"]
+   [:form {:method "post"}
+    (h/raw (anti-forgery-field))
+    [:div.flex.gap-x-4
+     [:div "eid:"]
+     [:input.border-1.rounded-md {:name "eid"}]
+     [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
+      {:hx-post "/admin/delete"
+       :hx-target "#delete"
+       :hx-swap "innerHTML"}
+      "delete"]]]
+   [:div#delete "?"]])
+
+(defn delete
+  [{{:keys [eid]} :params}]
+  (t/log! {:level :info :data {:eid eid}})
+  (ds/put! {:db/id (parse-long eid) :wil2 "delete"})
+  (htmx
+   [:div (str "eid:" eid " deleted")]))
+
 (defn admin
   [request]
   (let [user (user request)]
@@ -41,9 +67,11 @@
      [:div.mx-4
       [:div.text-2xl "Admin"]
       (env-var-section)
-      (redis-var-section user)])))
+      (redis-var-section user)
+      (delete-section)])))
 
 (comment
+  (:wil2 (ds/pl 1220))
   (-> (c/lrange (format "wil2:%s:%s" "hkimura" (today)))
       safe-vec)
   (->> (c/lrange "wil2:hkimura:answered")
