@@ -5,7 +5,7 @@
 * fake-today
 
 
-# 0.3.22-SNAPSHOT
+# 0.3.22 (2025-10-28)
 
 - renamed `view/html` as `view/htmx`
 - in develop mode, author will be displayed even if in rating period.
