@@ -28,10 +28,18 @@
 
 ;--------------------------
 
-(jt/local-date)
-(jt/local-date 2025 10 24)
+(ds/qq '[:find ?e ?date
+         :where
+         [?e :login "akitennis"]
+         [?e :date ?date]])
+
+(ds/pl 1220)
 
 (comment
+
+  (jt/local-date)
+  (jt/local-date 2025 10 24)
+
   (re-seq #"\d+" (str (jt/local-date)))
 
   ; feature/display-authors

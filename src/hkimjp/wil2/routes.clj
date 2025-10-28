@@ -19,7 +19,8 @@
    ["/logout"   logout!]
    ["/help"     {:get help}]
    ["/admin" {:middleware [m/wrap-admin]}
-    [""           {:get admin/admin}]]
+    [""           {:get admin/admin}]
+    ["/delete"    {:post admin/delete}]]
    ["/wil2"  {:middleware [m/wrap-users]}
     [""              {:get switch/switch}]
     ["/upload"       {:get uploads/upload :post uploads/upload!}]
