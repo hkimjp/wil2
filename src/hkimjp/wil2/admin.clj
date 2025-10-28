@@ -40,15 +40,17 @@
 
 (defn- delete-section []
   [:div.m-4
-   [:div.text-2xl "Delete2"]
+   [:div.text-2xl "Delete"]
    [:form {:method "post"}
     (h/raw (anti-forgery-field))
-    [:input.border-1.rounded-md {:name "eid"}]
-    [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
-     {:hx-post "/admin/delete"
-      :hx-target "#delete"
-      :hx-swap "innerHTML"}
-     "delete"]]
+    [:div.flex.gap-x-4
+     [:div "eid:"]
+     [:input.border-1.rounded-md {:name "eid"}]
+     [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
+      {:hx-post "/admin/delete"
+       :hx-target "#delete"
+       :hx-swap "innerHTML"}
+      "delete"]]]
    [:div#delete "?"]])
 
 (defn delete

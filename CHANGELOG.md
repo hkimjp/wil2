@@ -8,6 +8,7 @@
 # 0.3.22-SNAPSHOT
 
 - renamed `view/html` as `view/htmx`
+- in develop mode, author will be displayed even if in rating period.
 
 # 0.3.21 (2025-10-28)
 

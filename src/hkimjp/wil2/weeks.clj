@@ -1,12 +1,11 @@
 (ns hkimjp.wil2.weeks
   (:require
-   ; [hiccup2.core :as h]
+   [environ.core :refer [env]]
    [java-time.api :as jt]
    [nextjournal.markdown :as md]
-   ; [ring.util.response :as resp]
    [taoensso.telemere :as t]
-   [hkimjp.wil2.view :refer [page htmx]]
-   [hkimjp.datascript :as ds]))
+   [hkimjp.datascript :as ds]
+   [hkimjp.wil2.view :refer [page htmx]]))
 
 (def dates '[:find [?date ...]
              :where
@@ -15,6 +14,7 @@
 (comment
   (ds/qq dates)
   :rcf)
+
 (defn- link [day]
   [:span.px-2.hover:underline
    {:hx-get (str "/wil2/browse/" day)
@@ -47,7 +47,7 @@
     (htmx (for [[author date-time upload] (ds/qq uploads date)]
             [:div
              [:hr]
-             (when display-author?
+             (when (or (env :develop) display-author?)
                [:div [:span.font-bold "author: "] author])
              [:div [:span.font-bold "date: "] (jt/format "YYYY-MM-dd HH:mm:ss" date-time)]
              (-> upload
