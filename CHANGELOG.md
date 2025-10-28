@@ -6,17 +6,10 @@
   午後のジョブはこれからスタート。
 * which is bad forgetting cloing " ", put evil spaces inside?
 
-# 0.3.18 (2025-10-15)
 
-* do not display rating link before uploading self wil.
+# 0.3.20 (2025-10-27)
 
-# 0.3.17 (2025-10-08)
-
-- display number of unread wils.
-- fix Justfile - had removed container-repl recipe
-
-# 0.3.19-SNAPSHOT
-
+- after the voting period is over, the author's names are displayed.
 - fixed - localhost:3000/wil2 では「今週の WIL を評価」になるが、
   wil.melt では「自分 WIL を出してから」になってしまう。
 

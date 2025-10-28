@@ -35,13 +35,27 @@
                   [?e :date ?date]
                   [?e :login ?author]
                   [?e :updated ?updated]
-                  [?e :md ?md]]]
+                  [?e :md ?md]]
+        [y m d] (->> (re-seq #"\d+" date)
+                     (map parse-long))
+        diff (jt/time-between (jt/local-date y m d) (jt/local-date) :days)
+        display-author? (< 3 diff)]
     (t/log! :debug (str "browse: date " date))
-    (html (for [[_author date-time upload] (ds/qq uploads date)]
+    (html (for [[author date-time upload] (ds/qq uploads date)]
             [:div
              [:hr]
-             ; [:div [:span.font-bold "author: "] author]
+             (when display-author?
+               [:div [:span.font-bold "author: "] author])
              [:div [:span.font-bold "date: "] (jt/format "YYYY-MM-dd HH:mm:ss" date-time)]
              (-> upload
                  md/parse
                  md/->hiccup)]))))
+(comment
+
+  (let [[y m d] (->> (re-seq #"\d+" "2025-10-21")
+                     (map parse-long))]
+    (jt/time-between (jt/local-date) (jt/local-date y m d) :days))
+
+  :rcf)
+
+
