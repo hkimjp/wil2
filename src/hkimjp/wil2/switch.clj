@@ -11,22 +11,22 @@
 (defn- can-upload?
   "today is allowed to upload wils?"
   []
-  (or (env :develop) (jt/tuesday? (jt/local-date))))
+  (or (some? (env :develop)) (jt/tuesday? (jt/local-date))))
 
-(defn- rated?
-  "has user sent his ratings?"
-  [user]
-  true)
+; (defn- rated?
+;   "has user sent his ratings?"
+;   [user]
+;   true)
 
 (defn- can-rate?
   "in the period of rating allowed?"
   []
   (let [today (jt/local-date)]
-    (and (rated? user)
-         (or (jt/tuesday? today)
-             (jt/wednesday? today)
-             (jt/thursday? today)))))
+    (or (jt/tuesday? today)
+        (jt/wednesday? today)
+        (jt/thursday? today))))
 
+; refactor
 (defn switch [request]
   (let [user (user request)
         develop? (some? (env :develop))
@@ -47,9 +47,9 @@
                    (not (can-upload?)) [:span "WIL が提出できるのは授業のあった日。"]
                    uploaded?           [:span "提出済みです。"]
                    :else               [:a.hover:underline
-                                        {:href "/wil2/upload"} "今日のWILを提出"])]
-       [:li.py-2 (if (and uploaded? (can-rate?))
-                   [:a.hover:underline {:href "/wil2/rating"} "今週のWILを評価"]
+                                        {:href "/wil2/upload"} "今日の WIL を提出"])]
+       [:li.py-2 (if (or (some? (env :develop)) (and uploaded? (can-rate?)))
+                   [:a.hover:underline {:href "/wil2/rating"} "今週の WIL を評価"]
                    [:span "自分 WIL を出してから。"])]]
       [:br]])))
 

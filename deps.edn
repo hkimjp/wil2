@@ -13,7 +13,7 @@
   hato/hato               {:mvn/version "1.0.0"}
   hiccup/hiccup           {:mvn/version "2.0.0"}
   io.github.hkimjp/carmine-farm {:git/tag "0.2.9" :git/sha "5fcacc1"}
-  io.github.hkimjp/datascript-storage-javatime {:git/tag "0.7.4" :git/sha "f5c3196"}}
+  io.github.hkimjp/datascript-storage-javatime {:git/tag "0.7.6" :git/sha "815ae05"}}
 
  :aliases
  {:run-m {:main-opts ["-m" "hkimjp.wil2.core"]}
@@ -25,11 +25,11 @@
                  "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"
                  "--enable-native-access=ALL-UNNAMED"]}
   :nrepl
-  {:extra-deps {nrepl/nrepl {:mvn/version "1.4.0"}}
+  {:extra-deps {nrepl/nrepl {:mvn/version "1.5.1"}}
    :main-opts  ["-m" "nrepl.cmdline"]}
 
   :plus
-  {:extra-deps {io.github.tonsky/clojure-plus {:mvn/version "1.6.3"}}
+  {:extra-deps {io.github.tonsky/clojure-plus {:mvn/version "1.7.0"}}
    :exec-fn    clojure+.core.server/start-server
    :exec-args  {:name    "socket repl(plus)"
                 :address "0.0.0.0"
