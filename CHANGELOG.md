@@ -9,7 +9,7 @@
 * which is bad forgetting cloing " ", put evil spaces inside?
 
 
-# 0.3.21-SNAPSHOT
+# 0.3.21 (2025-10-28)
 
 - added `post /admin/delete` - put! {:db/id eid, :wil2 "delete"}
 
