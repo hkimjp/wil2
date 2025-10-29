@@ -8,7 +8,7 @@
    [hkimjp.datascript :as ds]
    [hkimjp.wil2.uploads :refer [max-count min-interval]]
    [hkimjp.wil2.util :refer [user today safe-vec]]
-   [hkimjp.wil2.view :refer [page html]]))
+   [hkimjp.wil2.view :refer [page htmx]]))
 
 (defn- env-var-section []
   [:div.m-4
@@ -40,22 +40,24 @@
 
 (defn- delete-section []
   [:div.m-4
-   [:div.text-2xl "Delete2"]
+   [:div.text-2xl "Delete"]
    [:form {:method "post"}
     (h/raw (anti-forgery-field))
-    [:input.border-1.rounded-md {:name "eid"}]
-    [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
-     {:hx-post "/admin/delete"
-      :hx-target "#delete"
-      :hx-swap "innerHTML"}
-     "delete"]]
+    [:div.flex.gap-x-4
+     [:div "eid:"]
+     [:input.border-1.rounded-md {:name "eid"}]
+     [:button.text-white.px-1.rounded-md.bg-sky-700.hover:bg-red-700.active:bg-red-900
+      {:hx-post "/admin/delete"
+       :hx-target "#delete"
+       :hx-swap "innerHTML"}
+      "delete"]]]
    [:div#delete "?"]])
 
 (defn delete
   [{{:keys [eid]} :params}]
   (t/log! {:level :info :data {:eid eid}})
   (ds/put! {:db/id (parse-long eid) :wil2 "delete"})
-  (html
+  (htmx
    [:div (str "eid:" eid " deleted")]))
 
 (defn admin
