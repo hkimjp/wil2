@@ -7,7 +7,7 @@
   午後のジョブはこれからスタート。
 * which is bad forgetting cloing " ", put evil spaces inside?
 
-# 0.3.23-SNAPSHOT
+# 0.3.23 (2025-10-29)
 
 - bug - can not send ratings today is wednesday.
 - fixed - added util/last-tuesday, replaced `today` in switch.clj with it.
