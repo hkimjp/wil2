@@ -3,15 +3,20 @@
 * make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
 * fake-today
+* 0.3.17, 0.3.18 を取りこぼし - 図書館で m1 でプログラムした分。
+  午後のジョブはこれからスタート。
+* which is bad forgetting cloing " ", put evil spaces inside?
+
+# 0.3.23-SNAPSHOT
+
+- bug - can not send ratings today is wednesday.
+- fixed - added util/last-tuesday, replaced `today` in switch.clj with it.
 
 
 # 0.3.22 (2025-10-28)
 
 - renamed `view/html` as `view/htmx`
 - in develop mode, author will be displayed even if in rating period.
-
-# 0.3.21 (2025-10-28)
-
 - added `post /admin/delete` - put! {:db/id eid, :wil2 "delete"}
 
 # 0.3.20 (2025-10-27)
