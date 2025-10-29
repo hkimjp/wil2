@@ -12,17 +12,18 @@
 (defn local-time []
   (jt/format "HH:mm:ss" (jt/local-time)))
 
-;; (defn abbrev
-;;   "shorten string s for concise log."
-;;   ([s] (abbrev s 80))
-;;   ([s n] (let [pat (re-pattern (str "(^.{" n "}).*"))]
-;;            (str/replace-first s pat "$1..."))))
-
 (defn safe-vec
   [v]
   (if (seq v)
     (pr-str (interpose " " v))
     "NIL"))
 
+(defn- last-tuesday-aux [day]
+  (if (jt/tuesday? day)
+    (str day)
+    (last-tuesday-aux (jt/minus day (jt/days 1)))))
 
+(defn last-tuesday []
+  (last-tuesday-aux (jt/local-date)))
 
+; (last-tuesday)

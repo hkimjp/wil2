@@ -4,7 +4,7 @@
    [java-time.api :as jt]
    [taoensso.telemere :as t]
    [hkimjp.datascript :as ds]
-   [hkimjp.wil2.util :refer [user today]]
+   [hkimjp.wil2.util :refer [user today last-tuesday]]
    [hkimjp.wil2.view :refer [page]]))
 
 ;; FIXME: generalize
@@ -26,7 +26,6 @@
         (jt/wednesday? today)
         (jt/thursday? today))))
 
-; refactor
 (defn switch [request]
   (let [user (user request)
         develop? (some? (env :develop))
@@ -36,7 +35,7 @@
                 [?e :wil2  "upload"]
                 [?e :login ?who]
                 [?e :date  ?date]]
-        uploaded? (seq (ds/qq query user (today)))]
+        uploaded? (seq (ds/qq query user (last-tuesday)))]
     (t/log! {:level :debug :id "switch" :data {:user user :uploaded? uploaded?}})
     (page
      [:div.mx-4
@@ -50,6 +49,6 @@
                                         {:href "/wil2/upload"} "今日の WIL を提出"])]
        [:li.py-2 (if (or (some? (env :develop)) (and uploaded? (can-rate?)))
                    [:a.hover:underline {:href "/wil2/rating"} "今週の WIL を評価"]
-                   [:span "自分 WIL を出してから。"])]]
+                   [:span "自分 WIL を出してから Rating。"])]]
       [:br]])))
 
