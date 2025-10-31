@@ -23,13 +23,13 @@
     ["/delete"    {:post admin/delete}]]
    ["/wil2"  {:middleware [m/wrap-users]}
     [""              {:get switch/switch}]
-    ["/upload"       {:get uploads/upload :post uploads/upload!}]
-    ["/rating"       {:get  ratings/rating}]
+    ["/browse/:date" {:get browse}]
     ["/md/:eid"      {:get  ratings/md}]
     ["/point/:pt"    {:post ratings/point!}]
-    ["/weeks"        {:get list-days}]
-    ["/browse/:date" {:get browse}]
-    ["/points"       {:get points}]]])
+    ["/points"       {:get points}]
+    ["/rating"       {:get  ratings/rating}]
+    ["/upload"       {:get uploads/upload :post uploads/upload!}]
+    ["/weeks"        {:get list-days}]]])
 
 (defn root-handler
   [request]
