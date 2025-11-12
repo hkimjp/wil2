@@ -1,11 +1,13 @@
 # Unreleased
 
-* make it possible to check other student's points or average
 * 30秒以内ルールに抵触はマイナス点とか。
 * fake-today
-* 0.3.17, 0.3.18 を取りこぼし - 図書館で m1 でプログラムした分。
-  午後のジョブはこれからスタート。
-* which is bad forgetting cloing " ", put evil spaces inside?
+* which is bad forgetting closing " ", put evil spaces inside?
+* display redis var in admin page (follow konpy2 manner)
+
+
+# 0.3.25-SNAPSHOT
+
 
 # 0.3.24 (2025-11-12)
 
