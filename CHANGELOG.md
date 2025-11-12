@@ -7,7 +7,7 @@
   午後のジョブはこれからスタート。
 * which is bad forgetting cloing " ", put evil spaces inside?
 
-# 0.3.24-SNAPSHOT
+# 0.3.24 (2025-11-12)
 
 - margin
 
