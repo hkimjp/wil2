@@ -17,7 +17,7 @@
 
 (defn- link [day]
   [:span.px-2.hover:underline
-   {:hx-get (str "/wil2/browse/" day)
+   {:hx-get (str "/wil2/browse/" day) ; => weeks/browse
     :hx-target "#weeks"}
    day])
 
@@ -42,7 +42,7 @@
         [y m d] (->> (re-seq #"\d+" date)
                      (map parse-long))
         diff (jt/time-between (jt/local-date y m d) (jt/local-date) :days)
-        display-author? (< 3 diff)]
+        display-author? (< 2 diff)]
     (t/log! :debug (str "browse: date " date))
     (htmx (for [[author date-time upload] (ds/qq uploads date)]
             [:div
