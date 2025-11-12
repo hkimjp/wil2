@@ -39,4 +39,13 @@
     list-style-type: decimal;
     margin-left: 2rem;
   }
+
+  p > code {
+    color: red;
+  }
+
+  pre {
+    margin: 10px 0 10px 0;
+    background-color: #eee;
+  }
 }
