@@ -39,12 +39,12 @@ update:
 build:
   clojure -T:build ci
 
-deploy: build
+deploy: minify build
   scp target/io.github.hkimjp/wil2-*.jar ${DEST}:wil2/wil.jar
   ssh ${DEST} 'sudo systemctl restart wil'
   ssh ${DEST} 'systemctl status wil'
 
-eq: build
+eq: minify build
   scp target/io.github.hkimjp/wil2-*.jar eq.local:wil2/wil2.jar
   ssh eq.local 'cd wil2 && docker compose restart'
 

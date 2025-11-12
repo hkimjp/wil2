@@ -28,14 +28,13 @@
 
 ;--------------------------
 
-(ds/qq '[:find ?e ?date
-         :where
-         [?e :login "akitennis"]
-         [?e :date ?date]])
-
-(ds/pl 1220)
-
 (comment
+  (ds/qq '[:find ?e ?date
+           :where
+           [?e :login "akitennis"]
+           [?e :date ?date]])
+
+  (ds/pl 1220)
 
   (jt/local-date)
   (jt/local-date 2025 10 24)
